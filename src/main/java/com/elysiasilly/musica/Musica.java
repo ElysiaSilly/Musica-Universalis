@@ -1,4 +1,4 @@
-package com.elysiasilly.babel;
+package com.elysiasilly.musica;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -33,8 +33,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(Babel.MODID)
-public class Babel {
+@Mod(Musica.MODID)
+public class Musica {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "babel";
     // Directly reference a slf4j logger
@@ -61,7 +61,7 @@ public class Babel {
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public Babel(IEventBus modEventBus, ModContainer modContainer) {
+    public Musica(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
