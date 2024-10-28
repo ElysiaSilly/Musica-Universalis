@@ -3,15 +3,16 @@ package com.elysiasilly.musalis.core.util;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
 public class RenderUtil {
-
+    /*
     public static void renderCube(
             VertexConsumer consumer, Matrix4f matrix4f,
             float s, int light, boolean centred, boolean cull) {
 
-        /*
+
         if(cull & (pos == null || level == null)) return;
 
         float b = 0;
@@ -38,38 +39,32 @@ public class RenderUtil {
         if(cull ? !level.getBlockState(pos.above()).isFaceSturdy(level, pos.above(), Direction.DOWN) : true)
             renderPlaneFull(consumer, matrix4f, b, s, s, s, s, s, b, b, light);
 
-         */
+
     }
+    */
 
     public static void renderPlane(
             VertexConsumer consumer, Matrix4f matrix4f, int packedLight, int translucency,
-            float startX, float startY, float startZ,
-            float endX, float endY, float endZ,
-            float offsetX, float offsetY, float offsetZ,
+            Vec3 start, Vec3 end, Vec3 offset,
             boolean centred
     ) {
 
-        startX = centred ? startX / 2 : startX;
-        startY = centred ? startY / 2 : startY;
-        startZ = centred ? startZ / 2 : startZ;
+        //startX = centred ? startX / 2 : startX;
+        //startY = centred ? startY / 2 : startY;
+        //startZ = centred ? startZ / 2 : startZ;
 
-        endX = centred ? endX / 2 : endX;
-        endY = centred ? endY / 2 : endY;
-        endZ = centred ? endZ / 2 : endZ;
+        //endX = centred ? endX / 2 : endX;
+        //endY = centred ? endY / 2 : endY;
+        //endZ = centred ? endZ / 2 : endZ;
 
         // TODO : STUPID ^
 
-        startX += offsetX;
-        startY += offsetY;
-        startZ += offsetZ;
+        start.add(offset);
+        end.add(offset);
 
-        endX += offsetX;
-        endY += offsetY;
-        endZ += offsetZ;
-
-        renderPlaneFull(consumer, matrix4f, packedLight, translucency, startX, startY, startZ, endX, endY, endZ);
+        renderPlaneFull(consumer, matrix4f, packedLight, translucency, start, end);
     }
-
+    /*
     public static void renderPlaneWithTextureDimensions(
             VertexConsumer consumer, Matrix4f matrix4f, int packedLight, int translucency, ResourceLocation resourceLocation,
             float offsetX, float offsetY, float offsetZ,
@@ -87,15 +82,14 @@ public class RenderUtil {
         renderPlane(consumer, matrix4f, packedLight, translucency, 0, 0, 0, (float) width / 16, 0, (float) height / 16, offsetX, offsetY, offsetZ, centred);
     }
 
+     */
 
     private static void renderPlaneFull(
             VertexConsumer consumer, Matrix4f matrix4f, int packedLight, int translucency,
-            float startX, float startY, float startZ,
-            float endX, float endY, float endZ
+            Vec3 start, Vec3 end
     ) {
-        float normal = 10;
 
-        consumer.addVertex(matrix4f, endX,   endY,   startZ)
+        consumer.addVertex(matrix4f, (float) end.z, (float) end.y, (float) start.z)
                 .setUv(1, 0)
                 .setLight(packedLight)
                 .setColor(-1, -1, -1, translucency)
@@ -103,7 +97,7 @@ public class RenderUtil {
                 .setUv2(1, 1)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix4f, startX, startY, startZ)
+        consumer.addVertex(matrix4f, (float) start.x, (float) start.y, (float) start.z)
                 .setUv(0, 0)
                 .setLight(packedLight)
                 .setColor(-1, -1, -1, translucency)
@@ -111,7 +105,7 @@ public class RenderUtil {
                 .setUv2(1, 1)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix4f, startX, startY, endZ)
+        consumer.addVertex(matrix4f, (float) start.x, (float) start.y, (float) end.z)
                 .setUv(0, 1)
                 .setLight(packedLight)
                 .setColor(-1, -1, -1, translucency)
@@ -119,7 +113,7 @@ public class RenderUtil {
                 .setUv2(1, 1)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix4f, endX,   endY,   endZ)
+        consumer.addVertex(matrix4f, (float) end.x,   (float) end.y,   (float) end.z)
                 .setUv(1, 1)
                 .setLight(packedLight)
                 .setColor(-1, -1, -1, translucency)

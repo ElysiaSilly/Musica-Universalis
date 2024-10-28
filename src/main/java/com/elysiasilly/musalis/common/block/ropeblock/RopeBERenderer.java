@@ -31,7 +31,11 @@ public class RopeBERenderer implements BlockEntityRenderer<RopeBE> {
             Matrix4f matrix4f = poseStack.last().pose();
             VertexConsumer consumer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(MusicaRenderTypes.getTestingShader());
 
-            RenderUtil.renderPlane(consumer, matrix4f, packedLight, 0, 0, 0, 0, 1, 0, 1, 0, (float) position.y, 0, false);
+            Vec3 start = new Vec3(0, 0, 0);
+            Vec3 end = new Vec3(1, 0, 1);
+            Vec3 offset = new Vec3(0, position.y, 0);
+
+            RenderUtil.renderPlane(consumer, matrix4f, packedLight, 0, start, end, offset, false);
         }
 
     }
