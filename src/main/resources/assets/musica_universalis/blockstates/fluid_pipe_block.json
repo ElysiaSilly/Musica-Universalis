@@ -1,0 +1,190 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection",
+        "x": 90,
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "north": "pipe"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection",
+        "x": 90,
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "east": "pipe"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection",
+        "x": 90,
+        "uvlock": true
+      },
+      "when": {
+        "south": "pipe"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection",
+        "x": 90,
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "west": "pipe"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection",
+        "x": 180,
+        "uvlock": true
+      },
+      "when": {
+        "up": "pipe"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection",
+        "uvlock": true
+      },
+      "when": {
+        "down": "pipe"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/core",
+        "x": 90,
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "north": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/core",
+        "x": 90,
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "east": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/core",
+        "x": 90,
+        "uvlock": true
+      },
+      "when": {
+        "south": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/core",
+        "x": 90,
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "west": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/core",
+        "x": 180,
+        "uvlock": true
+      },
+      "when": {
+        "up": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/core",
+        "uvlock": true
+      },
+      "when": {
+        "down": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection_machine",
+        "x": 90,
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "north": "machine"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection_machine",
+        "x": 90,
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "east": "machine"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection_machine",
+        "x": 90,
+        "uvlock": true
+      },
+      "when": {
+        "south": "machine"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection_machine",
+        "x": 90,
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "west": "machine"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection_machine",
+        "x": 180,
+        "uvlock": true
+      },
+      "when": {
+        "up": "machine"
+      }
+    },
+    {
+      "apply": {
+        "model": "musica_universalis:block/fluid_pipe/connection_machine",
+        "uvlock": true
+      },
+      "when": {
+        "down": "machine"
+      }
+    }
+  ]
+}

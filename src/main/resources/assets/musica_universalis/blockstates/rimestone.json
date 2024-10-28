@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "musica_universalis:block/rime_1"
+      },
+      {
+        "model": "musica_universalis:block/rime_2"
+      },
+      {
+        "model": "musica_universalis:block/rime_3"
+      },
+      {
+        "model": "musica_universalis:block/rime_4"
+      },
+      {
+        "model": "musica_universalis:block/rime_21"
+      },
+      {
+        "model": "musica_universalis:block/rime_22"
+      },
+      {
+        "model": "musica_universalis:block/rime_23"
+      },
+      {
+        "model": "musica_universalis:block/rime_24"
+      }
+    ]
+  }
+}

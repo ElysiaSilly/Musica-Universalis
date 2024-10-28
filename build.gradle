@@ -11,7 +11,16 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
-}
+    /*
+    maven {
+        name "Jitpack"
+        url "https://jitpack.io"
+        content {
+            includeGroup "com.github.ElysiaSilly"
+        }
+
+     */
+    }
 
 base {
     archivesName = mod_id
@@ -97,6 +106,9 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 
 dependencies {
+    //implementation files('babel/Babel-1.0-api.jar')
+
+    //implementation "com.github.ElysiaSilly:Babel:master-SNAPSHOT"
     // Example mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -112,7 +124,7 @@ dependencies {
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
 
     // Example project dependency using a sister or child project:
-    // implementation project(":myproject")
+    //implementation project("babel")
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

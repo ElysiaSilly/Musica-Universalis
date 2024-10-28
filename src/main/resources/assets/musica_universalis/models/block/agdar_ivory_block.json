@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "musica_universalis:block/agdar_ivory_block"
+  }
+}

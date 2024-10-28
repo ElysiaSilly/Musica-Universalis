@@ -1,0 +1,21 @@
+{
+	"credit": "an ElysiaSilly creation :D",
+	"textures": {
+		"particle": "musica_universalis:block/pipe",
+		"pipe": "musica_universalis:block/pipe"
+	},
+	"elements": [
+		{
+			"name": "connection",
+			"from": [6, 0, 6],
+			"to": [10, 6, 10],
+			"rotation": {"angle": 0, "axis": "z", "origin": [-1, 2, 8]},
+			"faces": {
+				"north": {"uv": [6, 10, 10, 16], "texture": "#pipe"},
+				"east": {"uv": [6, 10, 10, 16], "texture": "#pipe"},
+				"south": {"uv": [6, 10, 10, 16], "texture": "#pipe"},
+				"west": {"uv": [6, 10, 10, 16], "texture": "#pipe"}
+			}
+		}
+	]
+}

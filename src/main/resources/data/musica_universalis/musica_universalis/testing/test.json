@@ -1,0 +1,8 @@
+{
+  "target": {
+    "A": {
+      "type": "ad_infinitum:block",
+      "block": "minecraft:diamond_block"
+    }
+  }
+}

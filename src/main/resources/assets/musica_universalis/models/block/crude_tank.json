@@ -1,0 +1,96 @@
+{
+	"credit": "an ElysiaSilly creation :D",
+	"textures": {
+		"particle": "musica_universalis:block/crude_tank/side",
+		"side": "musica_universalis:block/crude_tank/side",
+		"end": "musica_universalis:block/crude_tank/end",
+		"side_inside": "musica_universalis:block/crude_tank/side_inside",
+		"end_inside": "musica_universalis:block/crude_tank/end_inside",
+		"frame": "musica_universalis:block/crude_tank/frame"
+	},
+	"render_type": "cutout",
+	"elements": [
+		{
+			"name": "outside",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#end", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#end", "cullface": "down"}
+			}
+		},
+		{
+			"name": "inside",
+			"from": [15, 15, 15],
+			"to": [1, 1, 1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [39, 15, 15]},
+			"faces": {
+				"north": {"uv": [15, 15, 1, 1], "texture": "#side_inside"},
+				"east": {"uv": [15, 15, 1, 1], "texture": "#side_inside"},
+				"south": {"uv": [15, 15, 1, 1], "texture": "#side_inside"},
+				"west": {"uv": [15, 15, 1, 1], "texture": "#side_inside"},
+				"up": {"uv": [1, 1, 15, 15], "texture": "#end_inside"},
+				"down": {"uv": [1, 1, 15, 15], "texture": "#end_inside"}
+			}
+		},
+		{
+			"name": "frame",
+			"from": [11, 11, 16],
+			"to": [5, 5, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [11, 15, 16]},
+			"faces": {
+				"east": {"uv": [0, 5, 16, 11], "texture": "#frame"},
+				"west": {"uv": [0, 5, 16, 11], "texture": "#frame"},
+				"up": {"uv": [0, 5, 16, 11], "rotation": 90, "texture": "#frame"},
+				"down": {"uv": [0, 5, 16, 11], "rotation": 90, "texture": "#frame"}
+			}
+		},
+		{
+			"name": "frame",
+			"from": [16, 11, 11],
+			"to": [0, 5, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 5, 16, 11], "texture": "#frame"},
+				"south": {"uv": [0, 5, 16, 11], "texture": "#frame"},
+				"up": {"uv": [0, 5, 16, 11], "rotation": 180, "texture": "#frame"},
+				"down": {"uv": [0, 5, 16, 11], "rotation": 180, "texture": "#frame"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}
