@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
+import org.joml.Vector4d;
 
 public class RopeBERenderer implements BlockEntityRenderer<RopeBE> {
 
@@ -18,8 +19,6 @@ public class RopeBERenderer implements BlockEntityRenderer<RopeBE> {
 
     @Override
     public void render(RopeBE ropeBE, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
-
-
         if(ropeBE.getRope() == null) return;
 
         for (Rope.RopeSegment segment : ropeBE.getRope().segments) {

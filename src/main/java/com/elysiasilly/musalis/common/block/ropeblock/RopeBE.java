@@ -27,6 +27,8 @@ public class RopeBE extends NetworkingBE {
     public void tick() {
         if(rope != null) rope.tick();
 
+        //System.out.println(rope.serialize());
+
         this.setChanged();
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
     }
@@ -36,16 +38,15 @@ public class RopeBE extends NetworkingBE {
         super.setLevel(setLevel);
 
         //assert level != null;
-        if(level.isClientSide) return;
+        if(setLevel.isClientSide) return;
 
-        this.rope = new Rope(level, new Vec3(0, 0, 0));
+        rope = new Rope(level, new Vec3(1, 1, 1));
 
         for(int iterate = 0; iterate < 2; iterate++) {
-               rope.addSegment(0.5f);
+            rope.addSegment(0.5f);
         }
 
-        this.setChanged();
-        this.getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        //markUpdated();
     }
 
     public Rope getRope() {
@@ -58,6 +59,11 @@ public class RopeBE extends NetworkingBE {
     }
 
     @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        return new CompoundTag();
+    }
+
+    @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
     }
@@ -65,5 +71,11 @@ public class RopeBE extends NetworkingBE {
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
+    }
+
+    private void markUpdated() {
+        this.setChanged();
+        assert level != null;
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }
 }

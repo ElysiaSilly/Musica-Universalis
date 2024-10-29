@@ -1,5 +1,7 @@
 package com.elysiasilly.musalis.common.physics.rope;
 
+import com.elysiasilly.musalis.core.util.SerializeUtil;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -38,7 +40,33 @@ public class Rope {
     }
 
     public void addSegment(float length) {
+        System.out.println("bruh");
         segments.add(new RopeSegment(this, length));
+    }
+
+    public static CompoundTag serialize(Rope rope) {
+
+        CompoundTag tag = new CompoundTag();
+
+        tag.putString("origin", SerializeUtil.packVec3(rope.origin));
+        tag.putInt("segment_amount", rope.segments.size());
+
+        if(!rope.segments.isEmpty()) {
+            for(int iterate = 0; iterate <= rope.segments.size(); iterate++) {
+                RopeSegment segment = rope.segments.get(iterate);
+
+                tag.putString(String.format("segment_position_%s", iterate), SerializeUtil.packVec3(segment.position));
+                tag.putString(String.format("segment_previous_position_%s", iterate), SerializeUtil.packVec3(segment.previousPosition));
+                tag.putFloat("segment_amount", segment.length);
+            }
+        }
+
+        return tag;
+    }
+
+    public static Rope deserialize(CompoundTag tag) {
+
+        return null;
     }
 
     public static class RopeSegment {
