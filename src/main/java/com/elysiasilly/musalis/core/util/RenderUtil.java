@@ -1,10 +1,14 @@
 package com.elysiasilly.musalis.core.util;
 
-import com.mojang.blaze3d.platform.NativeImage;
+import com.elysiasilly.musalis.core.util.type.RGBA;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 public class RenderUtil {
     /*
@@ -43,6 +47,25 @@ public class RenderUtil {
     }
     */
 
+    public static void renderLine(
+            MultiBufferSource multiBufferSource, PoseStack.Pose stack, RGBA rgba,
+            Vec3 start, Vec3 end
+    ) {
+        // scary
+        //Vector3f normal = new Vector3f((Vector3fc) start).sub(new Vector3f((Vector3fc) end).normalize());
+
+        VertexConsumer consumer = multiBufferSource.getBuffer(RenderType.lines());
+
+        Vector3f i = new Vector3f((float) start.x, (float) start.y, (float) start.z);
+
+        Vector3f f = new Vector3f((float) end.x, (float) end.y, (float) end.z);
+
+        Vector3f normal = i.sub(f).normalize();
+
+        consumer.addVertex(stack, (float) start.x, (float) start.y, (float) start.z).setColor(rgba.red(), rgba.green(), rgba.blue(), rgba.alpha()).setNormal(stack, normal.x, normal.y, normal.z);
+        consumer.addVertex(stack, (float) end.x, (float) end.y, (float) end.z).setColor(rgba.red(), rgba.green(), rgba.blue(), rgba.alpha()).setNormal(stack, normal.x, normal.y, normal.z);
+    }
+
     public static void renderPlane(
             VertexConsumer consumer, Matrix4f matrix4f, int packedLight, int translucency,
             Vec3 start, Vec3 end, Vec3 offset,
@@ -62,8 +85,9 @@ public class RenderUtil {
         start.add(offset);
         end.add(offset);
 
-        renderPlaneFull(consumer, matrix4f, packedLight, translucency, start, end);
+        renderPlane(consumer, matrix4f, packedLight, translucency, start, end);
     }
+
     /*
     public static void renderPlaneWithTextureDimensions(
             VertexConsumer consumer, Matrix4f matrix4f, int packedLight, int translucency, ResourceLocation resourceLocation,
@@ -84,7 +108,7 @@ public class RenderUtil {
 
      */
 
-    private static void renderPlaneFull(
+    private static void renderPlane(
             VertexConsumer consumer, Matrix4f matrix4f, int packedLight, int translucency,
             Vec3 start, Vec3 end
     ) {
