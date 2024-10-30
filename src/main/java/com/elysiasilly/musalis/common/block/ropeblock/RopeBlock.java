@@ -1,8 +1,5 @@
 package com.elysiasilly.musalis.common.block.ropeblock;
 
-import com.elysiasilly.musalis.common.block.fluid.FluidBE;
-import com.elysiasilly.musalis.common.physics.rope.Rope;
-import com.elysiasilly.musalis.core.util.SerializeUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -12,12 +9,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class RopeBlock extends BaseEntityBlock {
@@ -38,24 +35,13 @@ public class RopeBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
-        if(level.isClientSide) return ItemInteractionResult.SUCCESS;
-
         if (level.getBlockEntity(pos) instanceof RopeBE be) {
 
-            //for (Rope.RopeSegment segment : be.getRope().segments) {
+            if(level.isClientSide) System.out.println("client rope data: " + be.getRopeSegmentsCLIENT());
+            if(!level.isClientSide) System.out.println("server rope data: " + be.getRope().getSegmentPositions());
 
-            //    System.out.println(segment.getPosition());
+            return ItemInteractionResult.SUCCESS;
 
-            //}
-
-            //System.out.println(be.getRope().origin);
-
-            //Rope rope = new Rope(level, new Vec3(1, 1, 1));
-
-            System.out.println(SerializeUtil.packVec3(be.getRope().origin));
-
-            System.out.println(Rope.serialize(be.getRope()));
-            //System.out.println(be.getRope().origin);
         }
 
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
@@ -70,5 +56,10 @@ public class RopeBlock extends BaseEntityBlock {
                 be.tick();
             }
         };
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 }

@@ -3,6 +3,7 @@ package com.elysiasilly.musalis.common.block.ropeblock;
 import com.elysiasilly.musalis.client.render.MusicaRenderTypes;
 import com.elysiasilly.musalis.common.physics.rope.Rope;
 import com.elysiasilly.musalis.core.util.RenderUtil;
+import com.elysiasilly.musalis.core.util.type.RGBA;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -19,24 +20,28 @@ public class RopeBERenderer implements BlockEntityRenderer<RopeBE> {
 
     @Override
     public void render(RopeBE ropeBE, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
-        if(ropeBE.getRope() == null) return;
+        if(ropeBE.getRopeSegmentsCLIENT() == null) return;
+        if(ropeBE.getRopeSegmentsCLIENT().isEmpty()) return;
 
-        for (Rope.RopeSegment segment : ropeBE.getRope().segments) {
+        Vec3 previousSegment = new Vec3(.5f, 0, .5f);
 
-            Vec3 position = segment.getPosition();
+        int num = 0;
 
-            //poseStack.translate(0.5, 0.5, 0.5);
+        for (Vec3 segment : ropeBE.getRopeSegmentsCLIENT()) {
 
-            Matrix4f matrix4f = poseStack.last().pose();
-            VertexConsumer consumer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(MusicaRenderTypes.getTestingShader());
+            RGBA colour = new RGBA(255, 255, 255, 255);
 
-            Vec3 start = new Vec3(0, 0, 0);
-            Vec3 end = new Vec3(1, 0, 1);
-            Vec3 offset = new Vec3(0, position.y, 0);
+            if(num % 2 == 0) colour = new RGBA(255, 0, 0, 255);
 
-            RenderUtil.renderPlane(consumer, matrix4f, packedLight, 0, start, end, offset, false);
+            RenderUtil.renderLine(multiBufferSource, poseStack.last(), colour, previousSegment, segment);
+
+            previousSegment = segment;
+            num++;
         }
-
     }
 
+    @Override
+    public boolean shouldRenderOffScreen(RopeBE blockEntity) {
+        return true;
+    }
 }
