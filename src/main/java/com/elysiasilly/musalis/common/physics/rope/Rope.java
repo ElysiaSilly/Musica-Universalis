@@ -25,7 +25,7 @@ public class Rope {
             segment.tick();
         }
 
-        for(int iterate = 0; iterate < this.segments.size(); iterate++) {
+        for(int iterate = 0; iterate < this.segments.size();) {
 
             RopeSegment rope = segments.get(iterate);
 
@@ -36,14 +36,26 @@ public class Rope {
 
                 rope.position = new Vec3(origin.x, previousSegment.position.y - previousSegment.length, origin.z);
             }
+
+            iterate++;
         }
     }
 
     public void addSegment(float length) {
-        System.out.println("bruh");
-        segments.add(new RopeSegment(this, length));
+        new RopeSegment(this, length);
     }
 
+    public List<Vec3> getSegmentPositions() {
+        List<Vec3> list = new ArrayList<>();
+
+        for(RopeSegment segment : segments) {
+            list.add(segment.position);
+        }
+
+        return list;
+    }
+
+            /*
     public static CompoundTag serialize(Rope rope) {
 
         CompoundTag tag = new CompoundTag();
@@ -63,6 +75,7 @@ public class Rope {
 
         return tag;
     }
+             */
 
     public static Rope deserialize(CompoundTag tag) {
 
