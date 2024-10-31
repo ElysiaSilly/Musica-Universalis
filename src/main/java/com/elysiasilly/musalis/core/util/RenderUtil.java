@@ -8,52 +8,38 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
 public class RenderUtil {
-    /*
+
+
     public static void renderCube(
             VertexConsumer consumer, Matrix4f matrix4f,
-            float s, int light, boolean centred, boolean cull) {
+            float size, int packedLight, boolean centred, boolean cull, RGBA rgba
+    ) {
 
+        // up
+        renderPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, size, 0), new Vec3(size, size, size), new Vec3(size, size, 0), new Vec3(0, size, size));
 
-        if(cull & (pos == null || level == null)) return;
+        // down
+        renderPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, 0, size), new Vec3(size, 0, 0), new Vec3(size, 0, size), new Vec3(0, 0, 0));
 
-        float b = 0;
+        // north
+        renderPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, 0, 0), new Vec3(size, size, 0), new Vec3(size, 0, 0), new Vec3(0, size, 0));
 
-        float halfIt = s / 2;
-        s = centred ? s - halfIt : s;
-        b = centred ? b - halfIt : b;
+        // south
+        renderPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, size, size), new Vec3(size, 0, size), new Vec3(size, size, size), new Vec3(0, 0, size));
 
-        if(cull ? !level.getBlockState(pos.north()).isFaceSturdy(level, pos.above(), Direction.SOUTH) : true)
-            renderPlaneFull(consumer, matrix4f, b, s, s, b, b, b, b, b, light);
+        // east
+        renderPlane(consumer, matrix4f, packedLight, rgba, new Vec3(size, 0, 0), new Vec3(size, size, size), new Vec3(size, 0, size), new Vec3(size, size, 0));
 
-        if(cull ? !level.getBlockState(pos.west()).isFaceSturdy(level, pos.above(), Direction.EAST) : true)
-            renderPlaneFull(consumer, matrix4f, b, b, b, s, b, s, s, b, light);
-
-        if(cull ? !level.getBlockState(pos.south()).isFaceSturdy(level, pos.above(), Direction.NORTH) : true)
-            renderPlaneFull(consumer, matrix4f, b, s, b, s, s, s, s, s, light);
-
-        if(cull ? !level.getBlockState(pos.east()).isFaceSturdy(level, pos.above(), Direction.WEST) : true)
-            renderPlaneFull(consumer, matrix4f, s, s, s, b, b, s, s, b, light);
-
-        if(cull ? !level.getBlockState(pos.below()).isFaceSturdy(level, pos.above(), Direction.UP) : true)
-            renderPlaneFull(consumer, matrix4f, b, s, b, b, b, b, s, s, light);
-
-        if(cull ? !level.getBlockState(pos.above()).isFaceSturdy(level, pos.above(), Direction.DOWN) : true)
-            renderPlaneFull(consumer, matrix4f, b, s, s, s, s, s, b, b, light);
-
-
+        // west
+        renderPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, size, 0), new Vec3(0, 0, size), new Vec3(0, size, size), new Vec3(0, 0, 0));
     }
-    */
 
     public static void renderLine(
             MultiBufferSource multiBufferSource, PoseStack.Pose stack, RGBA rgba,
             Vec3 start, Vec3 end
     ) {
-        // scary
-        //Vector3f normal = new Vector3f((Vector3fc) start).sub(new Vector3f((Vector3fc) end).normalize());
-
         VertexConsumer consumer = multiBufferSource.getBuffer(RenderType.lines());
 
         Vector3f i = new Vector3f((float) start.x, (float) start.y, (float) start.z);
@@ -67,7 +53,7 @@ public class RenderUtil {
     }
 
     public static void renderPlane(
-            VertexConsumer consumer, Matrix4f matrix4f, int packedLight, int translucency,
+            VertexConsumer consumer, Matrix4f matrix4f, int packedLight, RGBA rgba,
             Vec3 start, Vec3 end, Vec3 offset,
             boolean centred
     ) {
@@ -85,7 +71,7 @@ public class RenderUtil {
         start.add(offset);
         end.add(offset);
 
-        renderPlane(consumer, matrix4f, packedLight, translucency, start, end);
+        renderPlane(consumer, matrix4f, packedLight, rgba, start, end, new Vec3(end.x, end.y, start.z), new Vec3(start.x, start.y, end.z));
     }
 
     /*
@@ -105,42 +91,41 @@ public class RenderUtil {
 
         renderPlane(consumer, matrix4f, packedLight, translucency, 0, 0, 0, (float) width / 16, 0, (float) height / 16, offsetX, offsetY, offsetZ, centred);
     }
-
      */
 
     private static void renderPlane(
-            VertexConsumer consumer, Matrix4f matrix4f, int packedLight, int translucency,
-            Vec3 start, Vec3 end
+            VertexConsumer consumer, Matrix4f matrix4f, int packedLight, RGBA rgba,
+            Vec3 a, Vec3 b, Vec3 c, Vec3 d
     ) {
 
-        consumer.addVertex(matrix4f, (float) end.z, (float) end.y, (float) start.z)
+        consumer.addVertex(matrix4f, (float) c.x, (float) c.y, (float) c.z)
                 .setUv(1, 0)
                 .setLight(packedLight)
-                .setColor(-1, -1, -1, translucency)
+                .setColor(rgba.red(), rgba.green(), rgba.blue(), rgba.alpha())
                 .setUv1(0, 0)
                 .setUv2(1, 1)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix4f, (float) start.x, (float) start.y, (float) start.z)
+        consumer.addVertex(matrix4f, (float) a.x, (float) a.y, (float) a.z)
                 .setUv(0, 0)
                 .setLight(packedLight)
-                .setColor(-1, -1, -1, translucency)
+                .setColor(rgba.red(), rgba.green(), rgba.blue(), rgba.alpha())
                 .setUv1(0, 0)
                 .setUv2(1, 1)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix4f, (float) start.x, (float) start.y, (float) end.z)
+        consumer.addVertex(matrix4f, (float) d.x, (float) d.y, (float) d.z)
                 .setUv(0, 1)
                 .setLight(packedLight)
-                .setColor(-1, -1, -1, translucency)
+                .setColor(rgba.red(), rgba.green(), rgba.blue(), rgba.alpha())
                 .setUv1(0, 0)
                 .setUv2(1, 1)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix4f, (float) end.x,   (float) end.y,   (float) end.z)
+        consumer.addVertex(matrix4f, (float) b.x,   (float) b.y,   (float) b.z)
                 .setUv(1, 1)
                 .setLight(packedLight)
-                .setColor(-1, -1, -1, translucency)
+                .setColor(rgba.red(), rgba.green(), rgba.blue(), rgba.alpha())
                 .setUv1(0, 0)
                 .setUv2(0, 0)
                 .setNormal(0, 1, 0);
