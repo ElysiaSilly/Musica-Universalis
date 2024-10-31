@@ -1,11 +1,11 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.ropeblock.RopeBE;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
 import com.elysiasilly.musalis.common.block.fluid.FluidBE;
 import com.elysiasilly.musalis.common.block.fluidPipes.FluidPipeBlockEntity;
 import com.elysiasilly.musalis.common.block.item.ItemBE;
 import com.elysiasilly.musalis.common.block.nodeBasedPipes.PipeNodeBE;
+import com.elysiasilly.musalis.common.block.ropeblock.RopeBE;
+import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;

@@ -1,7 +1,7 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.core.MusicaUniversalis;
 import com.elysiasilly.musalis.common.component.GPSComponent;
+import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.core.component.DataComponentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

@@ -1,12 +1,12 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.ropeblock.RopeBlock;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
 import com.elysiasilly.musalis.common.block.TestingBlock;
 import com.elysiasilly.musalis.common.block.fluid.FluidBlock;
 import com.elysiasilly.musalis.common.block.fluidPipes.FluidPipeBlock;
 import com.elysiasilly.musalis.common.block.item.ItemBlock;
 import com.elysiasilly.musalis.common.block.nodeBasedPipes.PipeNodeBlock;
+import com.elysiasilly.musalis.common.block.ropeblock.RopeBlock;
+import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

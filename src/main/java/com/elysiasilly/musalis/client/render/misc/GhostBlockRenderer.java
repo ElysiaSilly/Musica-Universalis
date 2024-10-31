@@ -2,7 +2,6 @@ package com.elysiasilly.musalis.client.render.misc;
 
 import com.elysiasilly.musalis.client.render.MusicaRenderTypes;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
-import com.elysiasilly.musalis.core.util.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;

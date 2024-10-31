@@ -3,7 +3,6 @@ package com.elysiasilly.musalis.common.block.fluid;
 import com.elysiasilly.musalis.client.render.MusicaRenderTypes;
 import com.elysiasilly.musalis.client.render.MusicaShaders;
 import com.elysiasilly.musalis.core.util.MathUtil;
-import com.elysiasilly.musalis.core.util.RenderUtil;
 import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
