@@ -40,7 +40,7 @@ public class RopeBE extends BlockEntity {
     public void tick() {
         //if(rope != null) rope.tick();
 
-        //markUpdated();
+        markUpdated();
     }
 
     @Override
@@ -94,6 +94,8 @@ public class RopeBE extends BlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
 
+        //System.out.println("hey");
+
         if(rope.segments == null) return tag;
         if(rope.segments.isEmpty()) return tag;
 
@@ -111,6 +113,8 @@ public class RopeBE extends BlockEntity {
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider provider) {
         super.handleUpdateTag(tag, provider);
 
+        System.out.println("test");
+
         getRopeSegmentsCLIENT().clear();
 
         int iterate = 0;
@@ -126,13 +130,12 @@ public class RopeBE extends BlockEntity {
             } else {
                 getRopeSegmentsCLIENT().add(SerializeUtil.unpackVec3(string));
             }
-
         }
     }
 
     private void markUpdated() {
         this.setChanged();
-        assert level != null;
-        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+        //assert level != null;
+        level.sendBlockUpdated(worldPosition, this.getBlockState(), this.getBlockState(), RopeBlock.UPDATE_CLIENTS);
     }
 }

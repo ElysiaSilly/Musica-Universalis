@@ -1,7 +1,5 @@
 package com.elysiasilly.musalis.common.physics.rope;
 
-import com.elysiasilly.musalis.core.util.SerializeUtil;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -13,7 +11,6 @@ public class Rope {
     public Vec3 origin;
     final Level level;
     public List<RopeSegment> segments = new ArrayList<>();
-
 
     public Rope(Level level, Vec3 origin) {
         this.level = level;
@@ -30,11 +27,11 @@ public class Rope {
             RopeSegment rope = segments.get(iterate);
 
             if(iterate == 0) {
-                rope.position = origin;
+                rope.position = new Vec3(origin.x, origin.y - rope.length, origin.z);
             } else {
                 RopeSegment previousSegment = segments.get(iterate - 1);
 
-                rope.position = new Vec3(origin.x, previousSegment.position.y - previousSegment.length, origin.z);
+                rope.position = new Vec3(origin.x, previousSegment.position.y - rope.length, origin.z);
             }
 
             iterate++;
@@ -43,6 +40,12 @@ public class Rope {
 
     public void addSegment(float length) {
         new RopeSegment(this, length);
+    }
+
+    public void addSegments(float length, int amount) {
+        for(int iterate = 0; iterate <= amount; iterate++) {
+            new RopeSegment(this, length);
+        }
     }
 
     public List<Vec3> getSegmentPositions() {
@@ -55,32 +58,6 @@ public class Rope {
         return list;
     }
 
-            /*
-    public static CompoundTag serialize(Rope rope) {
-
-        CompoundTag tag = new CompoundTag();
-
-        tag.putString("origin", SerializeUtil.packVec3(rope.origin));
-        tag.putInt("segment_amount", rope.segments.size());
-
-        if(!rope.segments.isEmpty()) {
-            for(int iterate = 0; iterate <= rope.segments.size(); iterate++) {
-                RopeSegment segment = rope.segments.get(iterate);
-
-                tag.putString(String.format("segment_position_%s", iterate), SerializeUtil.packVec3(segment.position));
-                tag.putString(String.format("segment_previous_position_%s", iterate), SerializeUtil.packVec3(segment.previousPosition));
-                tag.putFloat("segment_amount", segment.length);
-            }
-        }
-
-        return tag;
-    }
-             */
-
-    public static Rope deserialize(CompoundTag tag) {
-
-        return null;
-    }
 
     public static class RopeSegment {
 
