@@ -2,6 +2,7 @@ package com.elysiasilly.musalis.core.registry;
 
 import com.elysiasilly.musalis.common.component.GPSComponent;
 import com.elysiasilly.musalis.common.item.GPSItem;
+import com.elysiasilly.musalis.common.item.HexCoreItem;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -26,6 +27,17 @@ public class MUItems {
                     .stacksTo(1).component(ModComponent.BLOCK_POS, BlockPosComponent.EMPTY)
     );
      */
+    public static final DeferredItem<HexCoreItem> CRUDE_CORE =
+            ITEMS.register("crude_core", () ->
+                    new HexCoreItem(new Item.Properties()
+                            .stacksTo(1))
+            );
+
+    public static final DeferredItem<HexCoreItem> CREATIVE_CORE =
+            ITEMS.register("creative_core", () ->
+                    new HexCoreItem(new Item.Properties()
+                            .stacksTo(1))
+            );
 
     public static final DeferredItem<GPSItem> GPS_ITEM =
             ITEMS.register("gps", () ->

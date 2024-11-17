@@ -1,7 +1,6 @@
 package com.elysiasilly.musalis.common.block;
 
-import com.elysiasilly.musalis.common.data.FluidPropertiesData;
-import com.elysiasilly.musalis.common.data.testing.MultiblockData;
+import com.elysiasilly.musalis.common.fluid.FluidProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +25,7 @@ public class TestingBlock extends Block {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
+        /*
         if(level.isClientSide) return ItemInteractionResult.SUCCESS;
 
         // put stuff here
@@ -33,7 +33,7 @@ public class TestingBlock extends Block {
 
         if(stack.getItem() instanceof BucketItem bucketItem && bucketItem.content.getFluidType() != Fluids.EMPTY.getFluidType()) {
 
-            var fluidProperties = level.registryAccess().registry(FluidPropertiesData.FLUID_PROPERTIES_KEY).get();
+            var fluidProperties = level.registryAccess().registry(FluidProperties.FLUID_PROPERTIES_KEY).get();
 
             boolean isDefined = fluidProperties.getHolder(ResourceLocation.parse(bucketItem.content.getFluidType().toString())).isPresent();
 
@@ -66,6 +66,8 @@ public class TestingBlock extends Block {
 
             );
         }
+
+         */
 
         return ItemInteractionResult.SUCCESS;
     }

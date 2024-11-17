@@ -40,7 +40,7 @@ public class RenderUtil {
             MultiBufferSource multiBufferSource, PoseStack.Pose stack, RGBA rgba,
             Vec3 start, Vec3 end
     ) {
-        VertexConsumer consumer = multiBufferSource.getBuffer(RenderType.lines());
+        VertexConsumer consumer = multiBufferSource.getBuffer(RenderType.debugLineStrip(50));
 
         Vector3f i = new Vector3f((float) start.x, (float) start.y, (float) start.z);
 

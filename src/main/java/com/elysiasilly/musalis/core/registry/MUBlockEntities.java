@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.core.registry;
 
+import com.elysiasilly.musalis.common.block.dissolver.DissolverBE;
 import com.elysiasilly.musalis.common.block.fluid.FluidBE;
 import com.elysiasilly.musalis.common.block.fluidPipes.FluidPipeBlockEntity;
 import com.elysiasilly.musalis.common.block.item.ItemBE;
@@ -30,4 +31,7 @@ public class MUBlockEntities {
 
     public static final Supplier<BlockEntityType<RopeBE>> ROPE_BE = BLOCKENTITES.register(
             "rope_be", () -> BlockEntityType.Builder.of(RopeBE::new, MUBlocks.ROPE_BLOCK.get()).build(null));
+
+    public static final Supplier<BlockEntityType<DissolverBE>> DISSOLVER = BLOCKENTITES.register(
+            "dissolver_be", () -> BlockEntityType.Builder.of(DissolverBE::new, MUBlocks.DISSOLVER.get()).build(null));
 }

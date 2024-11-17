@@ -28,11 +28,12 @@ import java.util.Iterator;
 
 @SuppressWarnings({"unused"})
 @EventBusSubscriber(modid = MusicaUniversalis.MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
-
 public class GhostBlockRenderer {
 
     @SubscribeEvent
     public static void onRenderLevelEvent(RenderLevelStageEvent event) {
+
+        if(true) return;
 
         //Minecraft.getInstance().player.getMainHandItem();
 
@@ -52,15 +53,14 @@ public class GhostBlockRenderer {
 
         Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
 
-        //BlockPos blockPos = new BlockPos(0, 5, 0);
 
         stack.translate(blockPos.getX() - cam.getPosition().x, blockPos.getY() - cam.getPosition().y, blockPos.getZ() - cam.getPosition().z);
+        stack.pushPose();
 
         BlockHitResult result = new BlockHitResult(Minecraft.getInstance().hitResult.getLocation(), hitResult.getDirection(), blockPos, false);
 
         BlockPlaceContext context = new BlockPlaceContext(Minecraft.getInstance().player, Minecraft.getInstance().player.getUsedItemHand(), Minecraft.getInstance().player.getMainHandItem(), result);
 
-        stack.pushPose();
         BlockState block = item.getBlock().getStateForPlacement(context);
 
         BlockModelShaper modelShaper = new BlockModelShaper(Minecraft.getInstance().getModelManager());
@@ -89,12 +89,13 @@ public class GhostBlockRenderer {
 
 
 
+
         //Minecraft.getInstance().getBlockRenderer().renderSingleBlock(block, event.getPoseStack(), Minecraft.getInstance().renderBuffers().bufferSource(), 10, 10, ModelData.EMPTY, MusicaRenderTypes.getTestingShader());
 
         Matrix4f matrix4f = stack.last().pose();
-        VertexConsumer consumer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(MusicaRenderTypes.getTestingShader());
+        //VertexConsumer consumer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(MusicaRenderTypes.getTestingShader());
 
-        int packedLight = 10;
+        //int packedLight = 10;
 
         //RenderUtil.renderPlane(consumer, matrix4f, packedLight, 0, 0, 0, 0, 1, 0, 1, 0, 2, 0, false);
     }

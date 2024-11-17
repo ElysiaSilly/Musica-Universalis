@@ -1,6 +1,7 @@
 package com.elysiasilly.musalis.core.registry;
 
 import com.elysiasilly.musalis.common.block.TestingBlock;
+import com.elysiasilly.musalis.common.block.dissolver.DissolverBlock;
 import com.elysiasilly.musalis.common.block.fluid.FluidBlock;
 import com.elysiasilly.musalis.common.block.fluidPipes.FluidPipeBlock;
 import com.elysiasilly.musalis.common.block.item.ItemBlock;
@@ -35,6 +36,9 @@ public class MUBlocks {
 
     public static final Supplier<? extends Block> PIPE_NODE
             = registerBlockItem("pipe_node", () -> new PipeNodeBlock(getProperties(Blocks.POLISHED_DEEPSLATE).noOcclusion()));
+
+    public static final Supplier<? extends Block> DISSOLVER
+            = registerBlockItem("dissolver", () -> new DissolverBlock(getProperties(Blocks.POLISHED_DEEPSLATE)));
 
     //public static final DeferredBlock<ItemBlock> ITEM_BLOCK = BLOCK.register("milk_canister", () -> new ItemBlock(getProperties(Blocks.POLISHED_DEEPSLATE)));
 
