@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.core.util;
 
-import com.elysiasilly.musalis.core.util.type.RGBA;
+import com.elysiasilly.musalis.core.util.RGBA;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

@@ -1,78 +1,69 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.TestingBlock;
-import com.elysiasilly.musalis.common.block.dissolver.DissolverBlock;
-import com.elysiasilly.musalis.common.block.fluid.FluidBlock;
-import com.elysiasilly.musalis.common.block.fluidPipes.FluidPipeBlock;
-import com.elysiasilly.musalis.common.block.item.ItemBlock;
-import com.elysiasilly.musalis.common.block.nodeBasedPipes.PipeNodeBlock;
-import com.elysiasilly.musalis.common.block.ropeblock.RopeBlock;
+import com.elysiasilly.musalis.common.block.AstromBlock;
+import com.elysiasilly.musalis.common.block.CoreHolderBlock;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.function.Supplier;
 
 public class MUBlocks {
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, MusicaUniversalis.MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(MusicaUniversalis.MODID);
     public static final DeferredRegister.Items BLOCKITEMS = DeferredRegister.createItems(MusicaUniversalis.MODID);
 
 
-    //public static final DeferredRegister.Blocks BLOCK = DeferredRegister.createBlocks(Musalis.MODID);
+    public static final DeferredBlock<Block> ASTROM =
+            regWithItem("astrom", () -> new AstromBlock(getProp(Blocks.DEEPSLATE)));
 
-    public static final Supplier<? extends Block> ITEM_BLOCK
-            = registerBlockItem("item_block", () -> new ItemBlock(getProperties(Blocks.POLISHED_DEEPSLATE)));
+    public static final DeferredBlock<Block> COREHOLDER =
+            regWithItem("coreholder", () -> new CoreHolderBlock(getProp(Blocks.DEEPSLATE)));
 
-
-    public static final Supplier<? extends Block> FLUID_BLOCK
-            = registerBlockItem("fluid_block", () -> new FluidBlock(getProperties(Blocks.POLISHED_DEEPSLATE)));
-
-    public static final Supplier<? extends Block> FLUID_PIPE_BLOCK
-            = registerBlockItem("fluid_pipe_block", () -> new FluidPipeBlock(getProperties(Blocks.POLISHED_DEEPSLATE).noOcclusion()));
-
-    public static final Supplier<? extends Block> PIPE_NODE
-            = registerBlockItem("pipe_node", () -> new PipeNodeBlock(getProperties(Blocks.POLISHED_DEEPSLATE).noOcclusion()));
-
-    public static final Supplier<? extends Block> DISSOLVER
-            = registerBlockItem("dissolver", () -> new DissolverBlock(getProperties(Blocks.POLISHED_DEEPSLATE)));
-
-    //public static final DeferredBlock<ItemBlock> ITEM_BLOCK = BLOCK.register("milk_canister", () -> new ItemBlock(getProperties(Blocks.POLISHED_DEEPSLATE)));
-
-    public static final Supplier<Block> ASTROM = registerBlockItem("astrom");
-    public static final Supplier<Block> RIMESTONE = registerBlockItem("rimestone");
-
-
-    public static final Supplier<Block> AZRAQ_IVORY = registerBlockItem("azraq_ivory");
-    public static final Supplier<Block> AHMAR_IVORY = registerBlockItem("ahmar_ivory");
-
-    public static final Supplier<Block> CRUDE_TANK = registerBlockItem("crude_tank");
-
-    public static final Supplier<? extends Block> TESTING
-            = registerBlockItem("testing_block", TestingBlock::new);
-
-    public static final Supplier<? extends Block> ROPE_BLOCK
-            = registerBlockItem("rope_block", RopeBlock::new);
-    // HELPERS
-
-    // registers block and item if class extends block
-    private static Supplier<? extends Block> registerBlockItem(String resourceLocation, Supplier<? extends Block> blockType) {
-        var tempBlock = BLOCKS.register(resourceLocation, blockType);
+    /// register block and item
+    @SuppressWarnings({"unchecked"})
+    private static <T extends Block> DeferredBlock<T> regWithItem(String id, Supplier<? extends Block> blockType) {
+        var tempBlock = BLOCKS.register(id, blockType);
         BLOCKITEMS.registerSimpleBlockItem(tempBlock);
-        return tempBlock;
+        return (DeferredBlock<T>) tempBlock;
     }
 
-    @SuppressWarnings("unchecked")
-    // specifically for block
-    private static Supplier<Block> registerBlockItem(String resourceLocation) {
-        return (Supplier<Block>) registerBlockItem(resourceLocation, () -> new Block(BlockBehaviour.Properties.of()));
+    /// register block
+    @SuppressWarnings({"unchecked"})
+    private static <T extends Block> DeferredBlock<T> reg(String id, Supplier<? extends Block> blockType) {
+        return (DeferredBlock<T>) BLOCKS.register(id, blockType);
     }
 
-    // returns block properties
-    private static BlockBehaviour.Properties getProperties(Block block) {
+    /// register colour set of block and item
+    @SuppressWarnings({"unchecked"})
+    private static <T extends Block> Dictionary<DyeColor, DeferredBlock<T>> regDyeSet(String id, Supplier<? extends Block> blockType, boolean withItem) {
+        Dictionary<DyeColor, DeferredBlock<T>> blocks = new Hashtable<>();
+
+        for(DyeColor colour : DyeColor.values()) {
+            String name = String.format(id, colour.getName());
+            Supplier<? extends Block> block = withItem ? regWithItem(name, blockType) : reg(name, blockType);
+            blocks.put(colour, (DeferredBlock<T>) block);
+        }
+        return blocks;
+    }
+
+    /// returns block properties
+    private static BlockBehaviour.Properties getProp(Block block) {
         return BlockBehaviour.Properties.ofFullCopy(block);
+    }
+
+    private static BlockBehaviour.Properties getProp(DeferredBlock<Block> block) {
+        return BlockBehaviour.Properties.ofFullCopy(block.get());
+    }
+
+    private static BlockState getState(DeferredBlock<Block> block) {
+        return block.get().defaultBlockState();
     }
 }
