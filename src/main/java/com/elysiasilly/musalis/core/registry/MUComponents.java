@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.core.registry;
 
+import com.elysiasilly.musalis.common.component.DataDiskComponent;
 import com.elysiasilly.musalis.common.component.EtherCoreComponent;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.core.component.DataComponentType;
@@ -14,5 +15,6 @@ public class MUComponents {
     public static final Supplier<DataComponentType<EtherCoreComponent>> ETHER_CORE = COMPONENTS.registerComponentType("ether_core",
             builder -> builder.persistent(EtherCoreComponent.CODEC.codec()));
 
-
+    public static final Supplier<DataComponentType<DataDiskComponent>> DATA_DISK = COMPONENTS.registerComponentType("data_disk",
+            builder -> builder.persistent(DataDiskComponent.CODEC.codec()));
 }

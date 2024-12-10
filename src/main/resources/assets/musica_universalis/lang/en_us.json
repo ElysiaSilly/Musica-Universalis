@@ -1,4 +1,9 @@
 {
-  "itemGroup.musalis": "Musica Universalis",
-  "itemGroup.musalis_ether": "Musica Universalis: Ether"
+  "itemGroup.musalis_ether": "Musica Universalis: Ether",
+  "itemGroup.musalis_machine": "Musica Universalis: Devices",
+  "itemGroup.musalis_material": "Musica Universalis: Materials",
+
+  "block.musica_universalis.creative_ether_dissipator": "Creative Ether Dissipator",
+  "item.musica_universalis.creative_ether_core": "Creative Ether Core"
+
 }

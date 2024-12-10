@@ -11,17 +11,19 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.Optional;
 
 public class EtherCoreItem extends Item {
 
-    public EtherCoreItem(int capacity, float stability) {
-        super(new Properties().stacksTo(1).component(MUComponents.ETHER_CORE, new EtherCoreComponent(capacity, stability)));
+    public EtherCoreItem(int capacity, float stability, Properties properties) {
+        super(properties.stacksTo(1).component(MUComponents.ETHER_CORE, new EtherCoreComponent(capacity, stability)));
     }
 
     @Override

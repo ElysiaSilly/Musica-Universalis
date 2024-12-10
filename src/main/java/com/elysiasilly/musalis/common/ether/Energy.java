@@ -41,5 +41,8 @@ public class Energy extends Ether {
     @Override
     public void volatileDissipate(ItemStack stack, BlockPos pos, Level level) {
 
+        if(level.isClientSide) return;
+
+        level.explode(null, pos.getX(), pos.getY(), pos.getZ(), 10, Level.ExplosionInteraction.TNT);
     }
 }

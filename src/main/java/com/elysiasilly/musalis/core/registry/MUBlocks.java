@@ -1,9 +1,13 @@
 package com.elysiasilly.musalis.core.registry;
 
 import com.elysiasilly.musalis.common.block.AstromBlock;
-import com.elysiasilly.musalis.common.block.CoreHolderBlock;
+import com.elysiasilly.musalis.common.block.CrEtherDissipatorBlock;
+import com.elysiasilly.musalis.common.block.CrResonanceComposerBlock;
+import com.elysiasilly.musalis.common.block.CrResonanceDissolverBlock;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -24,14 +28,30 @@ public class MUBlocks {
     public static final DeferredBlock<Block> ASTROM =
             regWithItem("astrom", () -> new AstromBlock(getProp(Blocks.DEEPSLATE)));
 
-    public static final DeferredBlock<Block> COREHOLDER =
-            regWithItem("coreholder", () -> new CoreHolderBlock(getProp(Blocks.DEEPSLATE)));
+    public static final DeferredBlock<Block> CREATIVE_ETHER_DISSIPATOR =
+            regWithItem("creative_ether_dissipator", () -> new CrEtherDissipatorBlock(getProp(Blocks.DEEPSLATE)), new Item.Properties().rarity(Rarity.EPIC));
+
+    public static final DeferredBlock<Block> CREATIVE_RESONANCE_COMPOSER =
+            regWithItem("creative_resonance_composer", () -> new CrResonanceComposerBlock(getProp(Blocks.DEEPSLATE)), new Item.Properties().rarity(Rarity.EPIC));
+
+    public static final DeferredBlock<Block> CREATIVE_RESONANCE_DISSOLVER =
+            regWithItem("creative_resonance_dissolver", () -> new CrResonanceDissolverBlock(getProp(Blocks.DEEPSLATE)), new Item.Properties().rarity(Rarity.EPIC));
+
+    public static final DeferredBlock<Block> CREATIVE_NOTE_TANK =
+            regWithItem("creative_note_tank", () -> new CrEtherDissipatorBlock(getProp(Blocks.DEEPSLATE)), new Item.Properties().rarity(Rarity.EPIC));
 
     /// register block and item
     @SuppressWarnings({"unchecked"})
     private static <T extends Block> DeferredBlock<T> regWithItem(String id, Supplier<? extends Block> blockType) {
         var tempBlock = BLOCKS.register(id, blockType);
         BLOCKITEMS.registerSimpleBlockItem(tempBlock);
+        return (DeferredBlock<T>) tempBlock;
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private static <T extends Block> DeferredBlock<T> regWithItem(String id, Supplier<? extends Block> blockType, Item.Properties itemProperties) {
+        var tempBlock = BLOCKS.register(id, blockType);
+        BLOCKITEMS.registerSimpleBlockItem(tempBlock, itemProperties);
         return (DeferredBlock<T>) tempBlock;
     }
 

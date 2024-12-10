@@ -1,15 +1,15 @@
 package com.elysiasilly.musalis.common.block;
 
-import com.elysiasilly.musalis.common.block.be.AstromBE;
-import com.elysiasilly.musalis.core.key.MUResourceKeys;
+import com.elysiasilly.musalis.common.block.be.CrEtherDissipatorBE;
+import com.elysiasilly.musalis.common.component.EtherCoreComponent;
+import com.elysiasilly.musalis.core.registry.MUComponents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class AstromBlock extends BaseEntityBlock {
-    public AstromBlock(Properties properties) {
+public class CrEtherDissipatorBlock extends BaseEntityBlock {
+    public CrEtherDissipatorBlock(Properties properties) {
         super(properties);
     }
 
@@ -32,7 +32,19 @@ public class AstromBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new AstromBE(blockPos, blockState);
+        return new CrEtherDissipatorBE(blockPos, blockState);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if(level.getBlockEntity(pos) instanceof CrEtherDissipatorBE be) {
+            if(stack.isEmpty()) {
+                player.addItem(be.extractCore());
+            } else {
+                be.insertCore(stack);
+            }
+        }
+        return ItemInteractionResult.SUCCESS;
     }
 
     @Override
@@ -40,30 +52,10 @@ public class AstromBlock extends BaseEntityBlock {
         if(level.isClientSide) return null;
 
         return (lvl, pos, st, blockEntity) -> {
-            if (blockEntity instanceof AstromBE be) {
+            if (blockEntity instanceof CrEtherDissipatorBE be) {
                 be.tick();
             }
         };
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-
-        if(level.isClientSide) return ItemInteractionResult.SUCCESS;
-
-        if(stack.isEmpty()) {
-            if(level.getBlockEntity(pos) instanceof AstromBE be) {
-                player.displayClientMessage(Component.literal(String.valueOf(be.getAstromBlockMass().howMany())), true);
-                System.out.println(level.registryAccess().registry(MUResourceKeys.registries.NOTE).get().getRandom(level.random).get().value().key(level).location());
-            }
-        }
-        if(stack.is(Items.DIAMOND_PICKAXE)) {
-            if(level.getBlockEntity(pos) instanceof AstromBE be) {
-                be.getAstromBlockMass().breakAll();
-            }
-        }
-
-        return ItemInteractionResult.SUCCESS;
     }
 
     @Override

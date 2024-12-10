@@ -1,7 +1,6 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.be.AstromBE;
-import com.elysiasilly.musalis.common.block.be.CoreHolderBE;
+import com.elysiasilly.musalis.common.block.be.*;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,6 +15,15 @@ public class MUBlockEntities {
     public static final Supplier<BlockEntityType<AstromBE>> ASTROM = BLOCKENTITES.register(
             "astrom", () -> BlockEntityType.Builder.of(AstromBE::new, MUBlocks.ASTROM.get()).build(null));
 
-    public static final Supplier<BlockEntityType<CoreHolderBE>> COREHOLDER = BLOCKENTITES.register(
-            "coreholder", () -> BlockEntityType.Builder.of(CoreHolderBE::new, MUBlocks.COREHOLDER.get()).build(null));
+    public static final Supplier<BlockEntityType<CrEtherDissipatorBE>> CREATIVE_ETHER_DISSIPATOR = BLOCKENTITES.register(
+            "creative_ether_dissipator", () -> BlockEntityType.Builder.of(CrEtherDissipatorBE::new, MUBlocks.CREATIVE_ETHER_DISSIPATOR.get()).build(null));
+
+    public static final Supplier<BlockEntityType<CrResonanceDissolverBE>> CREATIVE_RESONANCE_DISSOLVER = BLOCKENTITES.register(
+            "creative_resonance_dissolver", () -> BlockEntityType.Builder.of(CrResonanceDissolverBE::new, MUBlocks.CREATIVE_RESONANCE_DISSOLVER.get()).build(null));
+
+    public static final Supplier<BlockEntityType<CrResonanceComposerBE>> CREATIVE_RESONANCE_COMPOSER = BLOCKENTITES.register(
+            "creative_resonance_composer", () -> BlockEntityType.Builder.of(CrResonanceComposerBE::new, MUBlocks.CREATIVE_RESONANCE_COMPOSER.get()).build(null));
+
+    public static final Supplier<BlockEntityType<CrNoteTankBE>> CREATIVE_NOTE_TANK = BLOCKENTITES.register(
+            "creative_note_tank", () -> BlockEntityType.Builder.of(CrNoteTankBE::new, MUBlocks.CREATIVE_NOTE_TANK.get()).build(null));
 }

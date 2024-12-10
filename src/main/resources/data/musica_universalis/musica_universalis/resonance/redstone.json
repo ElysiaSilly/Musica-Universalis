@@ -1,9 +1,4 @@
 {
-  "string":  [
-    "musica_universalis:red"
-  ],
-  "resonance": [
-    "musica_universalis:conductive",
-    "musica_universalis:numbers"
-  ]
+  "item": "minecraft:redstone",
+  "leitmotif": "musica_universalis:redstone"
 }

@@ -22,16 +22,16 @@ public class MUCreativeTabs {
 
     public static final DeferredRegister<CreativeModeTab> CREATIVETABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MusicaUniversalis.MODID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVETABS.register("musalis", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.musalis"))
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MATERIAL = CREATIVETABS.register("musalis_materials", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.musalis_material"))
             .icon(() -> new ItemStack(MUItems.RIMESTONE_CHUNK.get()))
             .displayItems((parameters, output) -> output.acceptAll(list(
                     MUBlocks.ASTROM,
-                    MUBlocks.COREHOLDER,
 
                     MUItems.FLAWED_CORE,
                     MUItems.FLAWLESS_CORE,
                     MUItems.CREATIVE_CORE,
+                    MUItems.CREATIVE_DATA_DISK,
 
                     MUItems.RIMESTONE_CHUNK,
                     MUItems.RIMESTONE_SHARD
@@ -39,7 +39,19 @@ public class MUCreativeTabs {
             .build()
     );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB_ETHER = CREATIVETABS.register("musalis_ether", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MACHINE = CREATIVETABS.register("musalis_machines", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.musalis_machine"))
+            .icon(() -> new ItemStack(MUBlocks.CREATIVE_ETHER_DISSIPATOR.get()))
+            .displayItems((parameters, output) -> output.acceptAll(list(
+                    MUBlocks.CREATIVE_ETHER_DISSIPATOR,
+                    MUBlocks.CREATIVE_RESONANCE_DISSOLVER,
+                    MUBlocks.CREATIVE_RESONANCE_COMPOSER,
+                    MUBlocks.CREATIVE_NOTE_TANK
+            )))
+            .build()
+    );
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ETHER = CREATIVETABS.register("musalis_ether", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.musalis_ether"))
             .icon(() -> new ItemStack(MUItems.CREATIVE_CORE.get()))
             .displayItems((parameters, output) -> output.acceptAll(ether()))

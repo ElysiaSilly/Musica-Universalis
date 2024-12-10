@@ -1,8 +1,4 @@
 {
-  "string":  [
-    "musica_universalis:dense"
-  ],
-  "resonance": [
-    "musica_universalis:cyan"
-  ]
+  "item": "minecraft:diamond",
+  "leitmotif": "musica_universalis:diamond"
 }
