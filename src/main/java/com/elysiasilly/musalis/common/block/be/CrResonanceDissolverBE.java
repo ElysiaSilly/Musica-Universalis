@@ -40,6 +40,7 @@ public class CrResonanceDissolverBE extends NetworkingBE {
     }
 
     public List<Note> extractNotes() {
+        if(level.isClientSide) return null;
         List<Note> copy = this.notes;
         //this.notes.clear();
         markUpdated();

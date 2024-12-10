@@ -33,6 +33,9 @@ public class CrResonanceDissolverBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+
+        if(level.isClientSide) return ItemInteractionResult.SUCCESS;
+
         if(level.getBlockEntity(pos) instanceof CrResonanceDissolverBE be) {
 
             if(stack.has(MUComponents.DATA_DISK)) {

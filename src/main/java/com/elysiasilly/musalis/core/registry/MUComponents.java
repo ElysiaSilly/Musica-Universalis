@@ -16,5 +16,6 @@ public class MUComponents {
             builder -> builder.persistent(EtherCoreComponent.CODEC.codec()));
 
     public static final Supplier<DataComponentType<DataDiskComponent>> DATA_DISK = COMPONENTS.registerComponentType("data_disk",
-            builder -> builder.persistent(DataDiskComponent.CODEC.codec()));
+            builder -> builder.persistent(DataDiskComponent.CODEC.codec()).networkSynchronized(DataDiskComponent.STREAM));
+
 }

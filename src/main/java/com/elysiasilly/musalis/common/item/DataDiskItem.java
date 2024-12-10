@@ -17,15 +17,17 @@ public class DataDiskItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-
         ItemStack stack = player.getItemInHand(usedHand);
+
+        //if(level.isClientSide) return InteractionResultHolder.success(stack);
+
         if(stack.has(MUComponents.DATA_DISK)) {
             DataDiskComponent component = stack.get(MUComponents.DATA_DISK);
             if (component != null) {
                 if(player.isShiftKeyDown()) {
                     component.extractNotes();
                 } else {
-                    player.displayClientMessage(Component.literal(String.valueOf(component.getNotes().size())), false);
+                    player.displayClientMessage(Component.literal(level + ": " + component.getNotes().size()), false);
                 }
             }
         }
