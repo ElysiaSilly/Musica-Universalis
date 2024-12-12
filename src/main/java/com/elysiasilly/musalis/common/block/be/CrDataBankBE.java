@@ -6,8 +6,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CrNoteTankBE extends NetworkingBE{
-    public CrNoteTankBE(BlockPos pos, BlockState blockState) {
+public class CrDataBankBE extends NetworkingBE{
+    public CrDataBankBE(BlockPos pos, BlockState blockState) {
         super(MUBlockEntities.CREATIVE_NOTE_TANK.get(), pos, blockState);
     }
 

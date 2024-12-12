@@ -11,27 +11,31 @@ public class Resonance {
     // todo : bonds
 
     final Item item;
-    final Holder<Leitmotif> packedLeitmotif;
-    final Leitmotif leitmotif;
+    final Holder<HolderLeitmotif> packedLeitmotif;
+    //final Leitmotif leitmotif;
 
     public static class codec{
         public static final Codec<Resonance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 BuiltInRegistries.ITEM.byNameCodec().fieldOf("item").forGetter(i -> i.item),
-                Leitmotif.codec.HOLDER.fieldOf("leitmotif").forGetter(i -> i.packedLeitmotif)
+                HolderLeitmotif.codec.HOLDER.fieldOf("leitmotif").forGetter(i -> i.packedLeitmotif)
         ).apply(instance, Resonance::new));
     }
 
-    public Resonance(Item item, Holder<Leitmotif> packedLeitmotif) {
+    public Resonance(Item item, Holder<HolderLeitmotif> packedLeitmotif) {
         this.item = item;
         this.packedLeitmotif = packedLeitmotif;
-        this.leitmotif = packedLeitmotif.value();
+        //this.leitmotif = packedLeitmotif.value();
     }
 
     public Item getItem() {
         return this.item;
     }
 
-    public Leitmotif getLeitmotif() {
-        return leitmotif;
+    public HolderLeitmotif getHolderLeitmotif() {
+        return this.packedLeitmotif.value();
+    }
+
+    public Leitmotif unpack() {
+        return this.packedLeitmotif.value().unpack();
     }
 }

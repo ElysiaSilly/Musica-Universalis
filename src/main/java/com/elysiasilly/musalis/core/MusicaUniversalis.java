@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 
 @SuppressWarnings("unused")
 @Mod(MusicaUniversalis.MODID)
-
 public class MusicaUniversalis {
 
     public static final String MODID = "musica_universalis";
@@ -28,6 +27,7 @@ public class MusicaUniversalis {
         MUItems.ITEMS.register(bus);
         MUComponents.COMPONENTS.register(bus);
         MUEther.ETHER.register(bus);
+        MUMenus.MENUS.register(bus);
 
     }
 }

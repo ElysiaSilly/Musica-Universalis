@@ -1,11 +1,8 @@
 package com.elysiasilly.musalis.common.block;
 
 import com.elysiasilly.musalis.common.block.be.CrEtherDissipatorBE;
-import com.elysiasilly.musalis.common.component.EtherCoreComponent;
-import com.elysiasilly.musalis.core.registry.MUComponents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;

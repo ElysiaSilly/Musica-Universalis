@@ -1,4 +1,4 @@
-package com.elysiasilly.musalis.client.render;
+package com.elysiasilly.musalis.client;
 
 import com.elysiasilly.musalis.client.tooltip.ResonanceTooltipComponent;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 
 @SuppressWarnings({"unused"})
 @EventBusSubscriber(modid = MusicaUniversalis.MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
-public class ResonanceTooltip {
+public class GameRegistries {
 
     @SubscribeEvent
     public static void gatherTooltipComponents(RenderTooltipEvent.GatherComponents event) {

@@ -1,10 +1,7 @@
 package com.elysiasilly.musalis.common.world.ether;
 
 import com.elysiasilly.musalis.core.MusicaUniversalis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 public class EtherCore {
 

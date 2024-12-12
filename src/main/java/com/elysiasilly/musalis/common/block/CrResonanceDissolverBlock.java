@@ -1,8 +1,6 @@
 package com.elysiasilly.musalis.common.block;
 
 import com.elysiasilly.musalis.common.block.be.CrResonanceDissolverBE;
-import com.elysiasilly.musalis.common.component.DataDiskComponent;
-import com.elysiasilly.musalis.core.registry.MUComponents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -34,18 +32,21 @@ public class CrResonanceDissolverBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
+        /*
         if(level.isClientSide) return ItemInteractionResult.SUCCESS;
 
         if(level.getBlockEntity(pos) instanceof CrResonanceDissolverBE be) {
 
-            if(stack.has(MUComponents.DATA_DISK)) {
-                DataDiskComponent data = stack.get(MUComponents.DATA_DISK);
-                if(data != null) data.insertNotes(be.extractNotes());;
+            if(stack.has(MUComponents.DATA_DISK_REC)) {
+                DataDiskComponent data = stack.get(MUComponents.DATA_DISK_REC);
+                if(data != null) stack.set(MUComponents.DATA_DISK_REC, new DataDiskComponent(be.extractNotes()));
             } else {
                 be.dissolveItem(stack);
             }
 
         }
+
+         */
         return ItemInteractionResult.SUCCESS;
     }
 }

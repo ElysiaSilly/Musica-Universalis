@@ -14,7 +14,7 @@ public class ColourUtil {
     }
 
     public static int RGBAToABGR(RGBA RGBA) { // TODO : where alpha
-        return RGBA.red() + (RGBA.green() * 256) + (RGBA.blue() * 256 * 256);
+        return RGBA.r() + (RGBA.g() * 256) + (RGBA.b() * 256 * 256);
     }
 
     public static RGBA DecToRGBA(int dec) {
@@ -25,11 +25,11 @@ public class ColourUtil {
     }
 
     public static int RGBAToDec(RGBA RGBA) {
-        return RGBA.red() * 65536 + RGBA.green() * 256 + RGBA.blue();
+        return RGBA.r() * 65536 + RGBA.g() * 256 + RGBA.b();
     }
 
     public static int RGBAToHex(RGBA RGBA) {
-        return (RGBA.red() << 16) + (RGBA.green() << 8) + (RGBA.blue());
+        return (RGBA.r() << 16) + (RGBA.g() << 8) + (RGBA.b());
     }
 
     public static RGBA HexToRGBA(int hex) {
@@ -46,5 +46,9 @@ public class ColourUtil {
 
     public static RGBA randomColour(RandomSource ran) {
         return new RGBA(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255), ran.nextInt(255));
+    }
+
+    public static RGBA white() {
+        return new RGBA(255, 255, 255);
     }
 }

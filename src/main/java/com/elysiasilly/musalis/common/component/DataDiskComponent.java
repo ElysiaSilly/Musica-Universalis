@@ -1,60 +1,35 @@
 package com.elysiasilly.musalis.common.component;
 
-import com.elysiasilly.musalis.common.world.resonance.Note;
-import com.mojang.serialization.Codec;
+import com.elysiasilly.musalis.common.world.resonance.HolderLeitmotif;
+import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class DataDiskComponent {
+public record DataDiskComponent(Leitmotif leitmotif) {
 
-    // wtf are these for
-    @Override
-    public boolean equals(Object obj) {
-        return obj.equals(this) || obj instanceof DataDiskComponent i && this.notes.equals(i.notes);
-    }
+    public static final DataDiskComponent EMPTY = new DataDiskComponent(new Leitmotif(List.of(), List.of()));
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.notes);
-    }
-
-    public static MapCodec<DataDiskComponent> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
-            Note.codec.CODEC.listOf().fieldOf("ether").forGetter(i -> i.notes)
+    public static final MapCodec<DataDiskComponent> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
+            Leitmotif.codec.CODEC.fieldOf("leitmotif").forGetter(i -> i.leitmotif)
     ).apply(builder, DataDiskComponent::new));
 
-    // please tell me this works
-    public static StreamCodec<ByteBuf, DataDiskComponent> STREAM = StreamCodec.composite(
-            ByteBufCodecs.fromCodec(Codec.list(Note.codec.CODEC)), i -> i.notes,
+    public static final StreamCodec<ByteBuf, DataDiskComponent> STREAM = StreamCodec.composite(
+            ByteBufCodecs.fromCodec(Leitmotif.codec.CODEC), i -> i.leitmotif,
             DataDiskComponent::new
     );
 
-    // capacity maybe idfk we just ballin for now
-    final List<Note> notes = new ArrayList<>();;
+    ///
 
-    public DataDiskComponent(List<Note> notes) {
-        this.notes.addAll(notes);
+    public DataDiskComponent setLeitmotif(Leitmotif leitmotif) {
+        return new DataDiskComponent(leitmotif);
     }
 
-    public DataDiskComponent() {}
-
-    public void insertNotes(List<Note> notes) {
-        this.notes.addAll(notes);
-    }
-
-    public List<Note> extractNotes() {
-        List<Note> copy = this.notes;
-        this.notes.clear();
-        return copy;
-    }
-
-    public List<Note> getNotes() {
-        return this.notes;
+    public Leitmotif getLeitmotif() {
+        return this.leitmotif;
     }
 }

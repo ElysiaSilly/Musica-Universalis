@@ -1,7 +1,7 @@
 package com.elysiasilly.musalis.core.key;
 
 import com.elysiasilly.musalis.common.world.ether.Ether;
-import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
+import com.elysiasilly.musalis.common.world.resonance.HolderLeitmotif;
 import com.elysiasilly.musalis.common.world.resonance.Note;
 import com.elysiasilly.musalis.common.world.resonance.Resonance;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
@@ -18,7 +18,7 @@ public class MUResourceKeys {
         public static final ResourceKey<Registry<Note>> NOTE
                 = ResourceKey.createRegistryKey(MusicaUniversalis.location("note"));
 
-        public static final ResourceKey<Registry<Leitmotif>> LEITMOTIF
+        public static final ResourceKey<Registry<HolderLeitmotif>> LEITMOTIF
                 = ResourceKey.createRegistryKey(MusicaUniversalis.location("leitmotif"));
 
         public static final ResourceKey<Registry<Resonance>> RESONANCE

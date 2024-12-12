@@ -33,7 +33,7 @@ public class CrResonanceDissolverBE extends NetworkingBE {
         if(level == null) return false;
         Resonance resonance = RegistryUtil.getResonance(level, stack.getItem());
         if(resonance == null) return false;
-        this.notes.addAll(resonance.getLeitmotif().getNotes());
+        this.notes.addAll(resonance.unpack().getNotes());
         stack.shrink(1);
         markUpdated();
         return true;

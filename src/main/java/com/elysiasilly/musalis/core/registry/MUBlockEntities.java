@@ -24,6 +24,12 @@ public class MUBlockEntities {
     public static final Supplier<BlockEntityType<CrResonanceComposerBE>> CREATIVE_RESONANCE_COMPOSER = BLOCKENTITES.register(
             "creative_resonance_composer", () -> BlockEntityType.Builder.of(CrResonanceComposerBE::new, MUBlocks.CREATIVE_RESONANCE_COMPOSER.get()).build(null));
 
-    public static final Supplier<BlockEntityType<CrNoteTankBE>> CREATIVE_NOTE_TANK = BLOCKENTITES.register(
-            "creative_note_tank", () -> BlockEntityType.Builder.of(CrNoteTankBE::new, MUBlocks.CREATIVE_NOTE_TANK.get()).build(null));
+    public static final Supplier<BlockEntityType<CrDataBankBE>> CREATIVE_NOTE_TANK = BLOCKENTITES.register(
+            "creative_note_tank", () -> BlockEntityType.Builder.of(CrDataBankBE::new, MUBlocks.CREATIVE_NOTE_TANK.get()).build(null));
+
+    public static final Supplier<BlockEntityType<CrResonanceMaterialiserBE>> CREATIVE_RESONANCE_MATERIALISER = BLOCKENTITES.register(
+            "creative_resonance_materialiser", () -> BlockEntityType.Builder.of(CrResonanceMaterialiserBE::new, MUBlocks.CREATIVE_RESONANCE_MATERIALISER.get()).build(null));
+
+    public static final Supplier<BlockEntityType<CrResonanceRecorderBE>> CREATIVE_RESONANCE_RECORDER = BLOCKENTITES.register(
+            "creative_resonance_recorder", () -> BlockEntityType.Builder.of(CrResonanceRecorderBE::new, MUBlocks.CREATIVE_RESONANCE_RECORDER.get()).build(null));
 }

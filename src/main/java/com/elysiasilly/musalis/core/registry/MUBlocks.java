@@ -1,9 +1,6 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.AstromBlock;
-import com.elysiasilly.musalis.common.block.CrEtherDissipatorBlock;
-import com.elysiasilly.musalis.common.block.CrResonanceComposerBlock;
-import com.elysiasilly.musalis.common.block.CrResonanceDissolverBlock;
+import com.elysiasilly.musalis.common.block.*;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -24,7 +21,6 @@ public class MUBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(MusicaUniversalis.MODID);
     public static final DeferredRegister.Items BLOCKITEMS = DeferredRegister.createItems(MusicaUniversalis.MODID);
 
-
     public static final DeferredBlock<Block> ASTROM =
             regWithItem("astrom", () -> new AstromBlock(getProp(Blocks.DEEPSLATE)));
 
@@ -39,6 +35,12 @@ public class MUBlocks {
 
     public static final DeferredBlock<Block> CREATIVE_NOTE_TANK =
             regWithItem("creative_note_tank", () -> new CrEtherDissipatorBlock(getProp(Blocks.DEEPSLATE)), new Item.Properties().rarity(Rarity.EPIC));
+
+    public static final DeferredBlock<Block> CREATIVE_RESONANCE_MATERIALISER =
+            regWithItem("creative_resonance_materialiser", () -> new CrResonanceMaterialiserBlock(getProp(Blocks.DEEPSLATE)), new Item.Properties().rarity(Rarity.EPIC));
+
+    public static final DeferredBlock<Block> CREATIVE_RESONANCE_RECORDER =
+            regWithItem("creative_resonance_recorder", () -> new CrResonanceRecorderBlock(getProp(Blocks.DEEPSLATE)), new Item.Properties().rarity(Rarity.EPIC));
 
     /// register block and item
     @SuppressWarnings({"unchecked"})
