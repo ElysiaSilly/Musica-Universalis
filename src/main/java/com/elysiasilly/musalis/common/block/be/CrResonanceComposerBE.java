@@ -18,11 +18,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider {
 
+    private static final Logger log = LoggerFactory.getLogger(CrResonanceComposerBE.class);
     ItemStack disk;
     int mode;
 
@@ -91,7 +94,7 @@ public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider 
 
     public void composeDisk(int index) {
         this.disk = ItemStack.EMPTY;
-
+        markUpdated();
         /*
         if(this.disk == null) return;
         if(this.disk.isEmpty()) return;
