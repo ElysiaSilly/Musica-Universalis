@@ -30,6 +30,7 @@ public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider 
         super(MUBlockEntities.CREATIVE_RESONANCE_COMPOSER.get(), pos, blockState);
     }
 
+    // todo : messy
     @Override
     public CompoundTag saveData(CompoundTag tag, HolderLookup.Provider registries) {
 
@@ -43,6 +44,7 @@ public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider 
         return tag;
     }
 
+    // todo : ditto
     @Override
     public void loadData(CompoundTag tag, HolderLookup.Provider registries) {
 
