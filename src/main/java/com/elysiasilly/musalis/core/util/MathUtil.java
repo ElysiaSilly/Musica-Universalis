@@ -1,5 +1,7 @@
 package com.elysiasilly.musalis.core.util;
 
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
@@ -24,5 +26,12 @@ public class MathUtil {
 
     public static float castToRange(float oldMin, float oldMax, float newMin, float newMax, float value) {
         return (((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
+    }
+
+    public static Vec2 getPointOnCircle(int radius, int current, int total) {
+        double theta = (Math.PI*2) / total;
+        double angle = theta * current;
+
+        return new Vec2((float) (radius * Math.cos(angle)), (float) (radius * Math.sin(angle)));
     }
 }

@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Leitmotif {
 
-    /// todo : figure out a smarter way to handle this but leitmotifs should always either only be recursive or made of notes
+    // todo : figure out a smarter way to handle this but leitmotifs should always either only be recursive or made of notes
     final List<Note> notes;
     final List<Leitmotif> leitmotifs;
     boolean isRecursive;

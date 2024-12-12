@@ -2,6 +2,7 @@ package com.elysiasilly.musalis.common.item;
 
 import com.elysiasilly.musalis.common.component.DataDiskComponent;
 import com.elysiasilly.musalis.core.registry.MUComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -20,30 +21,15 @@ public class DataDiskItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
 
-        /*
-        if(stack.has(MUComponents.DATA_DISK_REC)) {
-            DataDiskComponentRec component = stack.get(MUComponents.DATA_DISK_REC);
-            if (component != null) {
-                if(player.isShiftKeyDown()) {
-                    stack.set(MUComponents.DATA_DISK_REC, new DataDiskComponentRec(List.of()));
-                } else {
-                    Resonance resonance = RegistryUtil.getResonance(level, component.notes());
-                    if(resonance != null) {
-                        player.addItem(resonance.getItem().getDefaultInstance());
 
-                        List<Note> list = new ArrayList<>(List.copyOf(component.notes()));
-
-                        for(Note note : resonance.getLeitmotif().getNotes()) {
-                            list.remove(note);
-                        }
-
-                        stack.set(MUComponents.DATA_DISK_REC, new DataDiskComponentRec(list));
-                    }
-                }
+        if(stack.has(MUComponents.DATA_DISK)) {
+            DataDiskComponent component = stack.get(MUComponents.DATA_DISK);
+            if (component != null){
+                player.displayClientMessage(Component.literal(component.hashCode() + " : " + component.getLeitmotif().getLeitmotifs().size()), false);
             }
         }
 
-         */
+
 
         return InteractionResultHolder.success(stack);
     }

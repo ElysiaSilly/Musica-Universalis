@@ -19,9 +19,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider {
 
     ItemStack disk;
+    int mode;
 
     public CrResonanceComposerBE(BlockPos pos, BlockState blockState) {
         super(MUBlockEntities.CREATIVE_RESONANCE_COMPOSER.get(), pos, blockState);
@@ -53,6 +56,14 @@ public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider 
         }
     }
 
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    public int getMode() {
+        return this.mode;
+    }
+
     public boolean insertDisk(ItemStack stack) {
         if(this.disk != null) {
             if(!this.disk.isEmpty()) return false;
@@ -77,10 +88,11 @@ public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider 
     }
 
     public void composeDisk(int index) {
+        this.disk = ItemStack.EMPTY;
 
+        /*
         if(this.disk == null) return;
         if(this.disk.isEmpty()) return;
-
 
         DataDiskComponent component = this.disk.get(MUComponents.DATA_DISK);
 
@@ -90,11 +102,14 @@ public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider 
 
         if(leitmotif == null) return;
 
-        if(leitmotif.isRecursive()) {
-            leitmotif = leitmotif.getLeitmotifs().get(index);
-            this.disk.set(MUComponents.DATA_DISK, new DataDiskComponent(leitmotif));
-            markUpdated();
+        if(this.mode == 1) {
+            if(leitmotif.isRecursive()) {
+                leitmotif.getLeitmotifs().remove(index);
+                this.disk.set(MUComponents.DATA_DISK, new DataDiskComponent(leitmotif));
+                markUpdated();
+            }
         }
+         */
     }
 
 

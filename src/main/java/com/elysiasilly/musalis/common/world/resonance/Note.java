@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -52,5 +53,23 @@ public record Note(NoteEnum type, float loudness, float pitch, float timbre) {
     @Override
     public int hashCode() {
         return Objects.hash(type, loudness, pitch, timbre);
+    }
+
+    public enum NoteEnum implements StringRepresentable {
+        NATURAL("natural"),
+        WILD("wild"),
+        VIVID("vivid"),
+        EXOTIC("exotic");
+
+        private final String name;
+
+        NoteEnum(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public @NotNull String getSerializedName() {
+            return this.name;
+        }
     }
 }

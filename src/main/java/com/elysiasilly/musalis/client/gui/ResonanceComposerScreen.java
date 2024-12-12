@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
@@ -36,10 +37,25 @@ public class ResonanceComposerScreen extends AbstractContainerScreen<ResonanceCo
     @Override
     protected void init() {
         super.init();
+        createButtons();
     }
 
-    List<Vec2> seed = new ArrayList<>();
-    List<Vec2> seedInception = new ArrayList<>();
+    public static final WidgetSprites DELETE_BUTTON = new WidgetSprites(MusicaUniversalis.location("composer/delete"), MusicaUniversalis.location("composer/delete_active"));
+    public static final WidgetSprites LOOKUP_BUTTON = new WidgetSprites(MusicaUniversalis.location("composer/lookup"), MusicaUniversalis.location("composer/lookup_active"));
+    public static final WidgetSprites SELECT_BUTTON = new WidgetSprites(MusicaUniversalis.location("composer/select"), MusicaUniversalis.location("composer/select_active"));
+
+    public void createButtons() {
+        this.addRenderableWidget(new ImageButton(10, 10, 16, 16, DELETE_BUTTON, (e) -> PacketDistributor.sendToServer(new ComposerScreenPayload(1, 1))));
+        this.addRenderableWidget(new ImageButton(10, 30, 16, 16, LOOKUP_BUTTON, (e) -> PacketDistributor.sendToServer(new ComposerScreenPayload(2, 1))));
+        this.addRenderableWidget(new ImageButton(10, 50, 16, 16, SELECT_BUTTON, (e) -> PacketDistributor.sendToServer(new ComposerScreenPayload(3, 1))));
+    }
+
+    public void renderMouse(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+
+    }
+
+
+    // todo : cleanup
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
@@ -57,21 +73,19 @@ public class ResonanceComposerScreen extends AbstractContainerScreen<ResonanceCo
         Resonance resonance = RegistryUtil.getResonance(menu.getBE().getLevel(), leitmotif);
         ResourceLocation location = RegistryUtil.getLeitmotif(menu.getBE().getLevel(), leitmotif);
 
-        if(location == null) return;
-
-        guiGraphics.drawString(Minecraft.getInstance().font, location.toString(), this.width / 2 - (Minecraft.getInstance().font.width(location.toString()) / 2), this.height / 2, new RGBA(255, 255, 255, 255).toDec());
-
         String string = "???";
+        if(location != null) {
+            string = location.toString();
+            string = string.substring(string.indexOf(":") + 1);
+        }
+
+        guiGraphics.drawString(Minecraft.getInstance().font, string, this.width / 2 - (Minecraft.getInstance().font.width(string) / 2), this.height / 2 - (Minecraft.getInstance().font.lineHeight / 2), ColourUtil.white().toDec());
 
         if(resonance != null) {
             string = "Resonance matches that of: ";
+            guiGraphics.drawString(Minecraft.getInstance().font, string, this.width / 2 - (Minecraft.getInstance().font.width(string) / 2), 10 - (Minecraft.getInstance().font.lineHeight / 2), new RGBA(255, 255, 255, 255).toDec());
+            guiGraphics.renderItem(resonance.getItem().getDefaultInstance(), (this.width / 2) - 2 + (Minecraft.getInstance().font.width(string) / 2),  2);
         }
-
-        guiGraphics.drawString(Minecraft.getInstance().font, string, this.width / 2 - (Minecraft.getInstance().font.width(string) / 2), 10, new RGBA(255, 255, 255, 255).toDec());
-
-        if(resonance == null) return;
-
-        guiGraphics.renderItem(resonance.getItem().getDefaultInstance(), this.width / 2 + (Minecraft.getInstance().font.width(string) / 2), 6);
 
         if(leitmotif.isRecursive()) {
             int index = 0;
@@ -79,38 +93,42 @@ public class ResonanceComposerScreen extends AbstractContainerScreen<ResonanceCo
                 location = RegistryUtil.getLeitmotif(menu.getBE().getLevel(), recursive);
 
                 string = "???";
-                if(location != null) string = location.toString();
-
-                if(this.seed.size() < index + 1) {
-                    this.seed.add(new Vec2(menu.getBE().getLevel().random.nextInt(this.width), menu.getBE().getLevel().random.nextInt(this.height)));
+                if(location != null) {
+                    string = location.toString();
+                    string = string.substring(string.indexOf(":") + 1);
                 }
 
-                Vec2 position = this.seed.get(index);
+                Vec2 position = MathUtil.getPointOnCircle(80, index + 1, leitmotif.getLeitmotifs().size());
+
+                Vec2 adjusted = position.add(new Vec2((float) this.width / 2, (float) this.height / 2));
 
                 Matrix4f vert = guiGraphics.pose().last().pose();
                 MultiBufferSource bufferSource = guiGraphics.bufferSource();
                 VertexConsumer consumer = bufferSource.getBuffer(RenderType.gui());
 
-                RenderUtil.drawLineThatIsActuallyARectangle(consumer, vert, new Vec3((double) this.width / 2, (double) this.height / 2, 0), new Vec3(position.x + ((double) Minecraft.getInstance().font.width(string) / 2), position.y, 0), 1, ColourUtil.white());
+                RenderUtil.drawLineThatIsActuallyARectangle(consumer, vert, new Vec3((double) this.width / 2, (double) this.height / 2, 0), new Vec3(adjusted.x, adjusted.y, 0), 1, new RGBA(100, 100, 100, 255));
 
-
-                guiGraphics.drawString(Minecraft.getInstance().font, string, (int) position.x, (int) position.y, new RGBA(100, 100, 100, 255).toDec());
+                WidgetSprites spritesInception = RecipeBookComponent.RECIPE_BUTTON_SPRITES;
+                int finalIndex = index;
+                this.addRenderableWidget(new ImageButton((int) adjusted.x, (int) adjusted.y, 10, 10, spritesInception, (e) -> PacketDistributor.sendToServer(new ComposerScreenPayload(finalIndex, 0))));
 
                 index++;
 
-                if(recursive.isRecursive()) {
+                /*
+                if(!recursive.getLeitmotifs().isEmpty()) {
                     int indexInception = 0;
                     for(Leitmotif inception : recursive.getLeitmotifs()) {
                         location = RegistryUtil.getLeitmotif(menu.getBE().getLevel(), inception);
 
-                        string = "???";
-                        if(location != null) string = location.toString();
-
-                        if(this.seedInception.size() < indexInception + index + 1) {
-                            this.seedInception.add(new Vec2(menu.getBE().getLevel().random.nextInt(this.width), menu.getBE().getLevel().random.nextInt(this.height)));
+                        String strings = "???";
+                        if(location != null) {
+                            strings = location.toString();
+                            strings = strings.substring(strings.indexOf(":") + 1);
                         }
 
-                        Vec2 positionInception = this.seedInception.get(indexInception);
+                        Vec2 positionInception = MathUtil.getPointOnCircle(60, indexInception + 1, recursive.getLeitmotifs().size());
+
+                        positionInception = positionInception.add(adjusted);
 
                         vert = guiGraphics.pose().last().pose();
                         bufferSource = guiGraphics.bufferSource();
@@ -119,25 +137,25 @@ public class ResonanceComposerScreen extends AbstractContainerScreen<ResonanceCo
                         RenderUtil.drawLineThatIsActuallyARectangle(
                                 consumer,
                                 vert,
-                                new Vec3(position.x + ((double) Minecraft.getInstance().font.width(string) / 2), position.y, 0),
-                                new Vec3(positionInception.x + ((double) Minecraft.getInstance().font.width(string) / 2), positionInception.y, 0),
+                                new Vec3(adjusted.x, adjusted.y, 0),
+                                new Vec3(positionInception.x, positionInception.y, 0),
                                 1,
-                                new RGBA(100, 100, 100, 255)
+                                new RGBA(50, 50, 50, 255)
                         );
 
-                        guiGraphics.drawString(Minecraft.getInstance().font, string, (int) positionInception.x, (int) positionInception.y, new RGBA(50, 50, 50, 255).toDec());
+                        guiGraphics.drawString(Minecraft.getInstance().font, strings, (int) positionInception.x - (Minecraft.getInstance().font.width(strings) / 2), (int) positionInception.y - (Minecraft.getInstance().font.lineHeight / 2), new RGBA(70, 70, 70, 255).toDec(), false);
 
                         indexInception++;
                     }
                 }
+
+                 */
+
+                guiGraphics.drawString(Minecraft.getInstance().font, string, (int) adjusted.x - (Minecraft.getInstance().font.width(string) / 2), (int) adjusted.y - (Minecraft.getInstance().font.lineHeight / 2), new RGBA(160, 160, 160).toDec(), false);
+
             }
         }
     }
-
-    /*
-    int finalIndex = indexInception;
-                        if(false) this.addRenderableWidget(new ImageButton(this.width / 2 - (Minecraft.getInstance().font.width(string) / 2) - 20, 140 + (indexInception * 10), 10, 10, spritesInception, (e) -> PacketDistributor.sendToServer(new ComposerScreenPayload(finalIndex))));
-     */
 
     ///
 

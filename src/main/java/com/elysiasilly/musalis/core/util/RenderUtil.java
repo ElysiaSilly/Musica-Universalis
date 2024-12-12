@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -46,7 +47,18 @@ public class RenderUtil {
 
     public static void drawLineThatIsActuallyARectangle(VertexConsumer consumer, Matrix4f matrix4f, Vec3 start, Vec3 end, float girth, RGBA rgba) {
 
-        drawPlane(consumer, matrix4f, 100, rgba, start, start.add(0, girth, 0), end, end.add(0, girth, 0));
+        Vec2 vector = new Vec2((float) (start.x - end.x), (float) (start.y - end.y));
+        Vec2 perpendicular = new Vec2(vector.y, -vector.x);
+        double length = Math.sqrt(perpendicular.x * perpendicular.x + perpendicular.y * perpendicular.y);
+        Vec2 normalize = new Vec2((float) (perpendicular.x / length), (float) (perpendicular.y / length));
+
+        drawPlane(
+                consumer, matrix4f, 100, rgba,
+                new Vec3(start.x + normalize.x * girth / 2, start.y + normalize.y * girth / 2, 0),
+                new Vec3(end.x - normalize.x * girth / 2, end.y - normalize.y * girth / 2, 0),
+                new Vec3(start.x - normalize.x * girth / 2, start.y - normalize.y * girth / 2, 0),
+                new Vec3(end.x + normalize.x * girth / 2, end.y + normalize.y * girth / 2, 0)
+        );
 
     }
 

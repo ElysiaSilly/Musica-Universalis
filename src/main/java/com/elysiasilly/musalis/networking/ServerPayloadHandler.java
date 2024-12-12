@@ -10,10 +10,19 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public class ServerPayloadHandler {
 
     public static void handleDataOnMain(final ComposerScreenPayload data, final IPayloadContext context) {
+        // todo : instanceof casts
 
-        ResonanceComposerMenu menu = (ResonanceComposerMenu) context.player().containerMenu;
+        context.enqueueWork(() -> {
 
-        menu.getBE().composeDisk(data.index());
+            ResonanceComposerMenu menu = (ResonanceComposerMenu) context.player().containerMenu;
+
+            if(data.id() == 1) menu.getBE().setMode(data.index());
+            if(data.id() == 0) menu.getBE().composeDisk(data.index());
+
+
+        });
+
+
     }
 
 }
