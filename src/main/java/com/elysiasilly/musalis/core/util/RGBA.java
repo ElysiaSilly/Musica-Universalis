@@ -21,6 +21,34 @@ public class RGBA {
         this.A = 255;
     }
 
+    public RGBA(int gray) {
+        this.R = gray;
+        this.G = gray;
+        this.B = gray;
+        this.A = 255;
+    }
+
+    public RGBA(float gray) {
+        this.R = (int) MathUtil.castToRange(0, 1, 0, 255, gray);
+        this.G = (int) MathUtil.castToRange(0, 1, 0, 255, gray);
+        this.B = (int) MathUtil.castToRange(0, 1, 0, 255, gray);
+        this.A = 255;
+    }
+
+    public RGBA(float R, float G, float B) {
+        this.R = (int) MathUtil.castToRange(0, 1, 0, 255, R);
+        this.G = (int) MathUtil.castToRange(0, 1, 0, 255, G);
+        this.B = (int) MathUtil.castToRange(0, 1, 0, 255, B);
+        this.A = 255;
+    }
+
+    public RGBA(float R, float G, float B, float A) {
+        this.R = (int) MathUtil.castToRange(0, 1, 0, 255, R);
+        this.G = (int) MathUtil.castToRange(0, 1, 0, 255, G);
+        this.B = (int) MathUtil.castToRange(0, 1, 0, 255, B);
+        this.A = (int) MathUtil.castToRange(0, 1, 0, 255, A);
+    }
+
     public int r() {
         return R;
     }

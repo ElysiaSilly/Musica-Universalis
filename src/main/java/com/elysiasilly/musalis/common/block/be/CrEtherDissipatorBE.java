@@ -1,9 +1,11 @@
 package com.elysiasilly.musalis.common.block.be;
 
+import com.elysiasilly.musalis.common.block.sinterface.IEtherCoreHolder;
 import com.elysiasilly.musalis.common.component.EtherCoreComponent;
 import com.elysiasilly.musalis.common.world.ether.EtherStack;
 import com.elysiasilly.musalis.core.registry.MUBlockEntities;
 import com.elysiasilly.musalis.core.registry.MUComponents;
+import com.elysiasilly.musalis.core.util.MathUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -17,9 +19,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-public class CrEtherDissipatorBE extends BlockEntity {
+public class CrEtherDissipatorBE extends BlockEntity implements IEtherCoreHolder {
 
     ItemStack core;
 
@@ -127,5 +130,10 @@ public class CrEtherDissipatorBE extends BlockEntity {
         this.core = iHateData.getFirst();
 
         return tag;
+    }
+
+    @Override
+    public Vec3 snapPosition() {
+        return new Vec3(0, (float) 1 / 16 * 9, 0).add(this.getBlockPos().getCenter());
     }
 }

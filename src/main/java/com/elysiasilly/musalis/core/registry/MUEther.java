@@ -8,7 +8,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class MUEther {
-
     public static final DeferredRegister<Ether> ETHER = DeferredRegister.create(MURegistries.ETHER, MusicaUniversalis.MODID);
 
     public static final DeferredHolder<Ether, Empty> EMPTY =

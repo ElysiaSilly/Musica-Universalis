@@ -28,6 +28,8 @@ public class MusicaUniversalis {
         MUComponents.COMPONENTS.register(bus);
         MUEther.ETHER.register(bus);
         MUMenus.MENUS.register(bus);
+        MUEntities.ENTITIES.register(bus);
+        MUEtherCores.CORES.register(bus);
 
     }
 }

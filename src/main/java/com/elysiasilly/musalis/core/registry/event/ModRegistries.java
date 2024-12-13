@@ -38,6 +38,7 @@ public class ModRegistries {
     @SubscribeEvent
     static void onNewRegistry(NewRegistryEvent event) {
         event.register(MURegistries.ETHER);
+        event.register(MURegistries.ETHER_CORE);
     }
 
     @SubscribeEvent

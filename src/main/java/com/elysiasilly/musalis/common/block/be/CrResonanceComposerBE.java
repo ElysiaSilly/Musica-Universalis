@@ -25,9 +25,8 @@ import java.util.List;
 
 public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider {
 
-    private static final Logger log = LoggerFactory.getLogger(CrResonanceComposerBE.class);
     ItemStack disk;
-    int mode;
+    int mode = 1;
 
     public CrResonanceComposerBE(BlockPos pos, BlockState blockState) {
         super(MUBlockEntities.CREATIVE_RESONANCE_COMPOSER.get(), pos, blockState);
@@ -95,6 +94,7 @@ public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider 
     public void composeDisk(int index) {
         this.disk = ItemStack.EMPTY;
         markUpdated();
+
         /*
         if(this.disk == null) return;
         if(this.disk.isEmpty()) return;
@@ -114,13 +114,14 @@ public class CrResonanceComposerBE extends NetworkingBE implements MenuProvider 
                 markUpdated();
             }
         }
+
          */
     }
-
 
     public void process() {
 
     }
+
     public ItemStack getDisk() {
         return this.disk;
     }

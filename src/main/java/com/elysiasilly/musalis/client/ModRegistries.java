@@ -5,10 +5,12 @@ import com.elysiasilly.musalis.client.render.be.EtherDissipatorRenderer;
 import com.elysiasilly.musalis.client.render.be.ResonanceComposerRenderer;
 import com.elysiasilly.musalis.client.render.be.ResonanceMaterialiserRenderer;
 import com.elysiasilly.musalis.client.render.be.ResonanceRecorderRenderer;
+import com.elysiasilly.musalis.client.render.entity.EtherCoreEntityRenderer;
 import com.elysiasilly.musalis.client.tooltip.ResonanceClientTooltipComponent;
 import com.elysiasilly.musalis.client.tooltip.ResonanceTooltipComponent;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import com.elysiasilly.musalis.core.registry.MUBlockEntities;
+import com.elysiasilly.musalis.core.registry.MUEntities;
 import com.elysiasilly.musalis.core.registry.MUMenus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -28,10 +30,13 @@ public class ModRegistries {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        /// BE
         event.registerBlockEntityRenderer(MUBlockEntities.CREATIVE_ETHER_DISSIPATOR.get(), EtherDissipatorRenderer::new);
         event.registerBlockEntityRenderer(MUBlockEntities.CREATIVE_RESONANCE_RECORDER.get(), ResonanceRecorderRenderer::new);
         event.registerBlockEntityRenderer(MUBlockEntities.CREATIVE_RESONANCE_COMPOSER.get(), ResonanceComposerRenderer::new);
         event.registerBlockEntityRenderer(MUBlockEntities.CREATIVE_RESONANCE_MATERIALISER.get(), ResonanceMaterialiserRenderer::new);
+        /// ENTITY
+        event.registerEntityRenderer(MUEntities.ETHER_CORE.get(), EtherCoreEntityRenderer::new);
     }
 
     @SubscribeEvent

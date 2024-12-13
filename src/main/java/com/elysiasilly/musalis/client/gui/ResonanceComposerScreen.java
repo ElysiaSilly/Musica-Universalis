@@ -52,6 +52,16 @@ public class ResonanceComposerScreen extends AbstractContainerScreen<ResonanceCo
 
     public void renderMouse(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
 
+        /*
+        Matrix4f matrix4f = guiGraphics.pose().last().pose();
+        MultiBufferSource bufferSource = guiGraphics.bufferSource();
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.gui());
+
+        RenderUtil.drawLineThatIsActuallyARectangle(consumer, matrix4f, new Vec3(mouseX, 0, 0), new Vec3(mouseX, this.height, 0), .5f, new RGBA(100, 100, 100, 255));
+
+        consumer = bufferSource.getBuffer(RenderType.gui());
+        RenderUtil.drawLineThatIsActuallyARectangle(consumer, matrix4f, new Vec3(0, mouseY, 0), new Vec3(this.width, mouseY, 0), .5f, new RGBA(100, 100, 100, 255));
+         */
     }
 
 
@@ -60,6 +70,7 @@ public class ResonanceComposerScreen extends AbstractContainerScreen<ResonanceCo
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
+        renderMouse(guiGraphics, mouseX, mouseY, partialTick);
 
         if(menu.getBE() == null) return;
         if(menu.getBE().getDisk() == null) return;

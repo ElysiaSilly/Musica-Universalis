@@ -4,8 +4,8 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-srcalpha"
     },
-    "vertex": "musica_universalis:testing",
-    "fragment": "musica_universalis:testing",
+    "vertex": "musica_universalis:resonance_visualiser",
+    "fragment": "musica_universalis:resonance_visualiser",
     "attributes": [
         "Position",
         "UV0"
@@ -30,6 +30,6 @@
         { "name": "farPlaneDistance", "type": "float", "count": 1, "values": [ 100.0 ] },
         { "name": "ColorModulator", "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
         { "name": "Colour", "type": "int", "count": 3, "values": [0, 0, 0] },
-        { "name": "Test", "type": "float", "count": 4, "values": [ 0.0, 0.0, 0.0, 0.0 ] }
+        { "name": "seed", "type": "int", "count":  1, "values":  [1] }
     ]
 }

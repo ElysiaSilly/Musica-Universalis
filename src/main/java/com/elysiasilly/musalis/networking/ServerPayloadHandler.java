@@ -15,8 +15,10 @@ public class ServerPayloadHandler {
         context.enqueueWork(() -> {
             ResonanceComposerMenu menu = (ResonanceComposerMenu) context.player().containerMenu;
 
-            if(data.id() == 1) menu.getBE().setMode(data.index());
-            if(data.id() == 0) menu.getBE().composeDisk(data.index());
+            //if(data.id() == 1) menu.getBE().setMode(data.index());
+            //if(data.id() == 0) menu.getBE().composeDisk(data.index());
+
+            menu.getBE().composeDisk(data.index());
         });
 
     }
