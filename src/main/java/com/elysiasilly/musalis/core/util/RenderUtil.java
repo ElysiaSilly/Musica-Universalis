@@ -1,7 +1,12 @@
 package com.elysiasilly.musalis.core.util;
 
+import com.elysiasilly.musalis.client.render.MURenderTypes;
+import com.elysiasilly.musalis.client.render.MUShaders;
+import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
+import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.phys.Vec2;
@@ -10,7 +15,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class RenderUtil {
-
 
     public static void drawCube(VertexConsumer consumer, Matrix4f matrix4f, float size, int packedLight, boolean centred, boolean cull, RGBA rgba) {
         // up
@@ -48,7 +52,7 @@ public class RenderUtil {
     public static void drawLineThatIsActuallyARectangle(VertexConsumer consumer, Matrix4f matrix4f, Vec3 start, Vec3 end, float girth, RGBA rgba) {
 
         Vec2 vector = new Vec2((float) (start.x - end.x), (float) (start.y - end.y));
-        Vec2 perpendicular = new Vec2(vector.y, -vector.x);
+        Vec2 perpendicular = new Vec2((vector.y), -vector.x);
         double length = Math.sqrt(perpendicular.x * perpendicular.x + perpendicular.y * perpendicular.y);
         Vec2 normalize = new Vec2((float) (perpendicular.x / length), (float) (perpendicular.y / length));
 
@@ -59,7 +63,18 @@ public class RenderUtil {
                 new Vec3(start.x - normalize.x * girth / 2, start.y - normalize.y * girth / 2, 0),
                 new Vec3(end.x + normalize.x * girth / 2, end.y + normalize.y * girth / 2, 0)
         );
+    }
 
+    public static void drawOutlineRectangle(VertexConsumer consumer, Matrix4f matrix4f, Vec3 start, Vec3 end, float girth, RGBA rgba) {
+        Vec3 topRight = new Vec3(start.x, start.y, 0);
+        Vec3 topLeft = new Vec3(start.x, end.y, 0);
+        Vec3 bottomRight = new Vec3(end.x, start.y, 0);
+        Vec3 bottomLeft = new Vec3(end.x, end.y, 0);
+
+        RenderUtil.drawLineThatIsActuallyARectangle(consumer, matrix4f, topRight, topLeft, girth, rgba);
+        RenderUtil.drawLineThatIsActuallyARectangle(consumer, matrix4f, topLeft, bottomLeft, girth, rgba);
+        RenderUtil.drawLineThatIsActuallyARectangle(consumer, matrix4f, bottomLeft, bottomRight, girth, rgba);
+        RenderUtil.drawLineThatIsActuallyARectangle(consumer, matrix4f, bottomRight, topRight, girth, rgba);
     }
 
     public static void drawPlane(VertexConsumer consumer, Matrix4f matrix4f, int packedLight, RGBA rgba, Vec3 start, Vec3 end, Vec3 offset, boolean centred) {
@@ -132,5 +147,22 @@ public class RenderUtil {
                 .setUv1(0, 0)
                 .setUv2(0, 0)
                 .setNormal(0, 1, 0);
+    }
+
+    public static void drawResonance(Leitmotif leitmotif, int res, Matrix4f matrix4f, MultiBufferSource bufferSource, Vec3 start, Vec3 end) {
+
+        Uniform seed = MUShaders.getResonanceVisualiser().getUniform("Seed"); // todo : make this float (-1 - 1)
+        if(seed != null) seed.set(leitmotif.hashCode()); // todo : seeded float
+
+        Uniform resolution = MUShaders.getResonanceVisualiser().getUniform("Resolution");
+        if(resolution != null) resolution.set(res);
+
+        VertexConsumer consumer = bufferSource.getBuffer(MURenderTypes.getResonanceVisualiser());
+
+        //drawPlane(consumer, matrix4f, 200, RGBA.colours.WHITE, new Vec3(0, 0, 0), new Vec3(end.x, end.y, 0), new Vec3(end.x, 0, 0), new Vec3(0, end.y, 0));
+
+        drawPlane(consumer, matrix4f, 200, RGBA.colours.WHITE, new Vec3(start.x, start.y, 0), new Vec3(end.x, end.y, 0), new Vec3(end.x, start.y, 0), new Vec3(start.x, end.y, 0));
+
+        //RenderUtil.drawPlane(consumer, matrix4f, 200, new RGBA(1f), start, end, new Vec3(0, 0, 0), false);
     }
 }

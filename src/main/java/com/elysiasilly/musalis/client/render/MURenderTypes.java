@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 
@@ -30,17 +29,18 @@ public class MURenderTypes {
     private static final Function<ResourceLocation, RenderType> TESTING = Util.memoize((resourceLocation) -> {
         RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
                 .setShaderState(RESONANCE_VISUALISER)
-                .setTextureState(MultiTextureStateShard.builder().add(TheEndPortalRenderer.END_SKY_LOCATION, false, false).build())
-                .setTextureState(BLOCK_SHEET)
+                //.setTextureState(BLOCK_SHEET)
                 .setTransparencyState(ADDITIVE_TRANSPARENCY)
+                .setDepthTestState(LEQUAL_DEPTH_TEST) // <<<<<< is this needed for guis?
+                .setWriteMaskState(COLOR_WRITE) // <<<<< you too?
                 .setCullState(NO_CULL)
-                .setLightmapState(LIGHTMAP)
-                .setOverlayState(OVERLAY)
-                .createCompositeState(true);
+                //.setLightmapState(LIGHTMAP)
+                //.setOverlayState(OVERLAY)
+                .createCompositeState(false);
         return RenderType.create("resonance_visualiser", DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false, compositeState);
     });
 
-    public static RenderType getTestingShader() {
+    public static RenderType getResonanceVisualiser() {
         return TESTING.apply(TextureAtlas.LOCATION_PARTICLES);
     }
 }

@@ -33,6 +33,7 @@ public class CrResonanceComposerBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+
         if(level.getBlockEntity(pos) instanceof CrResonanceComposerBE be) {
 
             if(hitResult.getDirection() == Direction.UP) {

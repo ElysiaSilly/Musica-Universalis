@@ -102,4 +102,9 @@ public class RGBA {
         this.B = temp.B;
         return this;
     }
+
+    public static class colours {
+        public static final RGBA WHITE = new RGBA(1f);
+        public static final RGBA BLACK = new RGBA(0f);
+    }
 }

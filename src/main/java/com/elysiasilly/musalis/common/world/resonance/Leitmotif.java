@@ -2,7 +2,6 @@ package com.elysiasilly.musalis.common.world.resonance;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Holder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +35,10 @@ public class Leitmotif {
         return this.notes;
     }
 
-    public boolean isRecursive() {
-        return this.isRecursive;
+    public type type() {
+        if(this.notes.isEmpty() && !this.leitmotifs.isEmpty()) return type.RECURSIVE;
+        if(!this.notes.isEmpty() && this.leitmotifs.isEmpty()) return type.COMPOUND;
+        return type.INVALID;
     }
 
     /// im not sure how good this works lmao
@@ -69,5 +70,11 @@ public class Leitmotif {
         if(!this.notes.isEmpty()) return Objects.hash(notes.toArray());
         if(!this.leitmotifs.isEmpty()) return Objects.hash(leitmotifs.toArray());
         return 0;
+    }
+
+    public enum type {
+        COMPOUND,
+        RECURSIVE,
+        INVALID
     }
 }

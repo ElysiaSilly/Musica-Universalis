@@ -1,6 +1,5 @@
 package com.elysiasilly.musalis.common.block.container;
 
-import com.elysiasilly.musalis.client.gui.Test;
 import com.elysiasilly.musalis.common.block.be.CrResonanceComposerBE;
 import com.elysiasilly.musalis.core.registry.MUMenus;
 import net.minecraft.network.FriendlyByteBuf;
@@ -8,7 +7,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerSynchronizer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.Objects;
@@ -30,9 +31,7 @@ public class ResonanceComposerMenu extends AbstractContainerMenu {
         Objects.requireNonNull(playerInventory, "playerInventory cannot be null");
         Objects.requireNonNull(data, "data cannot be null");
         final BlockEntity be = playerInventory.player.level().getBlockEntity(data.readBlockPos());
-        if (be instanceof CrResonanceComposerBE) {
-            return (CrResonanceComposerBE) be;
-        }
+        if (be instanceof CrResonanceComposerBE) {return (CrResonanceComposerBE) be;}
         throw new IllegalStateException("BE is not correct! " + be);
     }
 

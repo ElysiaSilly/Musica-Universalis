@@ -4,12 +4,11 @@ import com.elysiasilly.musalis.common.component.DataDiskComponent;
 import com.elysiasilly.musalis.common.world.resonance.Resonance;
 import com.elysiasilly.musalis.core.registry.MUBlockEntities;
 import com.elysiasilly.musalis.core.registry.MUComponents;
+import com.elysiasilly.musalis.core.util.ItemUtil;
 import com.elysiasilly.musalis.core.util.RegistryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -26,36 +25,17 @@ public class CrResonanceRecorderBE extends NetworkingBE {
 
     @Override
     public CompoundTag saveData(CompoundTag tag, HolderLookup.Provider registries) {
-
-        NonNullList<ItemStack> iHateData = NonNullList.create();
-
-        if(this.item != null) {
-            iHateData.add(this.item);
-        }
-        if(this.disk != null) {
-            iHateData.add(this.disk);
-        }
+        ItemUtil.serialize("disk", this.disk, tag, registries);
+        ItemUtil.serialize("item", this.item, tag, registries);
         tag.putBoolean("eject", this.ejectDisk);
-        ContainerHelper.saveAllItems(tag, iHateData, registries);
-
         return tag;
     }
 
     @Override
     public void loadData(CompoundTag tag, HolderLookup.Provider registries) {
-
-        NonNullList<ItemStack> iHateData = NonNullList.create();
-
-        ContainerHelper.loadAllItems(tag, iHateData, registries);
-
+        this.disk = ItemUtil.deserialize("disk", tag, registries);
+        this.item = ItemUtil.deserialize("item", tag, registries);
         this.ejectDisk = tag.getBoolean("eject");
-
-         if(iHateData.isEmpty()) return;
-
-         for(ItemStack stack : iHateData) {
-             insertDisk(stack);
-             insertItem(stack);
-         }
     }
 
     public boolean insertItem(ItemStack stack) {
@@ -96,11 +76,8 @@ public class CrResonanceRecorderBE extends NetworkingBE {
     }
 
     public ItemStack extractDisk() {
-        if(this.disk == null) return ItemStack.EMPTY;
-        if(this.disk.isEmpty()) return ItemStack.EMPTY;
-
-        ItemStack copy = this.disk.copyWithCount(1);
-        this.disk.shrink(1);
+        if(ItemUtil.isEmpty(this.disk)) return ItemStack.EMPTY;
+        ItemStack copy = ItemUtil.splitAndCopy(this.disk, 1);
         this.ejectDisk = false;
         markUpdated();
         return copy;
@@ -115,22 +92,16 @@ public class CrResonanceRecorderBE extends NetworkingBE {
     }
 
     public void tick() {
-
         if(!this.ejectDisk) {
-            if(this.item != null && this.disk != null) {
-                if(!this.item.isEmpty() && !this.disk.isEmpty()) {
+            if(!ItemUtil.isEmpty(this.item, this.disk)) {
+                Resonance resonance = RegistryUtil.getResonance(level, this.item.getItem());
+                this.disk.set(MUComponents.DATA_DISK, new DataDiskComponent(resonance.unpack()));
 
-                    Resonance resonance = RegistryUtil.getResonance(level, this.item.getItem());
-
-                    this.disk.set(MUComponents.DATA_DISK, new DataDiskComponent(resonance.unpack()));
-
-                    this.ejectDisk = true;
-                    markUpdated();
-                }
+                this.ejectDisk = true;
+                markUpdated();
             }
         }
     }
-
 
     public boolean getEjectDisk() {
         return this.ejectDisk;

@@ -22,6 +22,14 @@ public class MathUtil {
         return new Vector3i((int) vec3.x, (int) vec3.y, (int) vec3.z);
     }
 
+    public static Vec3 vec2ToVec3(Vec2 vec2) {
+        return new Vec3(vec2.x, vec2.y, 0);
+    }
+
+    public static Vec2 vec3ToVec2(Vec3 vec3) {
+        return new Vec2((float) vec3.x, (float) vec3.y);
+    }
+
     public static float distance(Vector3f start, Vector3f end) {
         return Vector3f.distance(start.x, start.y, start.z, end.x, end.y, end.z);
     }
@@ -32,6 +40,10 @@ public class MathUtil {
 
     public static float castToRange(float oldMin, float oldMax, float newMin, float newMax, float value) {
         return (((value - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
+    }
+
+    public static boolean withinBounds(Vec2 position, Vec2 boundaryStart, Vec2 boundaryEnd) {
+        return position.x >= boundaryStart.x && position.y >= boundaryStart.y && position.x <= boundaryEnd.x && position.y <= boundaryEnd.y;
     }
 
     public static Vec2 getPointOnCircle(int radius, int current, int total) {

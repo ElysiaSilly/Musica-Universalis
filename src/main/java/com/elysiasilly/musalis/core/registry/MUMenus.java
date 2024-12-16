@@ -14,5 +14,5 @@ public class MUMenus {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, MusicaUniversalis.MODID);
 
     public static final Supplier<MenuType<ResonanceComposerMenu>> RESONANCE_COMPOSER =
-            MENUS.register("cooking_pot", () -> IMenuTypeExtension.create(ResonanceComposerMenu::new));
+            MENUS.register("resonance_composer", () -> IMenuTypeExtension.create(ResonanceComposerMenu::new));
 }

@@ -1,6 +1,5 @@
-package com.elysiasilly.musalis.common.block.sinterface;
+package com.elysiasilly.musalis.common.block.api;
 
-import com.elysiasilly.musalis.common.world.ether.EtherCore;
 import net.minecraft.world.phys.Vec3;
 
 public interface IEtherCoreHolder {

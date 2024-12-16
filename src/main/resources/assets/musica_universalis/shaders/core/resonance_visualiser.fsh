@@ -13,7 +13,9 @@ uniform sampler2D DepthBuffer;
 uniform vec4 ColorModulator;
 uniform vec2 ScreenSize;
 uniform vec3 Colour;
-uniform int seed;
+
+uniform int Seed;
+uniform int Resolution;
 
 uniform float GameTime;
 
@@ -30,7 +32,7 @@ vec4 rotate2d(float angle){
 
 float variation(vec2 v1, vec2 v2, float strength, float speed) {
     return sin(
-        dot(normalize(v1), normalize(v2)) * strength + (GameTime * 300) * speed * (seed * 0.00000001)
+        dot(normalize(v1), normalize(v2)) * strength + (GameTime * 300) * speed * (Seed * 0.00000001)
     ) / 100.0;
 }
 
@@ -39,7 +41,7 @@ vec3 paintCircle (vec2 uv, vec2 center, float rad, float width) {
     vec2 diff = center-uv;
     float len = length(diff);
 
-    float val = seed * 0.00000001;
+    float val = Seed * 0.00000001;
 
     len += variation(diff, vec2(0.0, 1.0), 5.0, 2.0) * val; // 5
     len -= variation(diff, vec2(1.0, 0.0), 5.0, 2.0) * val;
@@ -52,8 +54,7 @@ void main() {
 
     //vec2 uv = texCoord0.xy;
     // Normalized coordinates : ranges from 0.0 to 1.0 (??)
-    int res = 48;
-    vec2 uv = floor(texCoord0.xy * res) / res;
+    vec2 uv = floor(texCoord0.xy * Resolution) / Resolution;
 
     uv = uv - 0.5;
     // shifts 0.0 to be centered, but now coordinates range from -0.5 to 0.5
@@ -74,7 +75,7 @@ void main() {
 
         //color with gradient
         vec2 v = rotate2d(GameTime * 300).xy * uv;
-        color *= vec3(v.x, v.y, (seed * 0.00001)-v.y*v.x);
+        color *= vec3(v.x, v.y, (Seed * 0.00001)-v.y*v.x);
 
         //paint white circle
         color += paintCircle(uv, center, radius, 0.03);

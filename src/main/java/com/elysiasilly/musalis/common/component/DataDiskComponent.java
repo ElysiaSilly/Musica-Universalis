@@ -1,6 +1,5 @@
 package com.elysiasilly.musalis.common.component;
 
-import com.elysiasilly.musalis.common.world.resonance.HolderLeitmotif;
 import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

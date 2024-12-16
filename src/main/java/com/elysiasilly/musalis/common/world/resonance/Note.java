@@ -14,11 +14,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Optional;
 
-public record Note(NoteEnum type, float loudness, float pitch, float timbre) {
+public record Note(type noteType, float loudness, float pitch, float timbre) {
 
     public static class codec{
         public static final Codec<Note> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                StringRepresentable.fromEnum(NoteEnum::values).fieldOf("type").orElse(NoteEnum.NATURAL).forGetter(i -> i.type),
+                StringRepresentable.fromEnum(type::values).fieldOf("type").orElse(type.NATURAL).forGetter(i -> i.noteType),
                 Codec.floatRange(-1, 1).fieldOf("loudness").forGetter(S -> S.loudness),
                 Codec.floatRange(-1, 1).fieldOf("pitch").forGetter(S -> S.pitch),
                 Codec.floatRange(-1, 1).fieldOf("timbre").forGetter(S -> S.timbre)
@@ -46,16 +46,16 @@ public record Note(NoteEnum type, float loudness, float pitch, float timbre) {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Note note) return note.type == this.type && note.loudness == this.loudness && note.pitch == this.pitch && note.timbre == this.timbre;
+        if(obj instanceof Note note) return note.noteType == this.noteType && note.loudness == this.loudness && note.pitch == this.pitch && note.timbre == this.timbre;
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, loudness, pitch, timbre);
+        return Objects.hash(noteType, loudness, pitch, timbre);
     }
 
-    public enum NoteEnum implements StringRepresentable {
+    public enum type implements StringRepresentable {
         NATURAL("natural"),
         WILD("wild"),
         VIVID("vivid"),
@@ -63,7 +63,7 @@ public record Note(NoteEnum type, float loudness, float pitch, float timbre) {
 
         private final String name;
 
-        NoteEnum(String name) {
+        type(String name) {
             this.name = name;
         }
 

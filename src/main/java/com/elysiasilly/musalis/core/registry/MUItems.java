@@ -2,6 +2,7 @@ package com.elysiasilly.musalis.core.registry;
 
 import com.elysiasilly.musalis.common.item.DataDiskItem;
 import com.elysiasilly.musalis.common.item.EtherCoreItem;
+import com.elysiasilly.musalis.common.item.TestStickItem;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -34,5 +35,11 @@ public class MUItems {
     public static final DeferredItem<DataDiskItem> CREATIVE_DATA_DISK =
             ITEMS.register("creative_data_disk", () ->
                     new DataDiskItem(new Item.Properties().rarity(Rarity.EPIC))
+            );
+
+
+    public static final DeferredItem<TestStickItem> TEST_STICK =
+            ITEMS.register("test_stick", () ->
+                    new TestStickItem(new Item.Properties().rarity(Rarity.EPIC))
             );
 }

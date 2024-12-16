@@ -1,6 +1,5 @@
 package com.elysiasilly.musalis.common.block;
 
-import com.elysiasilly.musalis.common.block.be.CrResonanceComposerBE;
 import com.elysiasilly.musalis.common.block.be.CrResonanceMaterialiserBE;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;

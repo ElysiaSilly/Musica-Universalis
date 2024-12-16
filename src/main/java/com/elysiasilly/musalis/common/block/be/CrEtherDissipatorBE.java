@@ -1,11 +1,10 @@
 package com.elysiasilly.musalis.common.block.be;
 
-import com.elysiasilly.musalis.common.block.sinterface.IEtherCoreHolder;
+import com.elysiasilly.musalis.common.block.api.IEtherCoreHolder;
 import com.elysiasilly.musalis.common.component.EtherCoreComponent;
 import com.elysiasilly.musalis.common.world.ether.EtherStack;
 import com.elysiasilly.musalis.core.registry.MUBlockEntities;
 import com.elysiasilly.musalis.core.registry.MUComponents;
-import com.elysiasilly.musalis.core.util.MathUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;

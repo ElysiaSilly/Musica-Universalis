@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.common.world.ether;
 
-import com.elysiasilly.musalis.common.block.sinterface.IEtherCoreHolder;
+import com.elysiasilly.musalis.common.block.api.IEtherCoreHolder;
 import com.elysiasilly.musalis.core.key.MUResourceKeys;
 import com.elysiasilly.musalis.core.util.MathUtil;
 import net.minecraft.core.BlockPos;

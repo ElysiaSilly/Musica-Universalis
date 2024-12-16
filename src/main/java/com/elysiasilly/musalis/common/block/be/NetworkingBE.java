@@ -39,20 +39,20 @@ public abstract class NetworkingBE extends BlockEntity {
 
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.handleUpdateTag(tag, lookupProvider);
         loadData(tag, lookupProvider);
+        super.handleUpdateTag(tag, lookupProvider);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        tag = saveData(tag, registries);
         super.saveAdditional(tag, registries);
-        saveData(tag, registries);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
         loadData(tag, registries);
+        super.loadAdditional(tag, registries);
     }
 
     @Override

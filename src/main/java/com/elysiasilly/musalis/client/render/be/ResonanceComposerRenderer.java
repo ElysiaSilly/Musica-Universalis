@@ -1,18 +1,16 @@
 package com.elysiasilly.musalis.client.render.be;
 
 import com.elysiasilly.musalis.client.render.MURenderTypes;
-import com.elysiasilly.musalis.client.render.MUShaders;
 import com.elysiasilly.musalis.common.block.be.CrResonanceComposerBE;
 import com.elysiasilly.musalis.common.component.DataDiskComponent;
 import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import com.elysiasilly.musalis.core.registry.MUComponents;
+import com.elysiasilly.musalis.core.util.MathUtil;
 import com.elysiasilly.musalis.core.util.RGBA;
 import com.elysiasilly.musalis.core.util.RenderUtil;
-import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -25,7 +23,6 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.Shapes;
 import org.joml.Matrix4f;
 
 public class ResonanceComposerRenderer implements BlockEntityRenderer<CrResonanceComposerBE> {
@@ -64,28 +61,14 @@ public class ResonanceComposerRenderer implements BlockEntityRenderer<CrResonanc
                     Leitmotif leitmotif = component.getLeitmotif();
                     if(leitmotif != null) {
 
-                        Uniform uniform = MUShaders.getResonanceVisualiser().getUniform("seed");
-                        if(uniform != null) uniform.set(leitmotif.hashCode());
-
-                        VertexConsumer consumer = multiBufferSource.getBuffer(MURenderTypes.getTestingShader());
-
                         poseStack.translate(.5, 1.5, -1);
 
                         Matrix4f matrix4f = poseStack.last().pose();
-
-                        RenderUtil.drawPlane(consumer, matrix4f, 200, new RGBA(1f), new Vec3(0, 0, 0), new Vec3(0, 3, 3), new Vec3(0, 0, 0), false);
+                        //RenderUtil.drawResonance(leitmotif, 48, matrix4f, multiBufferSource, new Vec3(0, 0, 0), new Vec3(0, 3, 3));
                     }
                 }
             }
         }
-
-
-
-        /*
-        poseStack.rotateAround(Axis.YP.rotationDegrees(90), 0, 0, 1.5f);
-        matrix4f = poseStack.last().pose();
-        RenderUtil.drawPlane(consumer, matrix4f, 200, new RGBA(1f), new Vec3(0, 0, 0), new Vec3(0, 3, 3), new Vec3(0, 0, 0), false);
-         */
     }
 
     @Override

@@ -53,6 +53,8 @@ public class ModRegistries {
 
     @SubscribeEvent
     public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
+        //event.register(MUMenus.RESONANCE_COMPOSER.get(), ResonanceComposerScreen::new);
         event.register(MUMenus.RESONANCE_COMPOSER.get(), ResonanceComposerScreen::new);
+
     }
 }
