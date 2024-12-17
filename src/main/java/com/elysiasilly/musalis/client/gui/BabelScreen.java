@@ -27,9 +27,10 @@ public abstract class BabelScreen<T extends AbstractContainerMenu> extends Scree
     private Vec2 mousePosPrevious = new Vec2(0, 0), mousePos = new Vec2(0, 0), mouseVelocity = new Vec2(0, 0);
     private Vec2 offset = new Vec2(0, 0);
 
-    BabelWidget hoveredWidget = null, draggedWidget = null;
+    BabelWidget hoveredWidget = null, draggedWidget = null, focusedWidget = null;
 
-    boolean draggable;
+    boolean renderDebug = false;
+    boolean draggable = false;
     //boolean parallax;
 
     boolean check = false;
@@ -90,7 +91,20 @@ public abstract class BabelScreen<T extends AbstractContainerMenu> extends Scree
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if(isSomethingHovering()) if(this.hoveredWidget.clickable) this.hoveredWidget.onClick(this.mousePos, button);
+        this.focusedWidget = isSomethingHovering() ? this.hoveredWidget.clickable ? this.hoveredWidget : null : null;
         return super.mouseClicked(mouseX, mouseY, button); // do i need this stuff? :c
+    }
+
+    @Override
+    public boolean charTyped(char codePoint, int modifiers) {
+        if(isSomethingFocused()) this.focusedWidget.onType(codePoint, modifiers);
+        return super.charTyped(codePoint, modifiers);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        if(isSomethingHovering()) this.hoveredWidget.onScroll(this.mousePos, new Vec2((float) scrollX, (float) scrollY));
+        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     @Override
@@ -125,12 +139,21 @@ public abstract class BabelScreen<T extends AbstractContainerMenu> extends Scree
         return this.draggedWidget.equals(widget);
     }
 
+    boolean isFocused(BabelWidget widget) {
+        if(this.focusedWidget == null) return false;
+        return this.focusedWidget.equals(widget);
+    }
+
     public BabelWidget getDraggedWidget() {
         return this.draggedWidget;
     }
 
     public boolean isSomethingDragging() {
         return this.draggedWidget != null;
+    }
+
+    public boolean isSomethingFocused() {
+        return this.focusedWidget != null;
     }
 
     public boolean isNothingInteracted() {
@@ -151,7 +174,7 @@ public abstract class BabelScreen<T extends AbstractContainerMenu> extends Scree
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);
+        renderBackground(guiGraphics, partialTick);
 
         if(!this.check) return;
 
@@ -164,9 +187,12 @@ public abstract class BabelScreen<T extends AbstractContainerMenu> extends Scree
         this.mousePosPrevious = this.mousePos;
     }
 
+    abstract void renderBackground(GuiGraphics guiGraphics, float partialTick);
+
+
     @Override
     public void tick() {
-        for(BabelWidget widget : this.widgets) if(widget.ticks) widget.processTicking();
+        for(BabelWidget widget : this.widgets) widget.processTicking();
     }
 
     static class actions{
