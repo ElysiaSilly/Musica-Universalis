@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.client.render.be;
 
-import com.elysiasilly.musalis.common.block.be.CrEtherDissipatorBE;
+import com.elysiasilly.musalis.common.block.be.creative.CrEtherDissipatorBE;
 import com.elysiasilly.musalis.common.component.EtherCoreComponent;
 import com.elysiasilly.musalis.common.world.ether.EtherStack;
 import com.elysiasilly.musalis.core.MusicaUniversalis;

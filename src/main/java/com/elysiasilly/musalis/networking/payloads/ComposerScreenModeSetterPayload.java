@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.networking.payloads;
 
-import com.elysiasilly.musalis.common.block.be.CrResonanceComposerBE;
+import com.elysiasilly.musalis.common.block.be.creative.CrResonanceComposerBE;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

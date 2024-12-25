@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.client.render.be;
 
-import com.elysiasilly.musalis.common.block.be.CrResonanceMaterialiserBE;
+import com.elysiasilly.musalis.common.block.be.creative.CrResonanceMaterialiserBE;
 import com.elysiasilly.musalis.common.component.DataDiskComponent;
 import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
 import com.elysiasilly.musalis.common.world.resonance.Resonance;

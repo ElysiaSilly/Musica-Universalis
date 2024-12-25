@@ -19,6 +19,7 @@ public class AstromBE extends BlockEntity {
     public void setLevel(Level level) {
         super.setLevel(level);
 
+        if(true) return;
 
         if(level.isClientSide) return;
 

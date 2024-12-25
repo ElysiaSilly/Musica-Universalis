@@ -1,15 +1,13 @@
 package com.elysiasilly.musalis.common.block.container;
 
-import com.elysiasilly.musalis.common.block.be.CrResonanceComposerBE;
+import com.elysiasilly.musalis.common.block.be.creative.CrResonanceComposerBE;
 import com.elysiasilly.musalis.core.registry.MUMenus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
-import net.minecraft.world.inventory.ContainerSynchronizer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.Objects;

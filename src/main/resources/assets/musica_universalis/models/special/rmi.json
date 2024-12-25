@@ -1,0 +1,13 @@
+{
+  "loader": "neoforge:obj",
+  "flip_v": true,
+  "model": "musica_universalis:models/special/rmi.obj",
+  "mtl_override": "musica_universalis:models/special/rmi.mtl",
+  "textures": {
+    "1": "musica_universalis:block/rmi_1",
+    "2": "musica_universalis:block/rmi_2",
+    "3": "musica_universalis:block/rmi_3",
+    "4": "musica_universalis:block/rmi_4",
+    "5": "musica_universalis:block/rmi_5"
+  }
+}

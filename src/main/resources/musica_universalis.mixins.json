@@ -1,3 +1,18 @@
 {
-
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.elysiasilly.musalis.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "musica_universalis.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "client.GameRendererMixin",
+    "client.GuiMixin",
+    "client.LevelRendererMixin",
+    "client.LevelRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

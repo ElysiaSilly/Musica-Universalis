@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.core.registry;
 
+import com.elysiasilly.musalis.common.block.container.RMIMenu;
 import com.elysiasilly.musalis.common.block.container.ResonanceComposerMenu;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.core.registries.Registries;
@@ -15,4 +16,7 @@ public class MUMenus {
 
     public static final Supplier<MenuType<ResonanceComposerMenu>> RESONANCE_COMPOSER =
             MENUS.register("resonance_composer", () -> IMenuTypeExtension.create(ResonanceComposerMenu::new));
+
+    public static final Supplier<MenuType<RMIMenu>> RMI =
+            MENUS.register("rmi", () -> IMenuTypeExtension.create(RMIMenu::new));
 }

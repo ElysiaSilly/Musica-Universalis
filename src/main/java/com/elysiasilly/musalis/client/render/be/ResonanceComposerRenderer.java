@@ -1,14 +1,10 @@
 package com.elysiasilly.musalis.client.render.be;
 
-import com.elysiasilly.musalis.client.render.MURenderTypes;
-import com.elysiasilly.musalis.common.block.be.CrResonanceComposerBE;
+import com.elysiasilly.musalis.common.block.be.creative.CrResonanceComposerBE;
 import com.elysiasilly.musalis.common.component.DataDiskComponent;
 import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import com.elysiasilly.musalis.core.registry.MUComponents;
-import com.elysiasilly.musalis.core.util.MathUtil;
-import com.elysiasilly.musalis.core.util.RGBA;
-import com.elysiasilly.musalis.core.util.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

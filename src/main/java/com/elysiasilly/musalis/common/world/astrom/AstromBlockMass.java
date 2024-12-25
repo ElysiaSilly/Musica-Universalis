@@ -94,9 +94,9 @@ public class AstromBlockMass {
             if(Minecraft.getInstance().level == null) return;
 
             if(this.isMain) {
-                Minecraft.getInstance().level.addParticle(ParticleTypes.NOTE, be.getBlockPos().getX() + .5, be.getBlockPos().getY() + 2, be.getBlockPos().getZ() + .5, (double) this.mass.colour, 0, 0);
+                //Minecraft.getInstance().level.addParticle(ParticleTypes.NOTE, be.getBlockPos().getX() + .5, be.getBlockPos().getY() + 2, be.getBlockPos().getZ() + .5, (double) this.mass.colour, 0, 0);
             } else {
-                Minecraft.getInstance().level.addParticle(ParticleTypes.NOTE, be.getBlockPos().getX() + .5, be.getBlockPos().getY() + 1, be.getBlockPos().getZ() + .5, (double) this.mass.colour, 0, 0);
+                //Minecraft.getInstance().level.addParticle(ParticleTypes.NOTE, be.getBlockPos().getX() + .5, be.getBlockPos().getY() + 1, be.getBlockPos().getZ() + .5, (double) this.mass.colour, 0, 0);
             }
 
         }

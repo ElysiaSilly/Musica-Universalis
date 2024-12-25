@@ -1,36 +1,53 @@
 package com.elysiasilly.musalis.core.util;
 
 import com.elysiasilly.musalis.client.render.MURenderTypes;
-import com.elysiasilly.musalis.client.render.MUShaders;
+import com.elysiasilly.musalis.client.render.MUCoreShaders;
 import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
 import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.client.model.geometry.StandaloneGeometryBakingContext;
+import net.neoforged.neoforge.client.model.obj.ObjLoader;
+import net.neoforged.neoforge.client.model.obj.ObjModel;
+import net.neoforged.neoforge.client.model.renderable.CompositeRenderable;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class RenderUtil {
 
+    public static final int LIGHTING = 0xFFFFFF;
+    //public static final int LIGHTIN1G = LightTexture.;
+
     public static void drawCube(VertexConsumer consumer, Matrix4f matrix4f, float size, int packedLight, boolean centred, boolean cull, RGBA rgba) {
         // up
         drawPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, size, 0), new Vec3(size, size, size), new Vec3(size, size, 0), new Vec3(0, size, size));
 
+        rgba.a((int) (rgba.a() * .8));
+
         // down
         drawPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, 0, size), new Vec3(size, 0, 0), new Vec3(size, 0, size), new Vec3(0, 0, 0));
+        rgba.a((int) (rgba.a() * .8));
 
         // north
         drawPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, 0, 0), new Vec3(size, size, 0), new Vec3(size, 0, 0), new Vec3(0, size, 0));
+        rgba.a((int) (rgba.a() * .8));
 
         // south
         drawPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, size, size), new Vec3(size, 0, size), new Vec3(size, size, size), new Vec3(0, 0, size));
+        rgba.a((int) (rgba.a() * .8));
 
         // east
         drawPlane(consumer, matrix4f, packedLight, rgba, new Vec3(size, 0, 0), new Vec3(size, size, size), new Vec3(size, 0, size), new Vec3(size, size, 0));
+        rgba.a((int) (rgba.a() * .8));
 
         // west
         drawPlane(consumer, matrix4f, packedLight, rgba, new Vec3(0, size, 0), new Vec3(0, 0, size), new Vec3(0, size, size), new Vec3(0, 0, 0));
@@ -151,11 +168,8 @@ public class RenderUtil {
 
     public static void drawResonance(Leitmotif leitmotif, int res, Matrix4f matrix4f, MultiBufferSource bufferSource, Vec3 start, Vec3 end) {
 
-        Uniform seed = MUShaders.getResonanceVisualiser().getUniform("Seed"); // todo : make this float (-1 - 1)
-        if(seed != null) seed.set(leitmotif.hashCode()); // todo : seeded float
-
-        Uniform resolution = MUShaders.getResonanceVisualiser().getUniform("Resolution");
-        if(resolution != null) resolution.set(res);
+        setUniform(MUCoreShaders.getResonanceVisualiser(), "Seed", leitmotif.hashCode());
+        setUniform(MUCoreShaders.getResonanceVisualiser(), "Resolution", res);
 
         VertexConsumer consumer = bufferSource.getBuffer(MURenderTypes.getResonanceVisualiser());
 
@@ -164,5 +178,31 @@ public class RenderUtil {
         drawPlane(consumer, matrix4f, 200, RGBA.colours.WHITE, new Vec3(start.x, start.y, 0), new Vec3(end.x, end.y, 0), new Vec3(end.x, start.y, 0), new Vec3(start.x, end.y, 0));
 
         //RenderUtil.drawPlane(consumer, matrix4f, 200, new RGBA(1f), start, end, new Vec3(0, 0, 0), false);
+    }
+
+    public static void setUniform(ShaderInstance instance, String name, Object value) {
+        Uniform uniform = instance.getUniform(name);
+        if(uniform == null) return;
+
+        switch(value) {
+            case Float f -> uniform.set(f);
+            case Integer i -> uniform.set(i);
+            default -> throw new IllegalStateException("Unexpected value: " + value);
+        }
+    }
+
+    public static class ObjRenderer {
+        private final CompositeRenderable MODEL;
+
+        public ObjRenderer(ResourceLocation modelLocation, boolean automaticCulling, boolean shadeQuads, boolean flipV, boolean emissiveAmbient, @Nullable String mtlOverride) {
+            modelLocation = ResourceLocation.parse(String.format("%s:models/%s.obj", modelLocation.getNamespace(), modelLocation.getPath()));
+
+            ObjModel model = ObjLoader.INSTANCE.loadModel(new ObjModel.ModelSettings(modelLocation, automaticCulling, shadeQuads, flipV, emissiveAmbient, mtlOverride));
+            this.MODEL = model.bakeRenderable(StandaloneGeometryBakingContext.create(modelLocation));
+        }
+
+        public void render(PoseStack poseStack, MultiBufferSource bufferSource, RenderType renderType, int packedLight) {
+            MODEL.render(poseStack, bufferSource, t -> renderType, packedLight, OverlayTexture.NO_OVERLAY, 0, CompositeRenderable.Transforms.EMPTY);
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -41,7 +42,7 @@ public class EtherCoreEntityRenderer extends EntityRenderer<EtherCoreEntity> {
         poseStack.rotateAround(Axis.YP.rotationDegrees(angleY), 0.5f, 0, 0.5f);
         poseStack.rotateAround(Axis.XP.rotationDegrees(angleX), 0.5f, (float) 1 /16 * 1, 0.5f);
 
-        Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(poseStack.last(), consumer, null, model, 255, 255, 255, 200, packedLight);
+        Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(poseStack.last(), consumer, null, model, 255, 255, 255, 200, LightTexture.sky(packedLight));
 
         poseStack.popPose();
     }

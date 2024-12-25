@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.core;
 
+import com.elysiasilly.musalis.common.interactibles.InteractableManager;
 import com.elysiasilly.musalis.common.world.ether.Ether;
 import com.elysiasilly.musalis.common.world.ether.EtherCore;
 import com.elysiasilly.musalis.core.key.MUResourceKeys;
@@ -12,5 +13,7 @@ public class MURegistries {
             .defaultKey(MusicaUniversalis.location("empty")).create();
 
     public static final Registry<EtherCore> ETHER_CORE = new RegistryBuilder<>(MUResourceKeys.registries.ETHER_CORE).create();
+
+    public static final Registry<InteractableManager<?>> INTERACTABLE_MANAGER = new RegistryBuilder<>(MUResourceKeys.registries.INTERACTABLE_MANAGER).create();
 
 }

@@ -48,7 +48,8 @@ public class MUCreativeTabs {
                     MUBlocks.CREATIVE_RESONANCE_COMPOSER,
                     MUBlocks.CREATIVE_NOTE_TANK,
                     MUBlocks.CREATIVE_RESONANCE_MATERIALISER,
-                    MUBlocks.CREATIVE_RESONANCE_RECORDER
+                    MUBlocks.CREATIVE_RESONANCE_RECORDER,
+                    MUBlocks.RMI
             )))
             .build()
     );

@@ -39,6 +39,8 @@ public class ModRegistries {
     static void onNewRegistry(NewRegistryEvent event) {
         event.register(MURegistries.ETHER);
         event.register(MURegistries.ETHER_CORE);
+        event.register(MURegistries.INTERACTABLE_MANAGER);
+
     }
 
     @SubscribeEvent

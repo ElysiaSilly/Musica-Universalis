@@ -1,6 +1,8 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.*;
+import com.elysiasilly.musalis.common.block.AstromBlock;
+import com.elysiasilly.musalis.common.block.RMIBlock;
+import com.elysiasilly.musalis.common.block.creative.*;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -23,6 +25,9 @@ public class MUBlocks {
 
     public static final DeferredBlock<Block> ASTROM =
             regWithItem("astrom", () -> new AstromBlock(getProp(Blocks.DEEPSLATE)));
+
+    public static final DeferredBlock<Block> RMI =
+            regWithItem("rmi", () -> new RMIBlock(getProp(Blocks.DEEPSLATE)));
 
     public static final DeferredBlock<Block> CREATIVE_ETHER_DISSIPATOR =
             regWithItem("creative_ether_dissipator", () -> new CrEtherDissipatorBlock(getProp(Blocks.DEEPSLATE)), new Item.Properties().rarity(Rarity.EPIC));

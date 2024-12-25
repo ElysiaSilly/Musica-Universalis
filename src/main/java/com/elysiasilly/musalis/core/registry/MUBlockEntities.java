@@ -1,6 +1,8 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.be.*;
+import com.elysiasilly.musalis.common.block.be.AstromBE;
+import com.elysiasilly.musalis.common.block.be.RMIBE;
+import com.elysiasilly.musalis.common.block.be.creative.*;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -14,6 +16,10 @@ public class MUBlockEntities {
 
     public static final Supplier<BlockEntityType<AstromBE>> ASTROM = BLOCKENTITES.register(
             "astrom", () -> BlockEntityType.Builder.of(AstromBE::new, MUBlocks.ASTROM.get()).build(null));
+
+
+    public static final Supplier<BlockEntityType<RMIBE>> RMI = BLOCKENTITES.register(
+            "rmi", () -> BlockEntityType.Builder.of(RMIBE::new, MUBlocks.RMI.get()).build(null));
 
     public static final Supplier<BlockEntityType<CrEtherDissipatorBE>> CREATIVE_ETHER_DISSIPATOR = BLOCKENTITES.register(
             "creative_ether_dissipator", () -> BlockEntityType.Builder.of(CrEtherDissipatorBE::new, MUBlocks.CREATIVE_ETHER_DISSIPATOR.get()).build(null));

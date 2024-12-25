@@ -24,11 +24,11 @@ public class MURenderTypes {
                 RenderSystem.defaultBlendFunc();
     });
 
-    protected static final ShaderStateShard RESONANCE_VISUALISER = new ShaderStateShard(MUShaders::getResonanceVisualiser);
+    protected static final ShaderStateShard RESONANCE_VISUALISER_SHARD = new ShaderStateShard(MUCoreShaders::getResonanceVisualiser);
 
-    private static final Function<ResourceLocation, RenderType> TESTING = Util.memoize((resourceLocation) -> {
+    private static final Function<ResourceLocation, RenderType> RESONANCE_VISUALISER = Util.memoize((resourceLocation) -> {
         RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
-                .setShaderState(RESONANCE_VISUALISER)
+                .setShaderState(RESONANCE_VISUALISER_SHARD)
                 //.setTextureState(BLOCK_SHEET)
                 .setTransparencyState(ADDITIVE_TRANSPARENCY)
                 .setDepthTestState(LEQUAL_DEPTH_TEST) // <<<<<< is this needed for guis?
@@ -41,6 +41,26 @@ public class MURenderTypes {
     });
 
     public static RenderType getResonanceVisualiser() {
-        return TESTING.apply(TextureAtlas.LOCATION_PARTICLES);
+        return RESONANCE_VISUALISER.apply(TextureAtlas.LOCATION_PARTICLES);
+    }
+
+    protected static final ShaderStateShard DEPTH_SHADER_SHARD = new ShaderStateShard(MUCoreShaders::getDepthShader);
+
+    private static final Function<ResourceLocation, RenderType> DEPTH_SHADER = Util.memoize((resourceLocation) -> {
+        RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
+                .setShaderState(DEPTH_SHADER_SHARD)
+
+                .setDepthTestState(LEQUAL_DEPTH_TEST)
+                .setTransparencyState(ADDITIVE_TRANSPARENCY)
+                .setLightmapState(LIGHTMAP)
+                .setCullState(NO_CULL)
+                .setWriteMaskState(COLOR_WRITE)
+
+                .createCompositeState(true);
+        return RenderType.create("depth", DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false, compositeState);
+    });
+
+    public static RenderType getDepthShader() {
+        return DEPTH_SHADER.apply(TextureAtlas.LOCATION_PARTICLES);
     }
 }

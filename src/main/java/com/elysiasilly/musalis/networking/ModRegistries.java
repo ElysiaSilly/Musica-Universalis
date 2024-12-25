@@ -3,6 +3,7 @@ package com.elysiasilly.musalis.networking;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import com.elysiasilly.musalis.networking.payloads.ComposerScreenIndexPayload;
 import com.elysiasilly.musalis.networking.payloads.ComposerScreenModeSetterPayload;
+import com.elysiasilly.musalis.networking.payloads.RMIScreenPayload;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -21,5 +22,7 @@ public class ModRegistries {
                         ServerPayloadHandler::ComposerScreenModeSetterHandler);
         registrar.playToServer(ComposerScreenIndexPayload.TYPE, ComposerScreenIndexPayload.CODEC,
                 ServerPayloadHandler::ComposerScreenIndexHandler);
+        registrar.playToServer(RMIScreenPayload.TYPE, RMIScreenPayload.CODEC,
+                ServerPayloadHandler::MRIScreenHandler);
     }
 }

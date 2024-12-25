@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.client.render.be;
 
-import com.elysiasilly.musalis.common.block.be.CrResonanceRecorderBE;
+import com.elysiasilly.musalis.common.block.be.creative.CrResonanceRecorderBE;
 import com.elysiasilly.musalis.core.MusicaUniversalis;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

@@ -1,12 +1,14 @@
 package com.elysiasilly.musalis.client.gui;
 
+import com.elysiasilly.babel.client.gui.BabelScreen;
+import com.elysiasilly.babel.client.gui.BabelWidget;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
 
 import java.util.List;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class DragParentWidget extends BabelWidget{
+public class DragParentWidget extends BabelWidget {
 
     public DragParentWidget(BabelWidget parent, BabelScreen screen) {
         super(parent, screen);
@@ -21,7 +23,7 @@ public class DragParentWidget extends BabelWidget{
     }
 
     @Override
-    List<BabelWidget> initWidgets() {
+    public List<BabelWidget> initWidgets() {
         return List.of();
     }
 
@@ -33,7 +35,7 @@ public class DragParentWidget extends BabelWidget{
     }
 
     @Override
-    void tick() {
+    public void tick() {
 
     }
 

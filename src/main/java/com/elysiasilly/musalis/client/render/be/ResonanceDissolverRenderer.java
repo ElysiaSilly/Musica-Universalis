@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.client.render.be;
 
-import com.elysiasilly.musalis.common.block.be.CrResonanceDissolverBE;
+import com.elysiasilly.musalis.common.block.be.creative.CrResonanceDissolverBE;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;

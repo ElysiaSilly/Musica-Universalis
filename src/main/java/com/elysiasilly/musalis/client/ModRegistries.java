@@ -1,10 +1,8 @@
 package com.elysiasilly.musalis.client;
 
-import com.elysiasilly.musalis.client.gui.ResonanceComposerScreen;
-import com.elysiasilly.musalis.client.render.be.EtherDissipatorRenderer;
-import com.elysiasilly.musalis.client.render.be.ResonanceComposerRenderer;
-import com.elysiasilly.musalis.client.render.be.ResonanceMaterialiserRenderer;
-import com.elysiasilly.musalis.client.render.be.ResonanceRecorderRenderer;
+import com.elysiasilly.musalis.client.gui.RMIScreen;
+import com.elysiasilly.musalis.client.gui.composer.ResonanceComposerScreen;
+import com.elysiasilly.musalis.client.render.be.*;
 import com.elysiasilly.musalis.client.render.entity.EtherCoreEntityRenderer;
 import com.elysiasilly.musalis.client.tooltip.ResonanceClientTooltipComponent;
 import com.elysiasilly.musalis.client.tooltip.ResonanceTooltipComponent;
@@ -35,6 +33,10 @@ public class ModRegistries {
         event.registerBlockEntityRenderer(MUBlockEntities.CREATIVE_RESONANCE_RECORDER.get(), ResonanceRecorderRenderer::new);
         event.registerBlockEntityRenderer(MUBlockEntities.CREATIVE_RESONANCE_COMPOSER.get(), ResonanceComposerRenderer::new);
         event.registerBlockEntityRenderer(MUBlockEntities.CREATIVE_RESONANCE_MATERIALISER.get(), ResonanceMaterialiserRenderer::new);
+
+        event.registerBlockEntityRenderer(MUBlockEntities.RMI.get(), RMIBERenderer::new);
+        event.registerBlockEntityRenderer(MUBlockEntities.ASTROM.get(), AstromRenderer::new);
+
         /// ENTITY
         event.registerEntityRenderer(MUEntities.ETHER_CORE.get(), EtherCoreEntityRenderer::new);
     }
@@ -55,6 +57,7 @@ public class ModRegistries {
     public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
         //event.register(MUMenus.RESONANCE_COMPOSER.get(), ResonanceComposerScreen::new);
         event.register(MUMenus.RESONANCE_COMPOSER.get(), ResonanceComposerScreen::new);
+        event.register(MUMenus.RMI.get(), RMIScreen::new);
 
     }
 }

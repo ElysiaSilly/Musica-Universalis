@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 
 @SuppressWarnings("unused")
@@ -30,6 +31,7 @@ public class MusicaUniversalis {
         MUMenus.MENUS.register(bus);
         MUEntities.ENTITIES.register(bus);
         MUEtherCores.CORES.register(bus);
+        MUInteractableManagers.INTERACTABLES.register(bus);
 
     }
 }
