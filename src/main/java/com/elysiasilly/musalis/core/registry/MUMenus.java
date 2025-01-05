@@ -1,8 +1,8 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.container.RMIMenu;
-import com.elysiasilly.musalis.common.block.container.ResonanceComposerMenu;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.common.menu.RMIMenu;
+import com.elysiasilly.musalis.common.menu.ResonanceComposerMenu;
+import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class MUMenus {
 
-    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, MusicaUniversalis.MODID);
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, Musalis.MODID);
 
     public static final Supplier<MenuType<ResonanceComposerMenu>> RESONANCE_COMPOSER =
             MENUS.register("resonance_composer", () -> IMenuTypeExtension.create(ResonanceComposerMenu::new));

@@ -2,8 +2,9 @@ package com.elysiasilly.musalis.core.registry;
 
 import com.elysiasilly.musalis.common.block.AstromBlock;
 import com.elysiasilly.musalis.common.block.RMIBlock;
+import com.elysiasilly.musalis.common.block.RimeStoneBlock;
 import com.elysiasilly.musalis.common.block.creative.*;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -20,8 +21,14 @@ import java.util.function.Supplier;
 
 public class MUBlocks {
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(MusicaUniversalis.MODID);
-    public static final DeferredRegister.Items BLOCKITEMS = DeferredRegister.createItems(MusicaUniversalis.MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(Musalis.MODID);
+    public static final DeferredRegister.Items BLOCKITEMS = DeferredRegister.createItems(Musalis.MODID);
+
+    public static final DeferredBlock<Block> RIMESTONE_BLOCK =
+            regWithItem("rimestone_block", () -> new Block(getProp(Blocks.NETHERITE_BLOCK)));
+
+    public static final DeferredBlock<Block> RIMESTONE =
+            regWithItem("rimestone", () -> new RimeStoneBlock(getProp(Blocks.NETHERITE_BLOCK)));
 
     public static final DeferredBlock<Block> ASTROM =
             regWithItem("astrom", () -> new AstromBlock(getProp(Blocks.DEEPSLATE)));

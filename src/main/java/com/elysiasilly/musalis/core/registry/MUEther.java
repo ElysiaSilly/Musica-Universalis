@@ -2,13 +2,12 @@ package com.elysiasilly.musalis.core.registry;
 
 import com.elysiasilly.musalis.common.ether.*;
 import com.elysiasilly.musalis.common.world.ether.Ether;
-import com.elysiasilly.musalis.core.MURegistries;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.core.Musalis;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class MUEther {
-    public static final DeferredRegister<Ether> ETHER = DeferredRegister.create(MURegistries.ETHER, MusicaUniversalis.MODID);
+    public static final DeferredRegister<Ether> ETHER = DeferredRegister.create(Musalis.registries.ETHER, Musalis.MODID);
 
     public static final DeferredHolder<Ether, Empty> EMPTY =
             ETHER.register("empty", Empty::new);

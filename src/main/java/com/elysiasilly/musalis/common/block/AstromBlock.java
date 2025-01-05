@@ -1,10 +1,9 @@
 package com.elysiasilly.musalis.common.block;
 
-import com.elysiasilly.musalis.common.block.be.AstromBE;
+import com.elysiasilly.musalis.common.blockentity.AstromBE;
 import com.elysiasilly.musalis.core.key.MUResourceKeys;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +40,7 @@ public class AstromBlock extends BaseEntityBlock {
 
         return (lvl, pos, st, blockEntity) -> {
             if (blockEntity instanceof AstromBE be) {
-                be.tick();
+                //be.tick();
             }
         };
     }
@@ -53,13 +52,13 @@ public class AstromBlock extends BaseEntityBlock {
 
         if(stack.isEmpty()) {
             if(level.getBlockEntity(pos) instanceof AstromBE be) {
-                player.displayClientMessage(Component.literal(String.valueOf(be.getAstromBlockMass().howMany())), true);
+                //player.displayClientMessage(Component.literal(String.valueOf(be.getAstromBlockMass().howMany())), true);
                 System.out.println(level.registryAccess().registry(MUResourceKeys.registries.NOTE).get().getRandom(level.random).get().value().key(level).location());
             }
         }
         if(stack.is(Items.DIAMOND_PICKAXE)) {
             if(level.getBlockEntity(pos) instanceof AstromBE be) {
-                be.getAstromBlockMass().breakAll();
+                //be.getAstromBlockMass().breakAll();
             }
         }
 

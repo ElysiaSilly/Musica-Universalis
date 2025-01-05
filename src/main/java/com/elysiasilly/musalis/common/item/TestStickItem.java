@@ -1,13 +1,11 @@
 package com.elysiasilly.musalis.common.item;
 
-import com.elysiasilly.musalis.client.gui.composer.ResonanceComposerScreen;
-import com.elysiasilly.musalis.common.interactibles.InteractableManager;
+import com.elysiasilly.musalis.common.interactibles.managers;
 import com.elysiasilly.musalis.common.world.ether.EtherCoreManager;
-import com.elysiasilly.musalis.core.util.MCUtil;
-import com.elysiasilly.musalis.core.util.MathUtil;
+import com.elysiasilly.musalis.common.world.ether.EtherCoreObject;
+import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
+import net.minecraft.client.renderer.PostChain;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -27,10 +25,10 @@ public class TestStickItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
 
         if(level instanceof ServerLevel serverLevel) {
-            EtherCoreManager manager = EtherCoreManager.get(serverLevel);
+            EtherCoreManager manager = (EtherCoreManager) managers.MANAGERS.getFirst(); //EtherCoreManager.get(serverLevel);
 
             if(!player.isShiftKeyDown()) {
-                manager.addCore(level, player.position());
+                manager.add(new EtherCoreObject(level, Vec3.ZERO, player.position()));
                 System.out.println(manager.interactables.size());
             } else {
                 manager.interactables.removeLast();
@@ -44,13 +42,18 @@ public class TestStickItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        if(entity instanceof Player player) {
+        if(level.isClientSide) {
             if(isSelected) {
-                Vec3 ray = MCUtil.raycast.shittyRayCast(player, 10, .01f);
+                Minecraft.getInstance().gameRenderer.loadEffect(Musalis.location("shaders/post/normals.json"));
+                PostChain post = Minecraft.getInstance().gameRenderer.currentEffect();
 
-                level.addParticle(ParticleTypes.LAVA, ray.x, ray.y, ray.z, 0, 0, 0);
+                //if(((awooga) Minecraft.getInstance().levelRenderer).musicaUniversalis$getDepthRenderTarget() == null) return;
+
+                //post.setUniform("DepthBuffer", ((awooga) Minecraft.getInstance().levelRenderer).musicaUniversalis$getDepthRenderTarget().getDepthTextureId());
+
+            } else {
+                Minecraft.getInstance().gameRenderer.shutdownEffect();
             }
         }
-
     }
 }

@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.common.block.creative;
 
-import com.elysiasilly.musalis.common.block.be.creative.CrResonanceMaterialiserBE;
+import com.elysiasilly.musalis.common.blockentity.creative.CrResonanceMaterialiserBE;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;

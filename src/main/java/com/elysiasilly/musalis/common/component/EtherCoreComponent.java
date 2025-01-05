@@ -1,12 +1,7 @@
 package com.elysiasilly.musalis.common.component;
 
-import com.elysiasilly.musalis.common.world.ether.EtherStack;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 public class EtherCoreComponent {
-
+    /*
     // wtf are these for
     @Override
     public boolean equals(Object obj) {
@@ -65,4 +60,6 @@ public class EtherCoreComponent {
         if(isCreative()) return new EtherStack(this.etherStack.getEther(), 0);
         return this.etherStack.extract(amount);
     }
+
+     */
 }

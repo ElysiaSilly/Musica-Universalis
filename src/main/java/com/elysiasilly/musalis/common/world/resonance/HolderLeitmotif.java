@@ -1,53 +1,64 @@
 package com.elysiasilly.musalis.common.world.resonance;
 
 import com.elysiasilly.musalis.core.key.MUResourceKeys;
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HolderLeitmotif {
 
     // scary
-    //final Either<List<Holder<Leitmotif>>, List<Holder<Note>>> packed;
-    final List<Holder<Note>> notesPacked;
-    final List<Holder<HolderLeitmotif>> leitmotifsPacked;
+    final Either<List<Holder<Note>>, List<Holder<HolderLeitmotif>>> leitmotif;
 
-    public static class codec{ // todo : bonds for recursive leitmotifs
-        public static final Codec<Holder<HolderLeitmotif>> HOLDER;
+    public static class codec {
+        public static Codec<Holder<HolderLeitmotif>> HOLDER;
 
         public static final Codec<HolderLeitmotif> CODEC = Codec.recursive("leitmotif", (ins) -> RecordCodecBuilder.create(instance -> instance.group(
-                codec.HOLDER.listOf().fieldOf("leitmotifs").forGetter(i -> i.leitmotifsPacked),
-                Note.codec.HOLDER.listOf().fieldOf("notes").forGetter(i -> i.notesPacked)
-
-                //Codec.xor(
-                //        codec.HOLDER.listOf(),
-                //        Note.codec.HOLDER.listOf()
-                //).fieldOf("map").forGetter(i -> i.packed)
+                Codec.xor(
+                        Note.codec.HOLDER.listOf().fieldOf("compound").codec(),
+                        HOLDER.listOf().fieldOf("recursive").codec()
+                ).fieldOf("leitmotif").forGetter(i -> i.leitmotif)
         ).apply(instance, HolderLeitmotif::new)));
 
-        static {HOLDER = RegistryFileCodec.create(MUResourceKeys.registries.LEITMOTIF, CODEC);}
+        static { HOLDER = RegistryFileCodec.create(MUResourceKeys.registries.LEITMOTIF, CODEC); }
     }
 
-    public HolderLeitmotif(List<Holder<HolderLeitmotif>> leitmotifs, List<Holder<Note>> notes) {//Either<List<Holder<Leitmotif>>, List<Holder<Note>>> packed) {
-        this.notesPacked = notes;
-        this.leitmotifsPacked = leitmotifs;
+    private HolderLeitmotif(Either<List<Holder<Note>>, List<Holder<HolderLeitmotif>>> leitmotif) {
+        this.leitmotif = leitmotif;
+    }
+
+    public Leitmotif.Type type() {
+        return this.leitmotif.left().isPresent() ? Leitmotif.Type.COMPOUND : this.leitmotif.right().isPresent() ? Leitmotif.Type.RECURSIVE : Leitmotif.Type.INVALID;
+    }
+
+    public boolean isRecursive() {
+        return type().equals(Leitmotif.Type.RECURSIVE);
+    }
+
+    public boolean isCompound() {
+        return type().equals(Leitmotif.Type.COMPOUND);
     }
 
     public Leitmotif unpack() {
-        if(!this.notesPacked.isEmpty()) {
-            List<Note> unpacked = new ArrayList<>();
-            for(Holder<Note> note : this.notesPacked) unpacked.add(note.value());
-            return new Leitmotif(unpacked, List.of());
+
+        Leitmotif leitmotif = new Leitmotif(type());
+
+        if(isCompound()) {
+            for(Holder<Note> holder : this.leitmotif.left().get()) {
+                leitmotif.add(holder.value());
+            }
         }
-        if(!this.leitmotifsPacked.isEmpty()) {
-            List<Leitmotif> unpacked = new ArrayList<>();
-            for(Holder<HolderLeitmotif> leitmotif : this.leitmotifsPacked) unpacked.add(leitmotif.value().unpack());
-            return new Leitmotif(List.of(), unpacked);
+
+        if(isRecursive()) {
+            for(Holder<HolderLeitmotif> holder : this.leitmotif.right().get()) {
+                leitmotif.add(holder.value().unpack());
+            }
         }
-        return new Leitmotif(List.of(), List.of());
+
+        return leitmotif;
     }
 }

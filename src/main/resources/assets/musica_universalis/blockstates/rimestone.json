@@ -1,30 +1,31 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "musica_universalis:block/rime_1"
-      },
-      {
-        "model": "musica_universalis:block/rime_2"
-      },
-      {
-        "model": "musica_universalis:block/rime_3"
-      },
-      {
-        "model": "musica_universalis:block/rime_4"
-      },
-      {
-        "model": "musica_universalis:block/rime_21"
-      },
-      {
-        "model": "musica_universalis:block/rime_22"
-      },
-      {
-        "model": "musica_universalis:block/rime_23"
-      },
-      {
-        "model": "musica_universalis:block/rime_24"
-      }
-    ]
+    "tile=1": {
+      "model": "musica_universalis:block/rimestone/1"
+    },
+    "tile=2": {
+      "model": "musica_universalis:block/rimestone/2"
+    },
+    "tile=3": {
+      "model": "musica_universalis:block/rimestone/3"
+    },
+    "tile=4": {
+      "model": "musica_universalis:block/rimestone/4"
+    },
+    "tile=5": {
+      "model": "musica_universalis:block/rimestone/5"
+    },
+    "tile=6": {
+      "model": "musica_universalis:block/rimestone/6"
+    },
+    "tile=7": {
+      "model": "musica_universalis:block/rimestone/7"
+    },
+    "tile=8": {
+      "model": "musica_universalis:block/rimestone/8"
+    },
+    "tile=9": {
+      "model": "musica_universalis:block/rimestone/9"
+    }
   }
 }

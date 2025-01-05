@@ -1,9 +1,9 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.block.be.AstromBE;
-import com.elysiasilly.musalis.common.block.be.RMIBE;
-import com.elysiasilly.musalis.common.block.be.creative.*;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.common.blockentity.AstromBE;
+import com.elysiasilly.musalis.common.blockentity.RMIBE;
+import com.elysiasilly.musalis.common.blockentity.creative.*;
+import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -12,11 +12,10 @@ import java.util.function.Supplier;
 
 public class MUBlockEntities {
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCKENTITES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, MusicaUniversalis.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCKENTITES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Musalis.MODID);
 
     public static final Supplier<BlockEntityType<AstromBE>> ASTROM = BLOCKENTITES.register(
             "astrom", () -> BlockEntityType.Builder.of(AstromBE::new, MUBlocks.ASTROM.get()).build(null));
-
 
     public static final Supplier<BlockEntityType<RMIBE>> RMI = BLOCKENTITES.register(
             "rmi", () -> BlockEntityType.Builder.of(RMIBE::new, MUBlocks.RMI.get()).build(null));

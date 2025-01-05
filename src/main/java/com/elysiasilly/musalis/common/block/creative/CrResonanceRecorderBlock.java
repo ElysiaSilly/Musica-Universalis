@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.common.block.creative;
 
-import com.elysiasilly.musalis.common.block.be.creative.CrResonanceRecorderBE;
+import com.elysiasilly.musalis.common.blockentity.creative.CrResonanceRecorderBE;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

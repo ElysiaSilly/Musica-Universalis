@@ -1,7 +1,6 @@
 package com.elysiasilly.musalis.common.world.ether;
 
-import com.elysiasilly.musalis.core.MURegistries;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.Util;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -22,18 +21,14 @@ public abstract class EtherCore {
     // todo
     protected abstract void process();
 
-    // insertEther()
-
-    // extractEther()
-
     public ModelResourceLocation getModel() {
-        ResourceLocation location = MURegistries.ETHER_CORE.getKey(this);
+        ResourceLocation location = Musalis.registries.ETHER_CORE.getKey(this);
         String string = location == null ? "unregistered_sadface" : location.toString();
         string = string.substring(string.indexOf(":") + 1);
-        return ModelResourceLocation.standalone(MusicaUniversalis.location("special/" + string));
+        return ModelResourceLocation.standalone(Musalis.location("special/" + string));
     }
 
     public Component getName() {
-        return Component.translatable(Util.makeDescriptionId("ether_core", MURegistries.ETHER_CORE.getKey(this)));
+        return Component.translatable(Util.makeDescriptionId("ether_core", Musalis.registries.ETHER_CORE.getKey(this)));
     };
 }

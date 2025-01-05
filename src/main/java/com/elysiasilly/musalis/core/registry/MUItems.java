@@ -3,19 +3,21 @@ package com.elysiasilly.musalis.core.registry;
 import com.elysiasilly.musalis.common.item.DataDiskItem;
 import com.elysiasilly.musalis.common.item.EtherCoreItem;
 import com.elysiasilly.musalis.common.item.TestStickItem;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class MUItems {
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MusicaUniversalis.MODID);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Musalis.MODID);
 
     public static final DeferredItem<Item> RIMESTONE_SHARD =
             ITEMS.registerSimpleItem("rimestone_shard");
     public static final DeferredItem<Item> RIMESTONE_CHUNK =
             ITEMS.registerSimpleItem("rimestone_chunk");
+    public static final DeferredItem<Item> COLD_STEEL =
+            ITEMS.registerSimpleItem("cold_steel");
 
     public static final DeferredItem<EtherCoreItem> FLAWED_CORE =
             ITEMS.register("flawed_ether_core", () ->

@@ -1,21 +1,10 @@
 package com.elysiasilly.musalis.client.render.be;
 
-import com.elysiasilly.musalis.common.block.be.creative.CrEtherDissipatorBE;
-import com.elysiasilly.musalis.common.component.EtherCoreComponent;
-import com.elysiasilly.musalis.common.world.ether.EtherStack;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
-import com.elysiasilly.musalis.core.registry.MUComponents;
+import com.elysiasilly.musalis.common.blockentity.creative.CrEtherDissipatorBE;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 public class EtherDissipatorRenderer implements BlockEntityRenderer<CrEtherDissipatorBE> {
 
@@ -24,6 +13,7 @@ public class EtherDissipatorRenderer implements BlockEntityRenderer<CrEtherDissi
     @Override
     public void render(CrEtherDissipatorBE be, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1) {
 
+        /*
         if(be.getCore() != null) {
             if(!be.getCore().isEmpty()) {
 
@@ -55,5 +45,7 @@ public class EtherDissipatorRenderer implements BlockEntityRenderer<CrEtherDissi
                 poseStack.popPose();
             }
         }
+
+         */
     }
 }

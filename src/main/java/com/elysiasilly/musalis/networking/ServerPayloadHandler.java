@@ -1,7 +1,7 @@
 package com.elysiasilly.musalis.networking;
 
-import com.elysiasilly.musalis.common.block.container.RMIMenu;
-import com.elysiasilly.musalis.common.block.container.ResonanceComposerMenu;
+import com.elysiasilly.musalis.common.menu.RMIMenu;
+import com.elysiasilly.musalis.common.menu.ResonanceComposerMenu;
 import com.elysiasilly.musalis.networking.payloads.ComposerScreenIndexPayload;
 import com.elysiasilly.musalis.networking.payloads.ComposerScreenModeSetterPayload;
 import com.elysiasilly.musalis.networking.payloads.RMIScreenPayload;

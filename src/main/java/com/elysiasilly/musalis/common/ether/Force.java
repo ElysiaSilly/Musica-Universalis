@@ -1,19 +1,17 @@
 package com.elysiasilly.musalis.common.ether;
 
 import com.elysiasilly.musalis.common.world.ether.Ether;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 public class Force extends Ether {
 
+
     @Override
-    public void passiveDissipate(ItemStack stack, BlockPos pos, Level level) {
+    public void passiveDissipate() {
 
     }
 
     @Override
-    public void volatileDissipate(ItemStack stack, BlockPos pos, Level level) {
+    public void volatileDissipate() {
 
     }
 }

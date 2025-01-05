@@ -1,10 +1,7 @@
 package com.elysiasilly.musalis.core.registry;
 
-import com.elysiasilly.musalis.common.component.EtherCoreComponent;
 import com.elysiasilly.musalis.common.world.ether.Ether;
-import com.elysiasilly.musalis.common.world.ether.EtherStack;
-import com.elysiasilly.musalis.core.MURegistries;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -20,9 +17,9 @@ import java.util.List;
 
 public class MUCreativeTabs {
 
-    public static final DeferredRegister<CreativeModeTab> CREATIVETABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MusicaUniversalis.MODID);
+    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Musalis.MODID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MATERIAL = CREATIVETABS.register("musalis_materials", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MATERIAL = TABS.register("musalis_materials", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.musalis_material"))
             .icon(() -> new ItemStack(MUItems.RIMESTONE_CHUNK.get()))
             .displayItems((parameters, output) -> output.acceptAll(list(
@@ -33,13 +30,17 @@ public class MUCreativeTabs {
                     MUItems.CREATIVE_CORE,
                     MUItems.CREATIVE_DATA_DISK,
 
+                    MUBlocks.RIMESTONE,
                     MUItems.RIMESTONE_CHUNK,
-                    MUItems.RIMESTONE_SHARD
+                    MUItems.RIMESTONE_SHARD,
+                    MUBlocks.RIMESTONE_BLOCK,
+
+                    MUItems.COLD_STEEL
             )))
             .build()
     );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MACHINE = CREATIVETABS.register("musalis_machines", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MACHINE = TABS.register("musalis_machines", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.musalis_machine"))
             .icon(() -> new ItemStack(MUBlocks.CREATIVE_ETHER_DISSIPATOR.get()))
             .displayItems((parameters, output) -> output.acceptAll(list(
@@ -54,7 +55,7 @@ public class MUCreativeTabs {
             .build()
     );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ETHER = CREATIVETABS.register("musalis_ether", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ETHER = TABS.register("musalis_ether", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.musalis_ether"))
             .icon(() -> new ItemStack(MUItems.CREATIVE_CORE.get()))
             .displayItems((parameters, output) -> output.acceptAll(ether()))
@@ -64,21 +65,17 @@ public class MUCreativeTabs {
     private static List<ItemStack> list(Holder<?>...entries) {
         List<ItemStack> list = new ArrayList<>();
         for(Holder<?> entry : entries) {
-            if(entry.value() instanceof Item item) {
-                list.add(item.getDefaultInstance());
-            }
-            if(entry.value() instanceof Block block) {
-                list.add(block.asItem().getDefaultInstance());
-            }
+            if(entry.value() instanceof Item item) list.add(item.getDefaultInstance());
+            if(entry.value() instanceof Block block) list.add(block.asItem().getDefaultInstance());
         }
         return list;
     }
 
     private static List<ItemStack> ether() {
         List<ItemStack> list = new ArrayList<>();
-        for(Ether ether : MURegistries.ETHER.stream().toList()) {
+        for(Ether ether : Musalis.registries.ETHER.stream().toList()) {
             ItemStack stack = MUItems.CREATIVE_CORE.get().getDefaultInstance();
-            stack.set(MUComponents.ETHER_CORE, new EtherCoreComponent(new EtherStack(ether, 99), -1, 1f));
+            //stack.set(MUComponents.ETHER_CORE, new EtherCoreComponent(new EtherStack(ether, 99), -1, 1f));
             list.add(stack);
         }
         return list;

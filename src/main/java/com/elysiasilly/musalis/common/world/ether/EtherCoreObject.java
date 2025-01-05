@@ -1,37 +1,30 @@
 package com.elysiasilly.musalis.common.world.ether;
 
 import com.elysiasilly.musalis.common.interactibles.Interactable;
-import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
-import com.elysiasilly.musalis.common.world.resonance.Note;
-import com.elysiasilly.musalis.core.MURegistries;
+import com.elysiasilly.musalis.core.Musalis;
 import com.elysiasilly.musalis.core.key.MUResourceKeys;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.client.renderer.debug.DebugRenderer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 public class EtherCoreObject extends Interactable<EtherCoreManager> {
 
-    //private final Level level;
     private final EtherCore core;
 
-    private Vec3 rotation = Vec3.ZERO;
-    private Vec3 position = Vec3.ZERO;
+    private Vec3 rotation;
+    private Vec3 position;
+
+    private Vec3 velocity = Vec3.ZERO;
 
     public static class codec{
         public static final Codec<EtherCoreObject> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                MURegistries.ETHER_CORE.byNameCodec().fieldOf("core").forGetter(i -> i.core),
+                Musalis.registries.ETHER_CORE.byNameCodec().fieldOf("core").forGetter(i -> i.core),
                 Vec3.CODEC.fieldOf("rotation").forGetter(i -> i.rotation),
                 Vec3.CODEC.fieldOf("position").forGetter(i -> i.position)
         ).apply(instance, EtherCoreObject::new));
@@ -49,63 +42,54 @@ public class EtherCoreObject extends Interactable<EtherCoreManager> {
         this.position = position;
     }
 
-
-    public EtherCoreObject(Level level, EtherCore core) {
-        this.core = core;
-        //this.level = level;
-    }
-
-    public EtherCoreObject(Level level) {
-        this.core = level.registryAccess().registry(MUResourceKeys.registries.ETHER_CORE).flatMap(registry -> registry.getRandom(level.random)).get().value();
-        //this.level = level;
-    }
-
-    public EtherCore getCore() {
+    public EtherCore core() {
         return this.core;
     }
 
-    public Vec3 getRotation() {
+    public Vec3 rot() {
         return this.rotation;
     }
 
-    public void setRotation(Vec3 rotation) {
+    public void rot(Vec3 rotation) {
         this.rotation = rotation;
     }
 
-    public Vec3 getPosition() {
+    public Vec3 pos() {
         return this.position;
     }
 
-    public void setPosition(Vec3 position) {
+    public void pos(Vec3 position) {
         this.position = position;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public void render() {
+    public void move(Vec3 direction) {
+        this.pos(position.add(direction));
+    }
 
+    public void vel(Vec3 velocity) {
+        this.velocity = velocity;
+    }
+
+
+    @Override
+    public void render(RenderLevelStageEvent event) {
+
+        if(true) return;
+
+        if(!(event.getStage() == RenderLevelStageEvent.Stage.AFTER_CUTOUT_BLOCKS)) return;
+
+        PoseStack stack = event.getPoseStack();
+        stack.pushPose();
+
+        Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
+        stack.translate(position.x - cam.getPosition().x, position.y - cam.getPosition().y, position.z - cam.getPosition().z);
+
+        DebugRenderer.renderFilledBox(stack, Minecraft.getInstance().renderBuffers().bufferSource(), getShape().bounds(), 1, 1, 1, .5f);
+        stack.popPose();
     }
 
     @Override
     public void tick(Level level) {
-        if(level instanceof ServerLevel serverLevel) serverLevel.sendParticles(ParticleTypes.FALLING_LAVA, this.position.x, this.position.y, this.position.z, 1, 0, 0, 0, 0);
-
-        for(VoxelShape shape : level.getBlockCollisions(null, new AABB(position, position).inflate(.5))) {
-        }
-
-        Iterable<VoxelShape> sh = level.getBlockCollisions(null, new AABB(position, position).inflate(.1));
-
-        if(!sh.iterator().hasNext()) setPosition(this.position.subtract(0, .5, 0));
-
-        //setPosition(this.position.subtract(0, 1, 0));
-    }
-
-    @Override
-    public void serialize(CompoundTag compoundTag, HolderLookup.Provider provider) {
-
-    }
-
-    @Override
-    public void deserialize(CompoundTag compoundTag, HolderLookup.Provider provider) {
 
     }
 }

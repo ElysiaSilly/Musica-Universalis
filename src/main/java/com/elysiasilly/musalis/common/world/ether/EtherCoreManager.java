@@ -1,48 +1,49 @@
 package com.elysiasilly.musalis.common.world.ether;
 
 import com.elysiasilly.musalis.common.interactibles.InteractableManager;
-import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
-import com.elysiasilly.musalis.core.util.MathUtil;
-import com.mojang.serialization.JsonOps;
+import com.elysiasilly.musalis.common.interactibles.managers;
+import com.elysiasilly.musalis.util.MCUtil;
+import com.elysiasilly.musalis.util.MathUtil;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = MusicaUniversalis.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class EtherCoreManager extends InteractableManager<EtherCoreObject> {
 
-    public static EtherCoreManager get(ServerLevel level) {
-        return level.getDataStorage().computeIfAbsent(new Factory<>(EtherCoreManager::create, EtherCoreManager::load), "ether");
+    public EtherCoreManager() {
+        super(Tick.PRE, "ether_cores");
     }
 
-    public static EtherCoreManager create() {
-        return new EtherCoreManager();
+    @Override
+    public Codec<EtherCoreObject> getCodec() {
+        return EtherCoreObject.codec.CODEC;
     }
 
-    public static EtherCoreManager load(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        EtherCoreManager data = create();
+    @Override
+    public EtherCoreManager load(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        EtherCoreManager manager = create();
 
         int size = compoundTag.getInt("size");
 
-        for(int i = 0; i <= size; i++) {
-            data.interactables.add(EtherCoreObject.codec.CODEC.parse(NbtOps.INSTANCE, compoundTag.get(String.valueOf(i)) ).getOrThrow());
+        for(int i = 1; i <= size; i++) {
+            EtherCoreObject result = EtherCoreObject.codec.CODEC.parse(NbtOps.INSTANCE, compoundTag.get(String.valueOf(i))).getOrThrow();
+            result.manager = manager;
+            manager.interactables.add(result);
         }
 
-        return data;
+        return manager;
+    }
+
+    @Override
+    public EtherCoreManager create() {
+        return new EtherCoreManager();
     }
 
     public void addCore(Level level, Vec3 pos) {
@@ -63,13 +64,30 @@ public class EtherCoreManager extends InteractableManager<EtherCoreObject> {
         return compoundTag;
     }
 
-    @SubscribeEvent
-    public static void tick(LevelTickEvent.Pre event) {
-        if(event.getLevel() instanceof ServerLevel level) {
-            EtherCoreManager manager = EtherCoreManager.get(level);
-            manager.tick(event.getLevel());
+
+    static Vec3 previous;
+
+    public static void drag(Player player, Level level) {
+        List<Vec3> raycast = MCUtil.raycast.shittyRayCast(player, MCUtil.raycast.GOOD_ENOUGH);
+
+        if(level instanceof ServerLevel serverLevel) {
+
+            EtherCoreManager manager = (EtherCoreManager) managers.MANAGERS.getFirst(); //EtherCoreManager.get(serverLevel);
+
+            for(EtherCoreObject object : manager.interactables) {
+
+                for(Vec3 point : raycast) {
+                    if(MathUtil.withinBounds(point, MathUtil.vectors.add(object.pos(), -.5), MathUtil.vectors.add(object.pos(), .5))) {
+                        if(previous == null) previous = point;
+                        //object.setVelocity(MathUtil.vector.multiply(point.subtract(previous), 2));
+                        object.pos(MathUtil.vectors.offset(player.getEyePosition(), player.getLookAngle(), 3));
+                        //System.out.println(MathUtil.vector.multiply(point.subtract(previous), 2));
+                        //if(!point.equals(previous)) object.setPosition(point);
+                        previous = point;
+                    }
+                }
+            }
         }
     }
-
 
 }

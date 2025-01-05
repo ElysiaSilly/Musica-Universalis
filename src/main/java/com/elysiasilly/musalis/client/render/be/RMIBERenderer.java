@@ -1,13 +1,14 @@
 package com.elysiasilly.musalis.client.render.be;
 
 import com.elysiasilly.babel.client.render.BabelBERenderer;
-import com.elysiasilly.musalis.client.gui.RMIScreen;
-import com.elysiasilly.musalis.common.block.be.RMIBE;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
-import com.elysiasilly.musalis.core.util.RenderUtil;
+import com.elysiasilly.musalis.client.screen.RMIScreen;
+import com.elysiasilly.musalis.common.blockentity.RMIBE;
+import com.elysiasilly.musalis.core.Musalis;
+import com.elysiasilly.musalis.util.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -17,10 +18,10 @@ import net.minecraft.world.phys.Vec3;
 
 public class RMIBERenderer extends BabelBERenderer<RMIBE> {
 
-    static final ResourceLocation TEXTURE = MusicaUniversalis.location("textures/block/rmi.png");
+    static final ResourceLocation TEXTURE = Musalis.location("textures/block/rmi.png");
 
-    static final RenderUtil.ObjRenderer DISH = new RenderUtil.ObjRenderer(MusicaUniversalis.location("special/rmi"), false, true, true, true, null);
-    static final RenderUtil.ObjRenderer FRAME = new RenderUtil.ObjRenderer(MusicaUniversalis.location("special/rmi_frame"), false, true, true, true, null);
+    static final RenderUtil.ObjRenderer DISH = new RenderUtil.ObjRenderer(Musalis.location("special/rmi"), false, true, true, true, null);
+    static final RenderUtil.ObjRenderer FRAME = new RenderUtil.ObjRenderer(Musalis.location("special/rmi_frame"), false, true, true, true, null);
 
     public RMIBERenderer(BlockEntityRendererProvider.Context context) {
         super(context);
@@ -43,7 +44,7 @@ public class RMIBERenderer extends BabelBERenderer<RMIBE> {
 
         if(Minecraft.getInstance().screen instanceof RMIScreen screen) if(screen.menu.getBE().equals(be)) flag = false;
 
-        if(flag) DISH.render(poseStack, multiBufferSource, RenderType.entityCutout(TEXTURE), RenderUtil.LIGHTING);
+        if(flag) DISH.render(poseStack, multiBufferSource, RenderType.entityCutout(TEXTURE), LightTexture.FULL_SKY);
 
         poseStack.popPose();
 

@@ -1,13 +1,11 @@
 package com.elysiasilly.musalis.client.render.be;
 
 import com.elysiasilly.babel.client.render.BabelBERenderer;
+import com.elysiasilly.musalis.client.render.IDepthRenderTarget;
 import com.elysiasilly.musalis.client.render.MUCoreShaders;
-import com.elysiasilly.musalis.client.render.MURenderTypes;
-import com.elysiasilly.musalis.common.block.be.AstromBE;
-import com.elysiasilly.musalis.common.block.be.RMIBE;
-import com.elysiasilly.musalis.core.util.RGBA;
-import com.elysiasilly.musalis.core.util.RenderUtil;
-import com.elysiasilly.musalis.core.awooga;
+import com.elysiasilly.musalis.common.blockentity.AstromBE;
+import com.elysiasilly.musalis.util.RGBA;
+import com.elysiasilly.musalis.util.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -26,12 +24,12 @@ public class AstromRenderer extends BabelBERenderer<AstromBE> {
 
     @Override
     public void render(AstromBE astromBE, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay) {
-        VertexConsumer consumer = multiBufferSource.getBuffer(MURenderTypes.getDepthShader());
+        VertexConsumer consumer = multiBufferSource.getBuffer(MUCoreShaders.depthShader.get());
 
-        ShaderInstance instance = MUCoreShaders.getDepthShader();
+        ShaderInstance instance = MUCoreShaders.depthShader.instance();
 
-        if(((awooga) Minecraft.getInstance().levelRenderer).musicaUniversalis$getDepthRenderTarget() == null) return;
-        instance.setSampler("DepthBuffer", ((awooga) Minecraft.getInstance().levelRenderer).musicaUniversalis$getDepthRenderTarget().getDepthTextureId());
+        if(((IDepthRenderTarget) Minecraft.getInstance().levelRenderer).getDepthRenderTarget() == null) return;
+        instance.setSampler("DepthBuffer", ((IDepthRenderTarget) Minecraft.getInstance().levelRenderer).getDepthRenderTarget().getDepthTextureId());
 
         RenderUtil.setUniform(instance, "nearPlaneDistance", GameRenderer.PROJECTION_Z_NEAR);
         RenderUtil.setUniform(instance, "farPlaneDistance", Minecraft.getInstance().gameRenderer.getDepthFar());

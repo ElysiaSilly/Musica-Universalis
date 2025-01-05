@@ -1,14 +1,12 @@
 package com.elysiasilly.musalis.client.tooltip;
 
-import com.elysiasilly.musalis.common.world.resonance.Note;
 import com.elysiasilly.musalis.common.world.resonance.Resonance;
-import com.elysiasilly.musalis.core.util.RegistryUtil;
+import com.elysiasilly.musalis.util.RegistryUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import org.joml.Matrix4f;
 
@@ -70,6 +68,7 @@ public class ResonanceClientTooltipComponent implements ClientTooltipComponent {
 
         if(resonance == null) return;
 
+        /*
         int index = 0;
         for(Note note : resonance.unpack().getNotes()) {
             ResourceLocation location = note.location(level);
@@ -77,5 +76,7 @@ public class ResonanceClientTooltipComponent implements ClientTooltipComponent {
             guiGraphics.blitSprite(location, x + (index * 11), (int) (y + (note.pitch() * 1.5)), 10, 10);
             index++;
         }
+
+         */
     }
 }

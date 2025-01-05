@@ -1,51 +1,93 @@
 package com.elysiasilly.musalis.common.world.ether;
 
-import com.elysiasilly.musalis.core.MURegistries;
+import com.elysiasilly.musalis.common.world.resonance.Bond;
+import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class EtherStack {
 
-    public static final Codec<EtherStack> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            MURegistries.ETHER.byNameCodec().fieldOf("ether").forGetter(i -> i.ether),
-            Codec.INT.fieldOf("amount").forGetter(i -> i.amount)
-    ).apply(instance, EtherStack::new));
+    private Bond bond;
+    public final List<Leitmotif> leitmotifs = new ArrayList<>();
 
-    final Ether ether;
-    int amount;
+    public enum Purity { PURE, DILUTED }
 
-    public EtherStack(Ether ether, int amount) {
-        this.ether = ether;
-        this.amount = amount;
+    public static class codec {
+        public static final Codec<EtherStack> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.list(Leitmotif.C.CODEC).fieldOf("leitmotif").forGetter(i -> i.leitmotifs)
+        ).apply(instance, EtherStack::new));
     }
 
-    public EtherStack(Ether ether) {
-        this.ether = ether;
-        this.amount = 1;
+    public EtherStack(List<Leitmotif> leitmotifs) {
+        this.leitmotifs.addAll(leitmotifs);
     }
 
-    public int getAmount() {
-        return this.amount;
+    public Purity getPurity() {
+        return null;
     }
 
-    public Ether getEther() {
-        return this.ether;
+    public List<Ether> ether() {
+        return null;
+
+    }
+
+    public Map<Ether, Integer> percentageMap() {
+        return null;
+
+    }
+
+    public Map<Ether, Integer> volumeMap() {
+        return null;
+
+    }
+
+    public void add(List<Leitmotif> leitmotifs) {
+        this.leitmotifs.addAll(leitmotifs);
+    }
+
+    public void add(Leitmotif leitmotif) {
+        this.leitmotifs.add(leitmotif);
+    }
+
+    public List<Leitmotif> getContents() {
+        return this.leitmotifs;
     }
 
     public EtherStack copy() {
-        return new EtherStack(this.ether, this.amount);
+        return new EtherStack(this.leitmotifs);
     }
 
-    /// returns the extracted stack
-    public EtherStack extract(int amount) {
-        if(this.amount == 0) return new EtherStack(this.ether, 0);
-        if(this.amount < amount) {
-            int possibleAmount = amount - this.amount;
-            this.amount = possibleAmount;
-            return new EtherStack(this.ether, possibleAmount);
-        } else {
-            this.amount = this.amount - amount;
-            return new EtherStack(this.ether, amount);
+    public int getVolume() {
+        return 0;
+    }
+
+    public void clean(int percentageCeiling) {
+
+    }
+
+    public EtherStack subtract(Ether ether) {
+        return null;
+
+    }
+
+    public EtherStack subtract(Ether ether, int amount) {
+        return null;
+
+    }
+
+    public void passiveDissipate() {
+        for(Ether ether : ether()) {
+            ether.passiveDissipate();
+        }
+    }
+
+    public void volatileDissipate() {
+        for(Ether ether : ether()) {
+            ether.volatileDissipate();
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.elysiasilly.musalis.common.block;
 
 import com.elysiasilly.babel.common.block.BabelEntityBlock;
-import com.elysiasilly.musalis.common.block.be.RMIBE;
+import com.elysiasilly.musalis.common.blockentity.RMIBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

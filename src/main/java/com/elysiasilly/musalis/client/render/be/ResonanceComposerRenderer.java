@@ -1,9 +1,9 @@
 package com.elysiasilly.musalis.client.render.be;
 
-import com.elysiasilly.musalis.common.block.be.creative.CrResonanceComposerBE;
+import com.elysiasilly.musalis.common.blockentity.creative.CrResonanceComposerBE;
 import com.elysiasilly.musalis.common.component.DataDiskComponent;
 import com.elysiasilly.musalis.common.world.resonance.Leitmotif;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.core.Musalis;
 import com.elysiasilly.musalis.core.registry.MUComponents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -38,7 +38,7 @@ public class ResonanceComposerRenderer implements BlockEntityRenderer<CrResonanc
                 String string = BuiltInRegistries.ITEM.getKey(be.getDisk().getItem()).toString();
                 string = string.substring(string.indexOf(":") + 1);
 
-                BakedModel model = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(MusicaUniversalis.location("special/" + string)));
+                BakedModel model = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(Musalis.location("special/" + string)));
 
                 VertexConsumer consumer = multiBufferSource.getBuffer(RenderType.cutout());
 

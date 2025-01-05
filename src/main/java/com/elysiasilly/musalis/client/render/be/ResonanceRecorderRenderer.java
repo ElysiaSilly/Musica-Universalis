@@ -1,7 +1,7 @@
 package com.elysiasilly.musalis.client.render.be;
 
-import com.elysiasilly.musalis.common.block.be.creative.CrResonanceRecorderBE;
-import com.elysiasilly.musalis.core.MusicaUniversalis;
+import com.elysiasilly.musalis.common.blockentity.creative.CrResonanceRecorderBE;
+import com.elysiasilly.musalis.core.Musalis;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -53,7 +53,7 @@ public class ResonanceRecorderRenderer implements BlockEntityRenderer<CrResonanc
                 String string = BuiltInRegistries.ITEM.getKey(be.getDisk().getItem()).toString();
                 string = string.substring(string.indexOf(":") + 1);
 
-                BakedModel model = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(MusicaUniversalis.location("special/" + string)));
+                BakedModel model = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(Musalis.location("special/" + string)));
 
                 VertexConsumer consumer = multiBufferSource.getBuffer(RenderType.cutout());
 
