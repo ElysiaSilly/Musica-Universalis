@@ -17,6 +17,6 @@ public class MUInteractableManagers {
     public static final DeferredHolder<InteractableManager<?>, RimestarManager> RIMESTARS =
             INTERACTABLES.register("rimestars", RimestarManager::new);
 
-    public static final DeferredHolder<InteractableManager<?>, AstromMassManager> ASTROM_MASSES =
-            INTERACTABLES.register("astrom_masses", AstromMassManager::new);
+    //public static final DeferredHolder<InteractableManager<?>, AstromMassManager> ASTROM_MASSES =
+    //        INTERACTABLES.register("astrom_masses", AstromMassManager::new);
 }

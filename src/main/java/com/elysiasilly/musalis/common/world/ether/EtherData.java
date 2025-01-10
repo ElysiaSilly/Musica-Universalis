@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
@@ -45,9 +46,13 @@ public class EtherData extends SimpleJsonResourceReloadListener {
         object.forEach((key, value) -> {
             JsonObject json = GsonHelper.convertToJsonObject(value, "resonance/ether");
 
-            Pair<Ether, Holder<HolderLeitmotif>> pair = codec.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow();
+            DataResult<Pair<Ether, Holder<HolderLeitmotif>>> result = codec.CODEC.parse(JsonOps.INSTANCE, json);//.getOrThrow();
 
-            DATA.put(pair.getFirst(), pair.getSecond().value().unpack());
+            result.getOrThrow();
+
+            //Pair<Ether, Holder<HolderLeitmotif>> pair = codec.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow();
+
+            //DATA.put(pair.getFirst(), pair.getSecond().value().unpack());
         });
     }
 
