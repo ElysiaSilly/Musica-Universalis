@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class EtherData extends SimpleJsonResourceReloadListener {
 
-    private static final Gson GSON = new Gson();
+    static final Gson GSON = new Gson();
 
     public static final EtherData INSTANCE = new EtherData();
 
@@ -37,7 +37,7 @@ public class EtherData extends SimpleJsonResourceReloadListener {
         );
     }
 
-    private static final Map<Ether, Leitmotif> DATA = new HashMap<>();
+    static final Map<Ether, Leitmotif> DATA = new HashMap<>();
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
@@ -46,7 +46,9 @@ public class EtherData extends SimpleJsonResourceReloadListener {
         object.forEach((key, value) -> {
             JsonObject json = GsonHelper.convertToJsonObject(value, "resonance/ether");
 
-            DataResult<Pair<Ether, Holder<HolderLeitmotif>>> result = codec.CODEC.parse(JsonOps.INSTANCE, json);//.getOrThrow();
+            DataResult<Pair<Ether, Holder<HolderLeitmotif>>> result = codec.CODEC.parse(this.makeConditionalOps(), json);//.getOrThrow();
+
+            Musalis.LOGGER.info(key);
 
             result.getOrThrow();
 

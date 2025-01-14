@@ -19,10 +19,10 @@ public class Musalis {
 
     public static final String SHORTID = "musalis";
     public static final String MODID = "musica_universalis";
-    public static String prefix(String string) { return MODID + ":" + string; }
+
     public static ResourceLocation location(String string) { return ResourceLocation.fromNamespaceAndPath(MODID, string); }
 
-    public static final Logger LOGGER = LogManager.getLogger(MODID.toUpperCase());
+    public static final Logger LOGGER = LogManager.getLogger(SHORTID.toUpperCase());
 
     public Musalis(final IEventBus bus, final ModContainer modContainer) {
 
@@ -36,7 +36,7 @@ public class Musalis {
         MUMenus.MENUS.register(bus);
         MUEntities.ENTITIES.register(bus);
         MUEtherCores.CORES.register(bus);
-        MUInteractableManagers.INTERACTABLES.register(bus);
+        MUManagers.INTERACTABLES.register(bus);
         MUAttachments.ATTACHMENTS.register(bus);
 
     }

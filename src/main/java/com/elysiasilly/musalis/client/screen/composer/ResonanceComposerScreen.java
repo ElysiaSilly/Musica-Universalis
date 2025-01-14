@@ -34,7 +34,7 @@ public class ResonanceComposerScreen extends BabelScreen<ResonanceComposerMenu> 
     Options selected = Options.NONE;
 
     public ResonanceComposerScreen(ResonanceComposerMenu menu, Inventory playerInventory, Component title) {
-        super(menu, title);
+        super(menu);
     }
 
     List<Map.Entry<ResourceKey<Note>, Note>> notes = new ArrayList<>();

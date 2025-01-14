@@ -56,6 +56,10 @@ public class Conversions {
             );
         }
 
+        public static Vec3 rgba(RGBA rgba) {
+            return new Vec3(rgba.red, rgba.green, rgba.blue);
+        }
+
         public static int abgr(RGBA rgba) { // TODO : where alpha
             return rgba.red + (rgba.green * 256) + (rgba.blue * 256 * 256);
         }

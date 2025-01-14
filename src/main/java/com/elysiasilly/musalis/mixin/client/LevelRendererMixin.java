@@ -27,7 +27,7 @@ public abstract class LevelRendererMixin implements IDepthRenderTarget {
     @Unique private com.mojang.blaze3d.pipeline.RenderTarget depthRenderTarget;
 
     @Unique // ??
-    private void babel$copyDepthBuffer() {
+    private void musalis$copyDepthBuffer() {
         if(depthRenderTarget == null) {
             depthRenderTarget = new TextureTarget(this.minecraft.getWindow().getWidth(), minecraft.getWindow().getHeight(), true, Minecraft.ON_OSX);
         }
@@ -49,12 +49,12 @@ public abstract class LevelRendererMixin implements IDepthRenderTarget {
     }
 
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PostChain;process(F)V", ordinal = 1))
-    private void musicaUniversalis$renderLevelPreFabulous(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
+    private void musalis$renderLevelPreFabulous(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
         //because of COURSE it does Minecraft nukes the depth buffer in fabulous graphics before rendering the "transparency" post shader.
         //This copies the Depth buffer before it's nuked to a new render target
         //only done on fabulous graphics
         //if(transparencyChain != null) {
-        babel$copyDepthBuffer();
+        musalis$copyDepthBuffer();
         //}
 
     }

@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.core.registry;
 
+import com.elysiasilly.musalis.common.MUCreativeTab;
 import com.elysiasilly.musalis.common.world.ether.Ether;
 import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.core.Holder;
@@ -55,12 +56,19 @@ public class MUCreativeTabs {
             .build()
     );
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ETHER = TABS.register("musalis_ether", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.musalis_ether"))
-            .icon(() -> new ItemStack(MUItems.CREATIVE_CORE.get()))
-            .displayItems((parameters, output) -> output.acceptAll(ether()))
-            .build()
-    );
+    public static final DeferredHolder<CreativeModeTab, MUCreativeTab> ETHER = TABS.register("musalis_ether", () -> new MUCreativeTab(
+            CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.musalis_ether"))
+                    .icon(() -> new ItemStack(MUItems.CREATIVE_CORE.get()))
+                    .displayItems((parameters, output) -> output.acceptAll(ether()))
+    ));
+
+    //public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ETHER = TABS.register("musalis_ether", () -> MUCreativeTab.builder()
+    //        .title(Component.translatable("itemGroup.musalis_ether"))
+    //        .icon(() -> new ItemStack(MUItems.CREATIVE_CORE.get()))
+    //        .displayItems((parameters, output) -> output.acceptAll(ether()))
+    //        .build()
+    //);
 
     private static List<ItemStack> list(Holder<?>...entries) {
         List<ItemStack> list = new ArrayList<>();

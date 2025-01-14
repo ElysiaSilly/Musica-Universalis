@@ -31,7 +31,7 @@ import java.util.List;
 public class RMIScreen extends BabelScreen<RMIMenu> implements IModifyCameraScreen {
 
     public RMIScreen(RMIMenu menu, Inventory playerInventory, Component title) {
-        super(menu, title);
+        super(menu);
     }
 
     @Override

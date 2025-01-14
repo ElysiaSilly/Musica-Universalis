@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.util;
 
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
@@ -13,6 +14,10 @@ public class MathUtil {
     public static final double PI = Math.PI;
 
     public static class vectors {
+
+        public static Vec2 lerp(Vec2 start, Vec2 to, double delta) {
+            return new Vec2((float) Mth.lerp(delta, start.x, to.x), (float) Mth.lerp(delta, start.y, to.y));
+        }
 
         public static Vec3 random(RandomSource random) {
             return new Vec3(random.nextFloat(), random.nextFloat(), random.nextFloat());

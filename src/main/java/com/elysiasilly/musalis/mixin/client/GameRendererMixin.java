@@ -26,7 +26,7 @@ public class GameRendererMixin {
             cancellable = true
     )
 
-    private void Babel$renderItemInHand(Camera camera, float partialTick, Matrix4f projectionMatrix, CallbackInfo ci) {
+    private void musalis$renderItemInHand(Camera camera, float partialTick, Matrix4f projectionMatrix, CallbackInfo ci) {
         if(this.minecraft.screen instanceof IModifyCameraScreen screen) if(screen.hideElements()) ci.cancel();
     }
 
@@ -36,7 +36,7 @@ public class GameRendererMixin {
     )
 
     // todo : find better place to mixin
-    private void babel$renderLevel(DeltaTracker deltaTracker, CallbackInfo ci) {
+    private void musalis$renderLevel(DeltaTracker deltaTracker, CallbackInfo ci) {
         if(Minecraft.getInstance().screen instanceof IModifyCameraScreen screen) screen.camera(this.mainCamera);
     }
 }

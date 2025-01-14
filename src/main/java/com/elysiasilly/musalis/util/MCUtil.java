@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.util;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleOptions;
@@ -84,6 +85,18 @@ public class MCUtil {
 
         public static void add(Level level, ParticleOptions particle, Vec3 position) {
             add(level, particle, position, Vec3.ZERO);
+        }
+    }
+
+    public static class blockPos {
+
+        public static boolean isNeighbour(BlockPos pos, BlockPos potentialNeighbourPos) {
+            return pos.above().equals(potentialNeighbourPos) ||
+                   pos.below().equals(potentialNeighbourPos) ||
+                   pos.north().equals(potentialNeighbourPos) ||
+                   pos.east().equals(potentialNeighbourPos)  ||
+                   pos.south().equals(potentialNeighbourPos) ||
+                   pos.west().equals(potentialNeighbourPos);
         }
     }
 }

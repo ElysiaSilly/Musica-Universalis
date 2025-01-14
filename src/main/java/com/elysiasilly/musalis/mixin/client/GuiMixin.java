@@ -23,7 +23,7 @@ public class GuiMixin {
             cancellable = true
     )
 
-    private void Babel$render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+    private void musalis$render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if(this.minecraft.screen instanceof IModifyCameraScreen screen) if(screen.hideElements()) ci.cancel();
     }
 }

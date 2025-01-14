@@ -1,6 +1,7 @@
 package com.elysiasilly.musalis.util;
 
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.Vec3;
 
 public class RGBA {
 
@@ -68,6 +69,10 @@ public class RGBA {
 
     public int abgr() {
         return Conversions.colour.abgr(this);
+    }
+
+    public Vec3 vec3() {
+        return Conversions.colour.rgba(this);
     }
 
     public RGBA aberrate(float bias) { // todo

@@ -8,7 +8,7 @@ import com.elysiasilly.musalis.core.Musalis;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class MUInteractableManagers {
+public class MUManagers {
     public static final DeferredRegister<InteractableManager<?>> INTERACTABLES = DeferredRegister.create(Musalis.registries.INTERACTABLE_MANAGER, Musalis.MODID);
 
     public static final DeferredHolder<InteractableManager<?>, EtherCoreManager> ETHER_CORES =
@@ -17,6 +17,6 @@ public class MUInteractableManagers {
     public static final DeferredHolder<InteractableManager<?>, RimestarManager> RIMESTARS =
             INTERACTABLES.register("rimestars", RimestarManager::new);
 
-    //public static final DeferredHolder<InteractableManager<?>, AstromMassManager> ASTROM_MASSES =
-    //        INTERACTABLES.register("astrom_masses", AstromMassManager::new);
+    public static final DeferredHolder<InteractableManager<?>, AstromMassManager> ASTROM_MASSES =
+            INTERACTABLES.register("astrom_masses", AstromMassManager::new);
 }

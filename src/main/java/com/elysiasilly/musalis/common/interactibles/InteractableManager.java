@@ -17,6 +17,8 @@ public abstract class InteractableManager<INTERACTABLE extends Interactable> ext
     // todo: networking CLIENT <-> SERVER
     // todo: automatic (de)serializing
     // todo: collisions
+    // todo: load/unload with chunk
+    // todo: dimensions?
 
     public final Tick TICK;
     public final String NAME;
@@ -42,6 +44,7 @@ public abstract class InteractableManager<INTERACTABLE extends Interactable> ext
 
     public void add(INTERACTABLE interactable) {
         this.interactables.add(interactable);
+        interactable.manager = this;
         setDirty();
     }
 

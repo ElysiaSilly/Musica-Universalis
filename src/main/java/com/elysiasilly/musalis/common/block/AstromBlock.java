@@ -1,72 +1,44 @@
 package com.elysiasilly.musalis.common.block;
 
-import com.elysiasilly.musalis.common.blockentity.AstromBE;
-import com.elysiasilly.musalis.core.key.MUResourceKeys;
-import com.mojang.serialization.MapCodec;
+import com.elysiasilly.musalis.common.world.astrom.AstromMassManager;
+import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 
-public class AstromBlock extends BaseEntityBlock {
+public class AstromBlock extends Block {
     public AstromBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        if(level instanceof ServerLevel serverLevel) {
+            AstromMassManager manager = (AstromMassManager) new AstromMassManager().get(serverLevel);
+
+            manager.add(pos);
+        }
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new AstromBE(blockPos, blockState);
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if(level instanceof ServerLevel serverLevel) {
+            AstromMassManager manager = (AstromMassManager) new AstromMassManager().get(serverLevel);
+
+            manager.remove(pos);
+        }
     }
 
     @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        if(level.isClientSide) return null;
-
-        return (lvl, pos, st, blockEntity) -> {
-            if (blockEntity instanceof AstromBE be) {
-                //be.tick();
-            }
-        };
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-
-        if(level.isClientSide) return ItemInteractionResult.SUCCESS;
-
-        if(stack.isEmpty()) {
-            if(level.getBlockEntity(pos) instanceof AstromBE be) {
-                //player.displayClientMessage(Component.literal(String.valueOf(be.getAstromBlockMass().howMany())), true);
-                System.out.println(level.registryAccess().registry(MUResourceKeys.registries.NOTE).get().getRandom(level.random).get().value().key(level).location());
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        if(level instanceof ServerLevel serverLevel) {
+            if(entity instanceof ItemEntity item) {
+                AstromMassManager manager = (AstromMassManager) new AstromMassManager().get(serverLevel);
             }
         }
-        if(stack.is(Items.DIAMOND_PICKAXE)) {
-            if(level.getBlockEntity(pos) instanceof AstromBE be) {
-                //be.getAstromBlockMass().breakAll();
-            }
-        }
-
-        return ItemInteractionResult.SUCCESS;
-    }
-
-    @Override
-    protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.INVISIBLE;
     }
 }

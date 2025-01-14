@@ -1,0 +1,22 @@
+{
+  "condition": {
+    "only_load_when_present": "musalis"
+  },
+  "config": [
+    {
+      "ether": "musalis:ether"
+    },
+    {
+      "item": "minecraft:item"
+    },
+    {
+      "dimension": "minecraft:dimension"
+    },
+    {
+      "gas": "mekanism:gas",
+      "condition": {
+        "only_load_when_present": "mekanism"
+      }
+    }
+  ]
+}
