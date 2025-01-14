@@ -80,7 +80,7 @@ public class ItemStackWidget extends BabelWidget<BabelWidget, CreativeTab> {
         pose.pushPose();
         pose.translate(this.position.x, this.position.y, 0);
 
-        double delta = 0.5;
+        //double delta = 0.5;
 
         //if(this.endPos != null) {
         //    if(isHovering() && this.position.y > this.endPos.y) {
@@ -92,7 +92,7 @@ public class ItemStackWidget extends BabelWidget<BabelWidget, CreativeTab> {
 
         if(isHovering()) {
             this.rotation = rotation.add(0, 3, 0);
-            this.scale = Mth.lerp(0.2f, scale, 2f);
+            this.scale = Mth.lerp(0.2f, scale, 1.5f);
         } else {
             this.rotation = this.rotation.lerp(this.rotOrigin, 0.2);
             this.scale = Mth.lerp(0.2f, scale, 1f);
