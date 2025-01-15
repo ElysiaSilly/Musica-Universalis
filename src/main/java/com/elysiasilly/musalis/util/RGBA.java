@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.util;
 
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 
@@ -57,6 +58,10 @@ public class RGBA {
         this.green = (int) (this.green / bias);
         this.blue = (int) (this.blue / bias);
         return this;
+    }
+
+    public RGBA lerp(RGBA to, double delta) {
+        return new RGBA((int) Mth.lerp(delta, this.red, to.red), (int) Mth.lerp(delta, this.green, to.green), (int) Mth.lerp(delta, this.blue, to.blue), (int) Mth.lerp(delta, this.alpha, to.alpha));
     }
 
     public int dec() {

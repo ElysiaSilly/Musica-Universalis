@@ -1,5 +1,6 @@
 package com.elysiasilly.babel.client.gui;
 
+import com.elysiasilly.musalis.client.screen.CreativeTab;
 import com.elysiasilly.musalis.util.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,11 +28,14 @@ import java.util.Objects;
 @SuppressWarnings("rawtypes")
 public abstract class BabelScreen<MENU extends AbstractContainerMenu> extends Screen implements MenuAccess<MENU> {
 
+    // todo : please clean this up
+
     public final MENU menu;
 
-    public final List<BabelWidget> children = new ArrayList<>(), descendants = new ArrayList<>();
+    private final List<BabelWidget> children = new ArrayList<>(), descendants = new ArrayList<>();
 
-    public Vec2 mousePosPrevious = new Vec2(0, 0), mousePos = new Vec2(0, 0), mouseVelocity = new Vec2(0, 0);
+    private Vec2 mousePosPrevious = new Vec2(0, 0), mousePos = new Vec2(0, 0), mouseVelocity = new Vec2(0, 0);
+
     public Vec2 offset = new Vec2(0, 0);
 
     public BabelWidget hoveredWidget = null, draggedWidget = null, focusedWidget = null;
@@ -191,15 +195,29 @@ public abstract class BabelScreen<MENU extends AbstractContainerMenu> extends Sc
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        //BabelWidget copy = this.draggedWidget;
         if(isSomethingHovering() && !isSomethingDragging()) if(this.hoveredWidget.draggable) this.draggedWidget = this.hoveredWidget;
         if(isSomethingDragging()) this.draggedWidget.onDrag(this.mousePos, button, this.mouseVelocity);
         if(!isSomethingDragging() && !isSomethingHovering() && this.draggable) this.offset = this.offset.add(mouseVelocity);
+        //if(copy != this.draggedWidget)
         return true;//super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+    }
+
+
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        return super.keyReleased(keyCode, scanCode, modifiers);
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        if(this.draggedWidget != null) this.draggedWidget = null;
+        if(this.draggedWidget != null) this.draggedWidget.onDragRelease(this.mousePos, button); this.draggedWidget = null;
         return super.mouseReleased(mouseX, mouseY, button);
     }
 
@@ -246,7 +264,7 @@ public abstract class BabelScreen<MENU extends AbstractContainerMenu> extends Sc
         return this.mousePos;
     }
 
-    public Vec2 getMouseVelocity() {
+    public Vec2 getMouseVel() {
         return this.mouseVelocity;
     }
 
@@ -269,6 +287,11 @@ public abstract class BabelScreen<MENU extends AbstractContainerMenu> extends Sc
         this.mousePosPrevious = this.mousePos;
     }
 
+    public void add(BabelWidget widget) {
+        this.children.add(widget);
+        this.descendants.add(widget);
+    }
+
     public abstract void renderBackground(GuiGraphics guiGraphics, float partialTick);
 
     @Override
@@ -281,7 +304,4 @@ public abstract class BabelScreen<MENU extends AbstractContainerMenu> extends Sc
         return false;
     }
 
-    static class actions{
-
-    }
 }

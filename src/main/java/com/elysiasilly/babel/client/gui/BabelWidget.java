@@ -5,24 +5,31 @@ import com.elysiasilly.musalis.util.RGBA;
 import com.elysiasilly.musalis.util.RenderUtil;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @SuppressWarnings("rawtypes")
 public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends BabelScreen> {
+
+    // todo : please clean this up
 
     public WIDGET parent;
     public final SCREEN screen;
 
     public final List<BabelWidget> children = new ArrayList<>();
-    public final String ID;
+    public final UUID ID;
 
     public float depth = 1;
     public Vec2 position = new Vec2(0, 0);
@@ -37,7 +44,7 @@ public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends Bab
     public BabelWidget(@Nullable WIDGET parent, @NotNull SCREEN screen) {
         this.screen = screen;
         this.parent = parent;
-        this.ID = createID();
+        this.ID = UUID.randomUUID();
         initBefore();
         this.children.addAll(initWidgets());
         this.screen.descendants.addAll(this.children);
@@ -45,9 +52,12 @@ public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends Bab
         this.check = true;
     }
 
-    // todo
-    public String createID() {
-        return String.valueOf(this.screen.children.size());
+    public Vec2 mouseVel() {
+        return this.screen.getMouseVel();
+    }
+
+    public Vec2 mousePos() {
+        return this.screen.getMousePos();
     }
 
     public boolean isHovering() {
@@ -71,6 +81,8 @@ public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends Bab
     public void onClick(Vec2 mousePos, int button) {}
 
     public void onDrag(Vec2 mousePos, int button, Vec2 mouseVelocity) {}
+
+    public void onDragRelease(Vec2 mousePos, int button) {}
 
     public void onType(char codePoint, int modifiers) {}
 
@@ -105,14 +117,23 @@ public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends Bab
 
     public abstract void render(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick);
 
+    RGBA current;
+    RGBA to;
+
+    Integer currentI;
+    int toI;
+
     public void renderDebug(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
         Matrix4f matrix4f = guiGraphics.pose().last().pose();
         MultiBufferSource bufferSource = guiGraphics.bufferSource();
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.gui());
 
-        RGBA colour = isHovering() || isDragging() || isFocused() ? RGBA.colours.WHITE : new RGBA(this.depth / 2);
+        this.to = isHovering() || isDragging() || isFocused() ? RGBA.colours.WHITE : new RGBA(this.depth / 2);
+        if(this.current == null) this.current = this.to;
 
-        RenderUtil.drawOutlineRectangle(consumer, matrix4f, Conversions.vector.vec3(this.localBoundStart),  Conversions.vector.vec3(this.localBoundEnd), 1, colour);
+        this.current = this.current.lerp(this.to, .6);
+
+        RenderUtil.drawOutlineRectangle(consumer, matrix4f, Conversions.vector.vec3(this.localBoundStart),  Conversions.vector.vec3(this.localBoundEnd), 1, this.current);
     }
 
     public void destroy() {

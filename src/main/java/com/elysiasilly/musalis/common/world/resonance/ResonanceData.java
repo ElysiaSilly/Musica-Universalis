@@ -4,19 +4,20 @@ import com.elysiasilly.musalis.core.Musalis;
 import com.google.common.base.Predicates;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.fml.ModList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ResonanceData extends SimpleJsonResourceReloadListener {
+
+    // I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS I HATE THIS
 
     static final String DIR = "musalis/resonance";
 
@@ -29,69 +30,26 @@ public class ResonanceData extends SimpleJsonResourceReloadListener {
     }
 
     /*
-    public static class codec {
+    public static class Data {
 
-        public static class Config {
+        final String condition;
+        final String namespace;
 
-            final ConfigCondition CONDITION;
+        Resource config;
 
-            final List<ConfigEntry> MAPPING = new ArrayList<>();
+        Map<String, Map.Entry<ResourceLocation, Resource>> dirs = new HashMap<>();
 
-            public Config(ConfigCondition condition, List<ConfigEntry> mapping) {
-                this.CONDITION = condition;
-                this.MAPPING.addAll(mapping);
-            }
+        public Data(String condition, String namespace) {
+            this.condition = condition;
+            this.namespace = namespace;
 
-            public static class ConfigEntry {
-
-                public final String DIR;
-                public final String REGISTRY;
-
-                public final ConfigCondition CONDITION;
-
-                public ConfigEntry(String dir, String registry, ConfigCondition condition) {
-                    DIR = dir;
-                    REGISTRY = registry;
-                    CONDITION = condition;
-                }
-
-                public static final Codec<ConfigEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        Codec.STRING.fieldOf("dir").forGetter(i -> i.DIR),
-                        Codec.STRING.fieldOf("registry").forGetter(i -> i.REGISTRY),
-                        ConfigCondition.CODEC
-                ).apply(instance, ConfigEntry::new));
-            }
-
-            public static class ConfigCondition {
-
-                /// "#NONE" no condition, but may error upon verifying (eg a registry isn't present)
-                /// "<modid>" only loads if mod with matching modid is present
-                /// "#FORCE" forces to load, skips verifying, only to be used for debug purposes
-                public final String CONDITION;
-
-                public ConfigCondition(String condition) {
-                    CONDITION = condition;
-                }
-
-                public static final Codec<ConfigCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        Codec.STRING.fieldOf("condition").orElse("#NONE").forGetter(i -> i.CONDITION)
-                ).apply(instance, ConfigCondition::new));
-
-                public boolean isForceLoad() {
-                    return this.CONDITION.contains("#FORCE");
-                }
-
-                public boolean passesCondition() {
-                    return this.CONDITION.contains("#NONE") || ModList.get().isLoaded(this.CONDITION) || this.CONDITION.contains("#FORCE");
-                }
-            }
+            //NeoForgeRegistries.
         }
 
-        public static final Codec<Config> CONFIG = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.STRING.fieldOf("condition").orElse("#NONE").forGetter(i -> i.CONDITION),
-                Codec.BOOL.fieldOf("forceLoad").orElse(false).forGetter(i -> i.FORCE),
-                Codec.list(Codec.pair(Codec.STRING, Codec.STRING)).fieldOf("mappings").forGetter(i -> i.MAPPING)
-        ).apply(instance, Config::new));
+        @Override
+        public boolean equals(Object obj) {
+            return obj instanceof String string && string.equals(this.namespace);
+        }
     }
 
      */
@@ -100,27 +58,33 @@ public class ResonanceData extends SimpleJsonResourceReloadListener {
     protected void apply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profiler) {
         Musalis.LOGGER.info("Init Resonance Entries");
 
-        List<String> namespaces = new ArrayList<>();
+        Map<String, List<Map.Entry<ResourceLocation, Resource>>> dirs = new HashMap<>();
 
         Map<ResourceLocation, Resource> entries = resourceManager.listResources(DIR, Predicates.alwaysTrue());
 
-
-        List<String> files = new ArrayList<>();
-
         for(Map.Entry<ResourceLocation, Resource> entry : entries.entrySet()) {
-            Musalis.LOGGER.info("Resonance Entry: {}", entry.getKey());
-
+            Musalis.LOGGER.info("Resonance Entry : '{}'", entry.getKey());
             String namespace = entry.getKey().toString().split(":")[0];
-            files.add(entry.getKey().toString());
-
-            if(!namespaces.contains(namespace)) namespaces.add(namespace);
+            if(!dirs.containsKey(namespace)) dirs.put(namespace, new ArrayList<>());
+            dirs.get(namespace).add(entry);
         }
 
-        for(String namespace : namespaces) {
+        for(Map.Entry<String, List<Map.Entry<ResourceLocation, Resource>>> entry : dirs.entrySet()) {
 
-            if(!files.contains(namespace + ":musalis/resonance/config.json")) {
-                throw new RuntimeException("Couldn't find 'config.json' for directory '" + namespace.toUpperCase() + "'");
+            boolean config = false;
+
+            for(Map.Entry<ResourceLocation, Resource> subEntry : entry.getValue()) {
+                if(subEntry.getKey().getPath().equals("musalis/resonance/config.json")) {
+                    config = true;
+                    break;
+                }
             }
+
+            if(!config) {
+                throw new RuntimeException("Couldn't find 'config.json' for directory '" + entry.getKey() + "'");
+            }
+
+            Musalis.LOGGER.info("Resonance Dir '{}' : config = '{}' : entries = {}", entry.getKey(), config, entry.getValue().size());;
         }
     }
 }

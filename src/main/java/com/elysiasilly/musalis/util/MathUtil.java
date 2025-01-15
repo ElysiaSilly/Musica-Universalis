@@ -112,6 +112,10 @@ public class MathUtil {
         }
     }
 
+    public static class interpolations {
+
+    }
+
     public static boolean withinBounds(Vec2 pos, Vec2 start, Vec2 end) {
         return pos.x >= start.x && pos.y >= start.y && pos.x <= end.x && pos.y <= end.y;
     }
