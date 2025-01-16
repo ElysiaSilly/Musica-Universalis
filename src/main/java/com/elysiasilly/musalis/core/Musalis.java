@@ -17,6 +17,8 @@ import org.apache.logging.log4j.Logger;
 @Mod(Musalis.MODID)
 public class Musalis {
 
+    public static final boolean DEV = true;
+
     public static final String SHORTID = "musalis";
     public static final String MODID = "musica_universalis";
 

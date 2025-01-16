@@ -11,4 +11,9 @@ public class MutableTrio<LEFT, MIDDLE, RIGHT> {
         this.middle = middle;
         this.right = right;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof MutableTrio<?,?,?> other ? this.left.equals(other.left) && this.middle.equals(other.middle) && this.right.equals(other.right) : false;
+    }
 }

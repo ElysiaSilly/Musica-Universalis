@@ -1,8 +1,8 @@
 package com.elysiasilly.babel.client.gui.widget;
 
-public interface IClickableWidget {
+public interface IClickListenerWidget {
 
-    void onClick();
+    void onClick(int button);
 
     boolean canCLick();
 }

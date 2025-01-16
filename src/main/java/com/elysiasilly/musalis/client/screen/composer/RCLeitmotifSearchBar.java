@@ -14,33 +14,23 @@ public class RCLeitmotifSearchBar extends BabelWidget<RCLeitmotifCatalogueWidget
     String string = "";
 
     public RCLeitmotifSearchBar(RCLeitmotifCatalogueWidget parent, BabelScreen screen) {
-        super(parent, screen);
+        super(parent, screen, null);
     }
 
-    @Override
-    public void initAfter() {
-        this.hoverable = true;
-        this.clickable = true;
-    }
+    //@Override
+    //public void initAfter() {
+    //    this.hoverable = true;
+    //    this.clickable = true;
+    //}
 
-    @Override
-    public List<BabelWidget> initWidgets() {
-        return List.of();
-    }
+    //@Override
+    //public void onType(char codePoint, int modifiers) {
+    //    this.string = this.string + codePoint;
+    //    this.parent.leitmotifIndex.requestRecalculation = true;
+    //}
 
-    @Override
-    public void onType(char codePoint, int modifiers) {
-        this.string = this.string + codePoint;
-        this.parent.leitmotifIndex.requestRecalculation = true;
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void render(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
-        guiGraphics.drawString(Minecraft.getInstance().font, this.string, (int) localBoundStart.x + 2, (int) localBoundStart.y + 5, RGBA.colours.WHITE.dec());
-    }
+    //@Override
+    //public void render(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
+    //    guiGraphics.drawString(Minecraft.getInstance().font, this.string, (int) localBoundStart.x + 2, (int) localBoundStart.y + 5, RGBA.colours.WHITE.dec());
+    //}
 }

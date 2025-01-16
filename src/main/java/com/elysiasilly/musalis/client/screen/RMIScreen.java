@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.client.screen;
 
+import com.elysiasilly.babel.client.gui.BabelCursor;
 import com.elysiasilly.babel.client.gui.BabelScreen;
 import com.elysiasilly.babel.client.gui.BabelWidget;
 import com.elysiasilly.babel.client.gui.IModifyCameraScreen;
@@ -28,15 +29,10 @@ import org.lwjgl.glfw.GLFW;
 import java.util.List;
 
 @EventBusSubscriber(modid = Musalis.MODID, value = Dist.CLIENT)
-public class RMIScreen extends BabelScreen<RMIMenu> implements IModifyCameraScreen {
+public class RMIScreen extends BabelScreen<RMIMenu, BabelCursor> implements IModifyCameraScreen {
 
     public RMIScreen(RMIMenu menu, Inventory playerInventory, Component title) {
         super(menu);
-    }
-
-    @Override
-    public @Nullable ResourceLocation mousePointerTexture() {
-        return null;
     }
 
     @Override
@@ -64,11 +60,11 @@ public class RMIScreen extends BabelScreen<RMIMenu> implements IModifyCameraScre
     }
 
     @Override
-    public List<BabelWidget> initWidgets() {
+    public List<BabelWidget<?, ?>> initWidgets() {
 
         RMIGimbalWidget gimbal = new RMIGimbalWidget(null, this);
-        gimbal.boundEnd = new Vec2(32, 32);
-        gimbal.position = new Vec2(32, 32);
+        //gimbal.boundEnd = new Vec2(32, 32);
+        gimbal.bounds.position = new Vec2(32, 32);
 
         return List.of(gimbal);
     }

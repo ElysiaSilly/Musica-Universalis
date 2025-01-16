@@ -21,31 +21,31 @@ import java.util.List;
 public class RMIGimbalWidget extends BabelWidget<BabelWidget, RMIScreen> {
 
     public RMIGimbalWidget(@Nullable BabelWidget parent, RMIScreen screen) {
-        super(parent, screen);
+        super(parent, screen, null);
     }
 
     @Override
-    public List<BabelWidget> initWidgets() {
+    public List<BabelWidget<?, ?>> initWidgets() {
         return List.of();
     }
 
-    @Override
-    public void initAfter() {
-        this.clickable = true;
-        this.hoverable = true;
-        this.draggable = true;
-    }
+    //@Override
+    //public void initAfter() {
+    //    this.clickable = true;
+    //    this.hoverable = true;
+    //    this.draggable = true;
+    //}
 
-    @Override
-    public void onClick(Vec2 mousePos, int button) {
-        if(button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) PacketDistributor.sendToServer(new RMIScreenPayload(4, 0));
-    }
+    //@Override
+    //public void onClick(Vec2 mousePos, int button) {
+    //    if(button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) PacketDistributor.sendToServer(new RMIScreenPayload(4, 0));
+    //}
 
-    @Override
-    public void onDrag(Vec2 mousePos, int button, Vec2 mouseVelocity) {
-        PacketDistributor.sendToServer(new RMIScreenPayload(2, (int) (-mouseVelocity.y * .5)));
-        PacketDistributor.sendToServer(new RMIScreenPayload(3, (int) (-mouseVelocity.x * .5)));
-    }
+    //@Override
+    //public void onDrag(Vec2 mousePos, int button, Vec2 mouseVelocity) {
+    //    PacketDistributor.sendToServer(new RMIScreenPayload(2, (int) (-mouseVelocity.y * .5)));
+    //    PacketDistributor.sendToServer(new RMIScreenPayload(3, (int) (-mouseVelocity.x * .5)));
+    //}
 
     @Override
     public void tick() {
@@ -53,12 +53,12 @@ public class RMIGimbalWidget extends BabelWidget<BabelWidget, RMIScreen> {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
+    public void render(GuiGraphics guiGraphics, float partialTick) {
 
         PoseStack stack = guiGraphics.pose();
 
-        stack.rotateAround(Axis.YP.rotationDegrees(this.screen.menu.getBE().getYRot()), this.position.x + 15, this.position.y + 15, 15);
-        stack.rotateAround(Axis.XP.rotationDegrees(-this.screen.menu.getBE().getXRot()), this.position.x + 15, this.position.y + 15, 15);
+        stack.rotateAround(Axis.YP.rotationDegrees(this.screen.menu.getBE().getYRot()), this.bounds.position.x + 15, this.bounds.position.y + 15, 15);
+        stack.rotateAround(Axis.XP.rotationDegrees(-this.screen.menu.getBE().getXRot()), this.bounds.position.x + 15, this.bounds.position.y + 15, 15);
 
         MultiBufferSource bufferSource = guiGraphics.bufferSource();
 

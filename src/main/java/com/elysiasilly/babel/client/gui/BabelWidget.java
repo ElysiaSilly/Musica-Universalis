@@ -5,13 +5,10 @@ import com.elysiasilly.musalis.util.RGBA;
 import com.elysiasilly.musalis.util.RenderUtil;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.util.Mth;
-import net.minecraft.world.item.DyeColor;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
@@ -23,37 +20,44 @@ import java.util.UUID;
 @SuppressWarnings("rawtypes")
 public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends BabelScreen> {
 
-    // todo : please clean this up
-
     public WIDGET parent;
     public final SCREEN screen;
 
-    public final List<BabelWidget> children = new ArrayList<>();
-    public final UUID ID;
+    public final List<BabelWidget<?, ?>> children = new ArrayList<>();
 
-    public float depth = 1;
-    public Vec2 position = new Vec2(0, 0);
-    public Vec2 boundStart = new Vec2(0, 0), boundEnd = new Vec2(0, 0);
-    public Vec2 localBoundStart = new Vec2(0, 0), localBoundEnd = new Vec2(0, 0);
-
-    public boolean hoverable = false, clickable = false, draggable = false, anchored = false;
-
-    boolean check = false;
-
-    @SuppressWarnings("unchecked")
-    public BabelWidget(@Nullable WIDGET parent, @NotNull SCREEN screen) {
-        this.screen = screen;
-        this.parent = parent;
-        this.ID = UUID.randomUUID();
-        initBefore();
-        this.children.addAll(initWidgets());
-        this.screen.descendants.addAll(this.children);
-        initAfter();
-        this.check = true;
+    public List<BabelWidget> getChildren() {
+        return List.copyOf(this.children);
     }
 
-    public Vec2 mouseVel() {
-        return this.screen.getMouseVel();
+    public final UUID ID;
+
+    public final WidgetBounds bounds;
+
+    boolean lock = true;
+
+    public BabelWidget(@Nullable WIDGET parent, @NotNull SCREEN screen, @NotNull WidgetBounds bounds) {
+        this.screen = screen;
+        this.parent = parent;
+        this.bounds = bounds;
+        this.ID = UUID.randomUUID();
+        initBefore();
+        add(initWidgets());
+        initAfter();
+        this.lock = false;
+    }
+
+    public BabelWidget(@NotNull SCREEN screen, @NotNull WidgetBounds bounds) {
+        this(null, screen, bounds);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void add(List<BabelWidget<?, ?>> widgets) {
+        this.children.addAll(widgets);
+        this.screen.descendants.addAll(widgets);
+    }
+
+    public Vec2 mouseDrag() {
+        return this.screen.getMouseDrag();
     }
 
     public Vec2 mousePos() {
@@ -74,118 +78,68 @@ public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends Bab
 
     public void initBefore() {}
 
+    public List<BabelWidget<?, ?>> initWidgets() {
+        return List.of();
+    }
+
     public void initAfter() {}
 
-    public abstract List<BabelWidget> initWidgets();
-
-    public void onClick(Vec2 mousePos, int button) {}
-
-    public void onDrag(Vec2 mousePos, int button, Vec2 mouseVelocity) {}
-
-    public void onDragRelease(Vec2 mousePos, int button) {}
-
-    public void onType(char codePoint, int modifiers) {}
-
-    public void onScroll(Vec2 mousePos, Vec2 scroll) {}
-
-    public void processRendering(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
-        if(!check) return;
-        localToGlobal();
-        for(BabelWidget widget : this.children) widget.processRendering(guiGraphics, mousePos, partialTick);
-        if(this.screen.renderDebug) renderDebug(guiGraphics, mousePos, partialTick);
-        render(guiGraphics, mousePos, partialTick);
+    public void processRendering(GuiGraphics guiGraphics, float partialTick) {
+        if(lock) return;
+        this.bounds.calculateGlobals();
+        getChildren().forEach(child -> child.processRendering(guiGraphics, partialTick));
+        if(this.screen.renderDebug()) renderDebug(guiGraphics, partialTick);
+        render(guiGraphics, partialTick);
     }
 
     public void processTicking() {
-        if(!check) return;
+        if(lock) return;
         tick();
-        for(BabelWidget widget : this.children) widget.processTicking();
+        getChildren().forEach(BabelWidget::processTicking);
     }
 
-    public abstract void tick();  // todo : make sure bounds exist before ticking
+    public void tick() {}
 
-    public void localToGlobal() {
-        if(this.boundStart != null && this.boundEnd != null) {
-            this.localBoundStart = this.position.add(boundStart).add(this.screen.getOffset()); // todo : offset stuff (parallax woohoo)
-            this.localBoundEnd = this.position.add(boundEnd).add(this.screen.getOffset());
-        }
-    }
+    public void render(GuiGraphics guiGraphics, float partialTick) {}
 
-    public boolean hasBoundaries() {
-        return this.boundStart != null && this.boundEnd != null && this.localBoundStart != null && this.localBoundEnd != null;
-    }
+    private RGBA current;
 
-    public abstract void render(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick);
+    private void renderDebug(GuiGraphics guiGraphics, float partialTick) {
+        RGBA to = isHovering() || isDragging() || isFocused() ? RGBA.colours.WHITE : new RGBA(this.bounds.depth / 2);
+        if(this.current == null) this.current = to;
 
-    RGBA current;
-    RGBA to;
+        this.current = this.current.lerp(to, .5);
 
-    Integer currentI;
-    int toI;
-
-    public void renderDebug(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
-        Matrix4f matrix4f = guiGraphics.pose().last().pose();
-        MultiBufferSource bufferSource = guiGraphics.bufferSource();
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.gui());
-
-        this.to = isHovering() || isDragging() || isFocused() ? RGBA.colours.WHITE : new RGBA(this.depth / 2);
-        if(this.current == null) this.current = this.to;
-
-        this.current = this.current.lerp(this.to, .6);
-
-        RenderUtil.drawOutlineRectangle(consumer, matrix4f, Conversions.vector.vec3(this.localBoundStart),  Conversions.vector.vec3(this.localBoundEnd), 1, this.current);
+        RenderUtil.drawOutlineRectangle(guiGraphics.bufferSource().getBuffer(RenderType.gui()), guiGraphics.pose().last().pose(), Conversions.vector.vec3(this.boundStart()),  Conversions.vector.vec3(this.boundEnd()), 1, this.current);
     }
 
     public void destroy() {
-        if(this.parent != null) {
-            this.parent.children.remove(this);
-            this.screen.descendants.remove(this);
-        } else {
-            this.screen.children.remove(this);
-        }
+        this.screen.destroy(this);
+        if(this.parent != null) this.parent.children.remove(this);
     }
 
     public void move(Vec2 vec2) {
-        this.position = this.position.add(vec2);
+        this.bounds.move(vec2);
     }
 
     public void moveWithChildren(Vec2 vec2) {
         move(vec2);
-        for(BabelWidget widget : this.children) widget.moveWithChildren(vec2);
+        getChildren().forEach(child -> child.moveWithChildren(vec2));
     }
 
     public void moveChildren(Vec2 vec2) {
-        for(BabelWidget widget : this.children) widget.moveWithChildren(vec2);
+        getChildren().forEach(child -> child.moveWithChildren(vec2));
     }
 
-    public static class Bounds {
-
-        final BabelWidget widget;
-        final BabelScreen screen;
-
-        Vec2 localStart, localEnd;
-        Vec2 globalStart, globalEnd;
-
-        public Bounds(Vec2 start, Vec2 end, BabelWidget widget, BabelScreen screen) {
-            this.localStart = start;
-            this.globalStart = start;
-            this.localEnd = end;
-            this.globalEnd = end;
-            this.widget = widget;
-            this.screen = screen;
-        }
-
-        public void calculateGlobals(Vec2 globalPosition) {
-            this.globalStart = globalPosition.add(localStart);
-            this.globalEnd = globalPosition.add(localEnd);
-            if(!widget.anchored) {
-                this.globalStart.add(this.screen.getOffset());
-                this.globalEnd.add(this.screen.getOffset());
-            }
-        }
-
-        public Vec2 getCentre() {
-            return null;
-        }
+    public Vec2 boundStart() {
+        return this.bounds.globalStart;
     }
+
+    public Vec2 boundEnd() {
+        return this.bounds.globalEnd;
+    }
+
+    public BabelWidget copy() {return null;}
+    public CompoundTag save() {return null;}
+    public void load(CompoundTag tag) {}
 }

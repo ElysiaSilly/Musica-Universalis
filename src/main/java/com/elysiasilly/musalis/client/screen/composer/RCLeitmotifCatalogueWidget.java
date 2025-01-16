@@ -9,14 +9,15 @@ import java.util.List;
 
 public class RCLeitmotifCatalogueWidget extends BabelWidget<BabelWidget, ResonanceComposerScreen> {
     public RCLeitmotifCatalogueWidget(ResonanceComposerScreen screen) {
-        super(null, screen);
+        super(null, screen, null);
     }
 
     RCLeitmotifSearchBar searchBar;
     RCLeitmotifEntriesWidget leitmotifIndex;
 
+    /*
     @Override
-    public List<BabelWidget> initWidgets() {
+    public List<BabelWidget<?, ?>> initWidgets() {
         DragParentWidget dragger = new DragParentWidget(this, this.screen);
         dragger.boundStart = new Vec2(3, 36);
         dragger.boundEnd = new Vec2(91, 41);
@@ -34,13 +35,7 @@ public class RCLeitmotifCatalogueWidget extends BabelWidget<BabelWidget, Resonan
         return List.of(dragger, searchBar, leitmotifIndex);
     }
 
-    @Override
-    public void tick() {
+     */
 
-    }
 
-    @Override
-    public void render(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
-
-    }
 }

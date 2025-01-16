@@ -51,42 +51,9 @@ public abstract class CreativeModeInventoryScreenMixin {
 
     private void musalis$render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if(selectedTab instanceof MUCreativeTab) {
-            CreativeTab tab = new CreativeTab();
-            tab.tab = selectedTab;
-            Minecraft.getInstance().setScreen(tab);
-
-            /*
-            guiGraphics.fillGradient(0, 0, 10000, 10000, -1072689136, -804253680);
-
-
-            this.renderTabButton(guiGraphics, selectedTab);
-
-            Collection<ItemStack> items = selectedTab.getDisplayItems();
-
-            PoseStack pose = guiGraphics.pose();
-
-            int X = 0;
-            int Y = 0;
-            for(ItemStack stack : items) {
-                if(X % 9 == 0) {
-                    Y++;
-                    X = 0;
-                }
-
-                pose.pushPose();
-
-                pose.rotateAround(Axis.YP.rotationDegrees(5 * X), 28 + (20 * X), 28 + (20 * Y), 0);
-                pose.rotateAround(Axis.XP.rotationDegrees(-5), 28 + (20 * X), 28 + (20 * Y), 0);
-
-                guiGraphics.renderItem(stack, 20 + (20 * X), 20 + (20 * Y));
-
-                X++;
-                pose.popPose();
-            }
-
-            ci.cancel();
-
-             */
+            //CreativeTab tab = new CreativeTab();
+            //tab.tab = selectedTab;
+            //Minecraft.getInstance().setScreen(tab);
         }
     }
 }

@@ -1,27 +1,25 @@
 package com.elysiasilly.musalis.client.screen;
 
 import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.musalis.core.Musalis;
+import com.elysiasilly.babel.client.gui.WidgetBounds;
+import com.elysiasilly.babel.client.gui.widget.IClickListenerWidget;
+import com.elysiasilly.babel.client.gui.widget.IHoverableWidget;
 import com.elysiasilly.musalis.util.MathUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.particle.SquidInkParticle;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
-public class ItemStackWidget extends BabelWidget<BabelWidget, CreativeTab> {
+public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab> implements IHoverableWidget, IClickListenerWidget {
 
     ItemStack stack = ItemStack.EMPTY;
     Vec3 rotOrigin;
@@ -29,57 +27,16 @@ public class ItemStackWidget extends BabelWidget<BabelWidget, CreativeTab> {
 
     float scale = 1;
 
-    boolean copy = false;
+    boolean mutable = false;
 
-    public ItemStackWidget(@Nullable BabelWidget parent, @NotNull CreativeTab screen) {
-        super(parent, screen);
+    public ItemStackWidget(@NotNull CreativeTab screen, WidgetBounds bounds) {
+        super(screen, bounds);
     }
 
     @Override
     public void initBefore() {
         randomizeRot();
         this.rotation = this.rotOrigin;
-
-        this.hoverable = true;
-        this.clickable = true;
-        this.draggable = true;
-    }
-
-    @Override
-    public void onClick(Vec2 mousePos, int button) {
-
-        if(button == GLFW.GLFW_MOUSE_BUTTON_2 && copy && stack.getCount() > 1) {
-            ItemStackWidget copy = new ItemStackWidget(null, this.screen);
-            copy.stack = stack.split(stack.getCount() / 2);
-            copy.copy = true;
-            copy.boundStart = new Vec2(0 , 0 );
-            copy.boundEnd = new Vec2(16, 16);
-            copy.position = this.position;
-            this.screen.add(copy);
-            this.screen.draggedWidget = copy;
-        }
-    }
-
-    @Override
-    public void onDrag(Vec2 mousePos, int button, Vec2 mouseVelocity) {
-        if(!this.screen.isDragging()) {
-            if(this.copy) {
-                move(mouseVelocity);
-                this.position = mousePos().add(-8);
-            } else {
-                ItemStackWidget copy = new ItemStackWidget(null, this.screen);
-                int count = button == GLFW.GLFW_MOUSE_BUTTON_1 ? 1 : stack.getMaxStackSize();
-                copy.stack = stack.copyWithCount(count);
-                copy.copy = true;
-                copy.boundStart = new Vec2(0 , 0 );
-                copy.boundEnd = new Vec2(16, 16);
-                copy.position = mousePos;
-                copy.rotation = this.rotation;
-
-                this.screen.add(copy);
-                this.screen.draggedWidget = copy;
-            }
-        }
     }
 
     public void randomizeRot() {
@@ -90,45 +47,29 @@ public class ItemStackWidget extends BabelWidget<BabelWidget, CreativeTab> {
     }
 
     @Override
-    public void onDragRelease(Vec2 mousePos, int button) {
-        if(this.screen.hoveredWidget instanceof ItemStackWidget widget && this.screen.hoveredWidget != this) {
-            if(widget.copy) {
-                if(widget.stack.is(this.stack.getItem())) {
-                    widget.stack.grow(this.stack.getCount());
-                    widget.randomizeRot();
-                    destroy();
-                }
-            } else {
-                destroy();
-            }
-        }
-    }
-
-    @Override
-    public List<BabelWidget> initWidgets() {
+    public List<BabelWidget<?, ?>> initWidgets() {
         return List.of();
     }
 
     @Override
     public void tick() {
-        if(this.copy) {
-            //ParticleTypes.GLOW_SQUID_INK.getType().
 
-            //SquidInkParticle.GlowInkProvider particle = new SquidInkParticle.GlowInkProvider()
-
-            Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.ANGRY_VILLAGER, this.position.x, this.position.y, 0, 0, 0, 0);
-        }
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
+    public void render(GuiGraphics guiGraphics, float partialTick) {
+        if(isDragging()) {
+            this.bounds.position = mousePos().add(-8);
+        }
+
         PoseStack pose = guiGraphics.pose();
         pose.pushPose();
-        pose.translate(this.position.x, this.position.y, 0);
+        pose.translate(this.bounds.position.x, this.bounds.position.y, 0);
         pose.pushPose();
 
         if(isDragging()) {
-            this.rotation = rotation.add(-mouseVel().y * 2, (mouseVel().x  * 2), 0);
+            //GLFW.glfwSetCursor(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_HAND_CURSOR);
+            this.rotation = rotation.add(-mouseDrag().y * 2, (mouseDrag().x  * 2), 0);
             this.scale = Mth.lerp(0.2f, scale, 2f);
             pose.translate(0, 0, 100);
         }
@@ -139,14 +80,16 @@ public class ItemStackWidget extends BabelWidget<BabelWidget, CreativeTab> {
             }
         }
 
-        if(isHovering() && ((!this.screen.isSomethingDragging() && !isDragging()) || !this.copy)) {
+        if(isHovering() && ((!this.screen.isSomethingDragging() && !isDragging()) || !this.mutable)) {
             float clamp = MathUtil.numbers.castToRange(0, 360, 0, 1, (float) this.rotation.y);
             float rotationSpeed = (1 - clamp) * 4;
             this.rotation = rotation.add(0, rotationSpeed, 0);
-            this.scale = Mth.lerp(0.2f, scale, 1.5f);
+            float scale = 1.5f;
+            if(this.screen.isSomethingDragging()) scale = 1f;
+            this.scale = Mth.lerp(0.2f, this.scale, scale);
         } else {
             this.rotation = this.rotation.lerp(this.rotOrigin, 0.2);
-            this.scale = Mth.lerp(0.2f, scale, 1f);
+            this.scale = Mth.lerp(0.2f, this.scale, 1f);
         }
 
         pose.scale(this.scale, this.scale, this.scale);
@@ -170,5 +113,66 @@ public class ItemStackWidget extends BabelWidget<BabelWidget, CreativeTab> {
         pose.translate(15, 15, 0);
         guiGraphics.renderItemDecorations(Minecraft.getInstance().font, stack, 0, 0);
         pose.popPose();
+    }
+
+
+    @Override
+    public boolean canHover() {
+        return true;
+    }
+
+    @Override
+    public void onClick(int button) {
+        if(mutable) {
+            if(this.screen.isSomethingHovering()) {
+                if(this.screen.hoveredWidget instanceof ItemStackWidget widget) {
+                    if(!widget.mutable) {
+                        if(ItemStack.isSameItem(this.stack, widget.stack)) {
+                            if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+                                this.stack.grow(1);
+                            }
+                        } else {
+                            if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+                                destroy();
+                            }
+                        }
+                        if(button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+                            if(this.stack.getCount() > 1) {
+                                this.stack.grow(-1);
+                            } else {
+                                destroy();
+                            }
+                        }
+                    }
+                }
+            } else {
+                this.screen.releaseDragged();
+            }
+        } else {
+            if(!this.screen.isSomethingDragging()) {
+                if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT || button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+                    ItemStackWidget copy = new ItemStackWidget(this.screen, new WidgetBounds(0, 16));
+                    copy.stack = this.stack.copy();
+                    copy.bounds.position = this.bounds.position;
+                    this.screen.add(copy);
+                    this.mutable = true;
+                    this.screen.setDragged(this);
+                }
+                if(button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
+                    ItemStackWidget copy = new ItemStackWidget(this.screen, new WidgetBounds(0, 16));
+                    copy.stack = this.stack.copy();
+                    this.stack.setCount(this.stack.getMaxStackSize());
+                    copy.bounds.position = this.bounds.position;
+                    this.screen.add(copy);
+                    this.mutable = true;
+                    this.screen.setDragged(this);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean canCLick() {
+        return isHovering() || isDragging();
     }
 }

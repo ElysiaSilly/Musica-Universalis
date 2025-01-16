@@ -13,14 +13,15 @@ import java.util.Map;
 public class RCLeitmotifEntriesWidget extends BabelWidget<RCLeitmotifCatalogueWidget, ResonanceComposerScreen> {
 
     public RCLeitmotifEntriesWidget(RCLeitmotifCatalogueWidget parent, ResonanceComposerScreen screen) {
-        super(parent, screen);
+        super(parent, screen, null);
     }
 
     boolean requestRecalculation = true;
 
+    /*
     @Override
-    public List<BabelWidget> initWidgets() {
-        List<BabelWidget> widgets = new ArrayList<>();
+    public List<BabelWidget<?, ?>> initWidgets() {
+        List<BabelWidget<?, ?>> widgets = new ArrayList<>();
 
         if(this.indexed == null) return widgets;
         int index = 0;
@@ -29,7 +30,7 @@ public class RCLeitmotifEntriesWidget extends BabelWidget<RCLeitmotifCatalogueWi
             widget.boundStart = new Vec2(localBoundStart.x + 2, localBoundStart.y + 5 + ( index * 10));
             widget.boundEnd = new Vec2(localBoundEnd.x - 2, localBoundStart.y + 13 + ( index * 10));
             widget.hoverable = true;
-            widget.depth = this.depth + .1f;
+            widget.bounds.depth = this.bounds.depth + .1f;
             widgets.add(widget);
             index++;
         }
@@ -48,8 +49,8 @@ public class RCLeitmotifEntriesWidget extends BabelWidget<RCLeitmotifCatalogueWi
     @Override
     public void tick() {
         if(this.requestRecalculation) {
-            List<BabelWidget> list = new ArrayList<>(children);
-            for(BabelWidget widget : list) widget.destroy();
+            List<BabelWidget<?, ?>> list = new ArrayList<>(children);
+            for(BabelWidget<?, ?> widget : list) widget.destroy();
             this.indexed.clear();
 
             if(!this.parent.searchBar.string.isBlank()) {
@@ -63,9 +64,9 @@ public class RCLeitmotifEntriesWidget extends BabelWidget<RCLeitmotifCatalogueWi
                 this.indexed.addAll(this.screen.leitmotifs);
             }
 
-            List<BabelWidget> init = initWidgets();
-            this.screen.descendants.addAll(init);
-            this.children.addAll(init);
+            List<BabelWidget<?, ?>> init = initWidgets();
+            //this.screen.descendants.addAll(init);
+            //this.children.addAll(init);
             this.requestRecalculation = false;
         }
     }
@@ -102,6 +103,7 @@ public class RCLeitmotifEntriesWidget extends BabelWidget<RCLeitmotifCatalogueWi
             }
         }
 
-         */
+
     }
+    */
 }

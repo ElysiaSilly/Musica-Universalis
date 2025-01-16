@@ -11,15 +11,15 @@ import java.util.List;
 public class DragParentWidget extends BabelWidget {
 
     public DragParentWidget(BabelWidget parent, BabelScreen screen) {
-        super(parent, screen);
+        super(parent, screen, null);
     }
 
     @Override
     public void initAfter() {
-        this.draggable = true;
-        this.hoverable = true;
-        this.clickable = true;
-        this.depth = this.parent.depth + .1f;
+        //this.draggable = true;
+        //this.hoverable = true;
+        //this.clickable = true;
+        this.bounds.depth = this.parent.bounds.depth + .1f;
     }
 
     @Override
@@ -27,20 +27,10 @@ public class DragParentWidget extends BabelWidget {
         return List.of();
     }
 
-    @Override
-    public void onDrag(Vec2 mousePos, int button, Vec2 mouseVelocity) {
-        if(button == 0) {
-            this.parent.moveWithChildren(mouseVelocity);
-        }
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void render(GuiGraphics guiGraphics, Vec2 mousePos, float partialTick) {
-
-    }
+    //@Override
+    //public void onDrag(Vec2 mousePos, int button, Vec2 mouseVelocity) {
+    //    if(button == 0) {
+    //        this.parent.moveWithChildren(mouseVelocity);
+    //    }
+    //}
 }

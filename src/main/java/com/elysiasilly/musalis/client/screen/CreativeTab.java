@@ -2,6 +2,7 @@ package com.elysiasilly.musalis.client.screen;
 
 import com.elysiasilly.babel.client.gui.BabelScreen;
 import com.elysiasilly.babel.client.gui.BabelWidget;
+import com.elysiasilly.babel.client.gui.WidgetBounds;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -24,21 +25,10 @@ public class CreativeTab extends BabelScreen {
     }
 
     @Override
-    public @Nullable ResourceLocation mousePointerTexture() {
-        return null;
-    }
-
-    @Override
     public void initBefore() {
         this.tab = BuiltInRegistries.CREATIVE_MODE_TAB.getOrThrow(CreativeModeTabs.REDSTONE_BLOCKS);
-        //this.tab = MUCreativeTabs.MACHINE.get();
-        this.renderDebug = true;
     }
 
-    @Override
-    public void initAfter() {
-
-    }
 
     @Override
     public List<BabelWidget> initWidgets() {
@@ -61,12 +51,9 @@ public class CreativeTab extends BabelScreen {
 
             if(Y >= 6) break;
 
-            ItemStackWidget widget = new ItemStackWidget(null, this);
+            ItemStackWidget widget = new ItemStackWidget(this, new WidgetBounds(0, 16));
             widget.stack = stack.copy();
-            widget.position = new Vec2(start.x + (X * offset), start.y + (Y * offset));
-
-            widget.boundStart = new Vec2(0 , 0 );
-            widget.boundEnd = new Vec2(16, 16);
+            widget.bounds.position = new Vec2(start.x + (X * offset), start.y + (Y * offset));
 
             widgets.add(widget);
 

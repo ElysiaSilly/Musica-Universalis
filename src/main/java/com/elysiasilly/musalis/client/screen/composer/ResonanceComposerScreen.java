@@ -1,5 +1,6 @@
 package com.elysiasilly.musalis.client.screen.composer;
 
+import com.elysiasilly.babel.client.gui.BabelCursor;
 import com.elysiasilly.babel.client.gui.BabelScreen;
 import com.elysiasilly.babel.client.gui.BabelWidget;
 import com.elysiasilly.musalis.common.menu.ResonanceComposerMenu;
@@ -23,7 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @SuppressWarnings("rawtypes")
-public class ResonanceComposerScreen extends BabelScreen<ResonanceComposerMenu> {
+public class ResonanceComposerScreen extends BabelScreen<ResonanceComposerMenu, BabelCursor> {
 
     public enum Options {
         NONE,
@@ -45,21 +46,9 @@ public class ResonanceComposerScreen extends BabelScreen<ResonanceComposerMenu> 
     public static final ResourceLocation POINTER_DRAG = Musalis.location("composer/pointer_drag");
 
     @Override
-    public ResourceLocation mousePointerTexture() {
-        return null;
-        //if(isSomethingDragging()) return POINTER_DRAG;
-        //return isNothingInteracted() ? POINTER : POINTER_CLICK;
-    }
-
-    @Override
     public void initBefore() {
         cacheNotes();
         cacheLeitmotifs();
-    }
-
-    @Override
-    public void initAfter() {
-        this.renderDebug = true;
     }
 
     public void cacheNotes() {
@@ -79,16 +68,16 @@ public class ResonanceComposerScreen extends BabelScreen<ResonanceComposerMenu> 
     }
 
     @Override
-    public List<BabelWidget> initWidgets() {
+    public List<BabelWidget<?, ?>> initWidgets() {
         List<BabelWidget> widgets = new ArrayList<>();
 
         RCOptionsWidget options = new RCOptionsWidget(this);
-        options.boundStart = new Vec2(3, 3);
-        options.boundEnd = new Vec2(91, 33);
+        //options.boundStart = new Vec2(3, 3);
+       // options.boundEnd = new Vec2(91, 33);
 
         RCLeitmotifCatalogueWidget leitmotifCatalogue = new RCLeitmotifCatalogueWidget(this);
-        leitmotifCatalogue.boundStart = new Vec2(3, 36);
-        leitmotifCatalogue.boundEnd = new Vec2(91, 190);
+       // leitmotifCatalogue.boundStart = new Vec2(3, 36);
+        //leitmotifCatalogue.boundEnd = new Vec2(91, 190);
 
         return List.of(options, leitmotifCatalogue);
     }
