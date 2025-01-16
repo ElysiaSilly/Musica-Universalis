@@ -1,6 +1,6 @@
-package com.elysiasilly.babel.client.gui;
+package com.elysiasilly.babel.client.screen;
 
-import com.elysiasilly.babel.client.gui.widget.*;
+import com.elysiasilly.babel.client.screen.widget.*;
 import com.elysiasilly.musalis.util.MathUtil;
 import com.elysiasilly.musalis.util.MutableTrio;
 import net.minecraft.client.Minecraft;

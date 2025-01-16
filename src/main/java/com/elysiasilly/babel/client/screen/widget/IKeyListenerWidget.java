@@ -1,4 +1,4 @@
-package com.elysiasilly.babel.client.gui.widget;
+package com.elysiasilly.babel.client.screen.widget;
 
 public interface IKeyListenerWidget {
 

@@ -1,11 +1,10 @@
-package com.elysiasilly.babel.client.gui;
+package com.elysiasilly.babel.client.screen;
 
 import com.elysiasilly.musalis.util.Conversions;
 import com.elysiasilly.musalis.util.RGBA;
 import com.elysiasilly.musalis.util.RenderUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.client.screen.composer;
 
-import com.elysiasilly.babel.client.gui.BabelWidget;
+import com.elysiasilly.babel.client.screen.BabelWidget;
 import com.elysiasilly.musalis.common.world.resonance.HolderLeitmotif;
 import net.minecraft.resources.ResourceKey;
 

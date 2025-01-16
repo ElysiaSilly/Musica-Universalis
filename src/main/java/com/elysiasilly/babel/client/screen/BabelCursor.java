@@ -1,4 +1,4 @@
-package com.elysiasilly.babel.client.gui;
+package com.elysiasilly.babel.client.screen;
 
 public class BabelCursor {
     /*

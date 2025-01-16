@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.client.screen.composer;
 
-import com.elysiasilly.babel.client.gui.BabelWidget;
+import com.elysiasilly.babel.client.screen.BabelWidget;
 
 public class RCLeitmotifCatalogueWidget extends BabelWidget<BabelWidget, ResonanceComposerScreen> {
     public RCLeitmotifCatalogueWidget(ResonanceComposerScreen screen) {

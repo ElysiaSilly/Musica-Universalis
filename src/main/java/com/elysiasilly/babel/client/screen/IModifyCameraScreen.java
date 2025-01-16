@@ -1,4 +1,4 @@
-package com.elysiasilly.babel.client.gui;
+package com.elysiasilly.babel.client.screen;
 
 import net.minecraft.client.Camera;
 

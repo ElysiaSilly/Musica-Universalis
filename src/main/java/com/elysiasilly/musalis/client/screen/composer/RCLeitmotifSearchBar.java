@@ -1,7 +1,7 @@
 package com.elysiasilly.musalis.client.screen.composer;
 
-import com.elysiasilly.babel.client.gui.BabelScreen;
-import com.elysiasilly.babel.client.gui.BabelWidget;
+import com.elysiasilly.babel.client.screen.BabelScreen;
+import com.elysiasilly.babel.client.screen.BabelWidget;
 
 public class RCLeitmotifSearchBar extends BabelWidget<RCLeitmotifCatalogueWidget, BabelScreen> {
 

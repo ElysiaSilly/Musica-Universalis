@@ -1,4 +1,4 @@
-package com.elysiasilly.babel.client.gui;
+package com.elysiasilly.babel.client.screen;
 
 import com.elysiasilly.musalis.util.RGBA;
 import com.mojang.blaze3d.vertex.VertexConsumer;

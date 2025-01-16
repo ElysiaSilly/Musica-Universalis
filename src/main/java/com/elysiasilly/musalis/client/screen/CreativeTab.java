@@ -1,16 +1,8 @@
 package com.elysiasilly.musalis.client.screen;
 
-import com.elysiasilly.babel.client.gui.BabelScreen;
-import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.babel.client.gui.WidgetBounds;
-import com.elysiasilly.musalis.util.RenderUtil;
+import com.elysiasilly.babel.client.screen.BabelScreen;
+import com.elysiasilly.babel.client.screen.BabelWidget;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;
