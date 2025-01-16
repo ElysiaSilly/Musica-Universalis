@@ -1,18 +1,17 @@
 package com.elysiasilly.musalis.client.screen;
 
-import com.elysiasilly.babel.client.gui.BabelScreen;
-import com.elysiasilly.babel.client.gui.BabelScreenUtil;
-import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.babel.client.gui.WidgetBounds;
-import com.elysiasilly.babel.client.gui.widget.IClickListenerWidget;
-import com.elysiasilly.babel.client.gui.widget.IHoverableWidget;
+import com.elysiasilly.babel.client.screen.BabelScreen;
+import com.elysiasilly.babel.client.screen.BabelScreenUtil;
+import com.elysiasilly.babel.client.screen.BabelWidget;
+import com.elysiasilly.babel.client.screen.WidgetBounds;
+import com.elysiasilly.babel.client.screen.widget.IClickListenerWidget;
+import com.elysiasilly.babel.client.screen.widget.IHoverableWidget;
 import com.elysiasilly.musalis.util.RGBA;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
 import org.jetbrains.annotations.NotNull;

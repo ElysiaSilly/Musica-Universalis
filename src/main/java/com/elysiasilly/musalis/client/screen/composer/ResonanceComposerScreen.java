@@ -1,8 +1,8 @@
 package com.elysiasilly.musalis.client.screen.composer;
 
-import com.elysiasilly.babel.client.gui.BabelCursor;
-import com.elysiasilly.babel.client.gui.BabelScreen;
-import com.elysiasilly.babel.client.gui.BabelWidget;
+import com.elysiasilly.babel.client.screen.BabelCursor;
+import com.elysiasilly.babel.client.screen.BabelScreen;
+import com.elysiasilly.babel.client.screen.BabelWidget;
 import com.elysiasilly.musalis.common.menu.ResonanceComposerMenu;
 import com.elysiasilly.musalis.common.world.resonance.HolderLeitmotif;
 import com.elysiasilly.musalis.common.world.resonance.Note;

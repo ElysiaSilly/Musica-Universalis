@@ -1,9 +1,9 @@
 package com.elysiasilly.musalis.client.screen;
 
-import com.elysiasilly.babel.client.gui.BabelScreen;
-import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.babel.client.gui.WidgetBounds;
-import com.elysiasilly.babel.client.gui.widget.IClickListenerWidget;
+import com.elysiasilly.babel.client.screen.BabelScreen;
+import com.elysiasilly.babel.client.screen.BabelWidget;
+import com.elysiasilly.babel.client.screen.WidgetBounds;
+import com.elysiasilly.babel.client.screen.widget.IClickListenerWidget;
 
 import java.util.List;
 

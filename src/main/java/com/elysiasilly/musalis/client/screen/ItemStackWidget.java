@@ -1,15 +1,14 @@
 package com.elysiasilly.musalis.client.screen;
 
-import com.elysiasilly.babel.client.gui.BabelScreen;
-import com.elysiasilly.babel.client.gui.BabelScreenUtil;
-import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.babel.client.gui.WidgetBounds;
-import com.elysiasilly.babel.client.gui.widget.IClickListenerWidget;
-import com.elysiasilly.babel.client.gui.widget.IHoverableWidget;
+import com.elysiasilly.babel.client.screen.BabelScreen;
+import com.elysiasilly.babel.client.screen.BabelScreenUtil;
+import com.elysiasilly.babel.client.screen.BabelWidget;
+import com.elysiasilly.babel.client.screen.WidgetBounds;
+import com.elysiasilly.babel.client.screen.widget.IClickListenerWidget;
+import com.elysiasilly.babel.client.screen.widget.IHoverableWidget;
 import com.elysiasilly.musalis.util.Conversions;
 import com.elysiasilly.musalis.util.MathUtil;
 import com.elysiasilly.musalis.util.RGBA;
-import com.elysiasilly.musalis.util.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;

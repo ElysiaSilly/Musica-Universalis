@@ -1,9 +1,9 @@
 package com.elysiasilly.musalis.client.screen;
 
-import com.elysiasilly.babel.client.gui.BabelCursor;
-import com.elysiasilly.babel.client.gui.BabelScreen;
-import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.babel.client.gui.IModifyCameraScreen;
+import com.elysiasilly.babel.client.screen.BabelCursor;
+import com.elysiasilly.babel.client.screen.BabelScreen;
+import com.elysiasilly.babel.client.screen.BabelWidget;
+import com.elysiasilly.babel.client.screen.IModifyCameraScreen;
 import com.elysiasilly.musalis.client.screen.rmi.RMIGimbalWidget;
 import com.elysiasilly.musalis.common.menu.RMIMenu;
 import com.elysiasilly.musalis.core.Musalis;

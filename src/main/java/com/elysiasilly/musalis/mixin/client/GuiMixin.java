@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.mixin.client;
 
-import com.elysiasilly.babel.client.gui.IModifyCameraScreen;
+import com.elysiasilly.babel.client.screen.IModifyCameraScreen;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

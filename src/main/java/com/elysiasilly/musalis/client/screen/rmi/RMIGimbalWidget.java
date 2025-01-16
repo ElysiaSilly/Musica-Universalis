@@ -1,6 +1,6 @@
 package com.elysiasilly.musalis.client.screen.rmi;
 
-import com.elysiasilly.babel.client.gui.BabelWidget;
+import com.elysiasilly.babel.client.screen.BabelWidget;
 import com.elysiasilly.musalis.client.screen.RMIScreen;
 import com.elysiasilly.musalis.util.RGBA;
 import com.elysiasilly.musalis.util.RenderUtil;
