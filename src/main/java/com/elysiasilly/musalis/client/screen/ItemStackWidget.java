@@ -12,12 +12,9 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.List;
 
 public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab> implements IHoverableWidget, IClickListenerWidget {
 
@@ -47,16 +44,6 @@ public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab>
     }
 
     @Override
-    public List<BabelWidget<?, ?>> initWidgets() {
-        return List.of();
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void render(GuiGraphics guiGraphics, float partialTick) {
         if(isDragging()) {
             this.bounds.position = mousePos().add(-8);
@@ -82,7 +69,7 @@ public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab>
 
         if(isHovering() && ((!this.screen.isSomethingDragging() && !isDragging()) || !this.mutable)) {
             float clamp = MathUtil.numbers.castToRange(0, 360, 0, 1, (float) this.rotation.y);
-            float rotationSpeed = (1 - clamp) * 4;
+            float rotationSpeed = (1 - clamp) * 2;
             this.rotation = rotation.add(0, rotationSpeed, 0);
             float scale = 1.5f;
             if(this.screen.isSomethingDragging()) scale = 1f;
@@ -123,56 +110,55 @@ public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab>
 
     @Override
     public void onClick(int button) {
-        if(mutable) {
-            if(this.screen.isSomethingHovering()) {
-                if(this.screen.hoveredWidget instanceof ItemStackWidget widget) {
-                    if(!widget.mutable) {
-                        if(ItemStack.isSameItem(this.stack, widget.stack)) {
-                            if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
-                                this.stack.grow(1);
-                            }
-                        } else {
-                            if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
-                                destroy();
-                            }
-                        }
-                        if(button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
-                            if(this.stack.getCount() > 1) {
-                                this.stack.grow(-1);
+        if(isHovering() || isDragging()) {
+            if(mutable) {
+                if(this.screen.isSomethingHovering()) {
+                    if(this.screen.hoveredWidget instanceof ItemStackWidget widget) {
+                        if(!widget.mutable) {
+                            if(ItemStack.isSameItem(this.stack, widget.stack)) {
+                                if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+                                    this.stack.grow(1);
+                                }
                             } else {
-                                destroy();
+                                if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+                                    destroy();
+                                }
+                            }
+                            if(button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+                                if(this.stack.getCount() > 1) {
+                                    this.stack.grow(-1);
+                                } else {
+                                    destroy();
+                                }
                             }
                         }
                     }
+                } else {
+                    this.screen.releaseDragged();
                 }
             } else {
-                this.screen.releaseDragged();
-            }
-        } else {
-            if(!this.screen.isSomethingDragging()) {
-                if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT || button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
-                    ItemStackWidget copy = new ItemStackWidget(this.screen, new WidgetBounds(0, 16));
-                    copy.stack = this.stack.copy();
-                    copy.bounds.position = this.bounds.position;
-                    this.screen.add(copy);
-                    this.mutable = true;
-                    this.screen.setDragged(this);
-                }
-                if(button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
-                    ItemStackWidget copy = new ItemStackWidget(this.screen, new WidgetBounds(0, 16));
-                    copy.stack = this.stack.copy();
-                    this.stack.setCount(this.stack.getMaxStackSize());
-                    copy.bounds.position = this.bounds.position;
-                    this.screen.add(copy);
-                    this.mutable = true;
-                    this.screen.setDragged(this);
+                if(!this.screen.isSomethingDragging()) {
+                    if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT || button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+                        ItemStackWidget copy = new ItemStackWidget(this.screen, new WidgetBounds(0, 16));
+                        copy.stack = this.stack.copy();
+                        copy.bounds.position = this.bounds.position;
+                        copy.rotation = this.rotation;
+                        this.screen.add(copy);
+                        this.mutable = true;
+                        this.screen.setDragged(this);
+                    }
+                    if(button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
+                        ItemStackWidget copy = new ItemStackWidget(this.screen, new WidgetBounds(0, 16));
+                        copy.stack = this.stack.copy();
+                        this.stack.setCount(this.stack.getMaxStackSize());
+                        copy.bounds.position = this.bounds.position;
+                        copy.rotation = this.rotation;
+                        this.screen.add(copy);
+                        this.mutable = true;
+                        this.screen.setDragged(this);
+                    }
                 }
             }
         }
-    }
-
-    @Override
-    public boolean canCLick() {
-        return isHovering() || isDragging();
     }
 }

@@ -1,14 +1,6 @@
 package com.elysiasilly.musalis.client.screen.composer;
 
 import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.musalis.common.world.resonance.HolderLeitmotif;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.phys.Vec2;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class RCLeitmotifEntriesWidget extends BabelWidget<RCLeitmotifCatalogueWidget, ResonanceComposerScreen> {
 

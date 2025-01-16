@@ -3,25 +3,22 @@ package com.elysiasilly.babel.client.gui;
 import com.elysiasilly.musalis.util.Conversions;
 import com.elysiasilly.musalis.util.RGBA;
 import com.elysiasilly.musalis.util.RenderUtil;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @SuppressWarnings("rawtypes")
-public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends BabelScreen> {
+public abstract class BabelWidget<W extends BabelWidget, S extends BabelScreen> {
 
-    public WIDGET parent;
-    public final SCREEN screen;
+    public W parent;
+    public final S screen;
 
     public final List<BabelWidget<?, ?>> children = new ArrayList<>();
 
@@ -35,7 +32,7 @@ public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends Bab
 
     boolean lock = true;
 
-    public BabelWidget(@Nullable WIDGET parent, @NotNull SCREEN screen, @NotNull WidgetBounds bounds) {
+    public BabelWidget(@Nullable W parent, @NotNull S screen, @NotNull WidgetBounds bounds) {
         this.screen = screen;
         this.parent = parent;
         this.bounds = bounds;
@@ -46,7 +43,7 @@ public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends Bab
         this.lock = false;
     }
 
-    public BabelWidget(@NotNull SCREEN screen, @NotNull WidgetBounds bounds) {
+    public BabelWidget(@NotNull S screen, @NotNull WidgetBounds bounds) {
         this(null, screen, bounds);
     }
 
@@ -139,7 +136,4 @@ public abstract class BabelWidget<WIDGET extends BabelWidget, SCREEN extends Bab
         return this.bounds.globalEnd;
     }
 
-    public BabelWidget copy() {return null;}
-    public CompoundTag save() {return null;}
-    public void load(CompoundTag tag) {}
 }

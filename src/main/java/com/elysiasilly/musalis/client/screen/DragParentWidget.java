@@ -2,8 +2,6 @@ package com.elysiasilly.musalis.client.screen;
 
 import com.elysiasilly.babel.client.gui.BabelScreen;
 import com.elysiasilly.babel.client.gui.BabelWidget;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.phys.Vec2;
 
 import java.util.List;
 

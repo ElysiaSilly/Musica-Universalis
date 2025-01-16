@@ -2,12 +2,6 @@ package com.elysiasilly.musalis.client.screen.composer;
 
 import com.elysiasilly.babel.client.gui.BabelScreen;
 import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.musalis.util.RGBA;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.phys.Vec2;
-
-import java.util.List;
 
 public class RCLeitmotifSearchBar extends BabelWidget<RCLeitmotifCatalogueWidget, BabelScreen> {
 

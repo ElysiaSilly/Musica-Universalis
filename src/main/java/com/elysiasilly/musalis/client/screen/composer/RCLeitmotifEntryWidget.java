@@ -2,12 +2,7 @@ package com.elysiasilly.musalis.client.screen.composer;
 
 import com.elysiasilly.babel.client.gui.BabelWidget;
 import com.elysiasilly.musalis.common.world.resonance.HolderLeitmotif;
-import com.elysiasilly.musalis.util.MathUtil;
-import com.elysiasilly.musalis.util.RGBA;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.phys.Vec2;
 
 import java.util.List;
 import java.util.Map;

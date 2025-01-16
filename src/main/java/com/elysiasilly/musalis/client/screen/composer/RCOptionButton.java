@@ -1,17 +1,6 @@
 package com.elysiasilly.musalis.client.screen.composer;
 
 import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.musalis.util.Conversions;
-import com.elysiasilly.musalis.util.RGBA;
-import com.elysiasilly.musalis.util.RenderUtil;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.phys.Vec2;
-import org.joml.Matrix4f;
-
-import java.util.List;
 
 public class RCOptionButton extends BabelWidget<BabelWidget, ResonanceComposerScreen> {
 

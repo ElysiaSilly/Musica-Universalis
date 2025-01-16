@@ -50,6 +50,12 @@ public class MCUtil {
             Optional<ItemStack> stack = ItemStack.parse(registries, tag);
             return stack.orElse(ItemStack.EMPTY);
         }
+
+        public static void increment(ItemStack stack, int increment) {
+            int count = stack.getCount() + increment;
+            if(count > stack.getMaxStackSize() || count < 1) return;
+            stack.grow(increment);
+        }
     }
 
     public static class raycast {

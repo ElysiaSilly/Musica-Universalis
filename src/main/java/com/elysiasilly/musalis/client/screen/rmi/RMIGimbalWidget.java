@@ -2,7 +2,6 @@ package com.elysiasilly.musalis.client.screen.rmi;
 
 import com.elysiasilly.babel.client.gui.BabelWidget;
 import com.elysiasilly.musalis.client.screen.RMIScreen;
-import com.elysiasilly.musalis.networking.payloads.RMIScreenPayload;
 import com.elysiasilly.musalis.util.RGBA;
 import com.elysiasilly.musalis.util.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,10 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.phys.Vec2;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 

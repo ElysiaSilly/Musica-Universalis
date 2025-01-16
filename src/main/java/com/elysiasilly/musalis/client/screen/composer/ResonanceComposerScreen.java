@@ -16,7 +16,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;

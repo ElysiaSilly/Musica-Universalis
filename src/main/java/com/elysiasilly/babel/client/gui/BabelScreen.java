@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
-public abstract class BabelScreen<MENU extends AbstractContainerMenu, CURSOR extends BabelCursor> extends Screen implements MenuAccess<MENU> {
+public abstract class BabelScreen<M extends AbstractContainerMenu, C extends BabelCursor> extends Screen implements MenuAccess<M> {
 
-    //public final CURSOR cursor;
-    public final MENU menu;
+    //public final C cursor;
+    public final M menu;
 
     public final List<BabelWidget<?, ?>> children = new ArrayList<>(), descendants = new ArrayList<>();
 
@@ -44,7 +44,7 @@ public abstract class BabelScreen<MENU extends AbstractContainerMenu, CURSOR ext
         this.tick = this.tick == Integer.MAX_VALUE ? 0 : this.tick + 1;
     }
 
-    public BabelScreen(@Nullable MENU menu) {
+    public BabelScreen(@Nullable M menu) {
         super(Component.empty());
         this.menu = menu;
     }
@@ -69,7 +69,7 @@ public abstract class BabelScreen<MENU extends AbstractContainerMenu, CURSOR ext
         rebuild();
     }
 
-    public @NotNull MENU getMenu() {
+    public @NotNull M getMenu() {
         return this.menu;
     }
 
@@ -102,7 +102,7 @@ public abstract class BabelScreen<MENU extends AbstractContainerMenu, CURSOR ext
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        getDescendants().forEach(descendant -> {if(descendant instanceof IClickListenerWidget widget) if(widget.canCLick()) widget.onClick(button);});
+        getDescendants().forEach(descendant -> {if(descendant instanceof IClickListenerWidget widget) widget.onClick(button);});
 
         if(this.hoveredWidget instanceof IFocusableWidget widget) {this.focusedWidget = widget.canFocus() ? this.hoveredWidget : null;}
 
@@ -111,13 +111,13 @@ public abstract class BabelScreen<MENU extends AbstractContainerMenu, CURSOR ext
 
     @Override
     public boolean charTyped(char codePoint, int modifiers) {
-        getDescendants().forEach(descendant -> {if(descendant instanceof IKeyListenerWidget widget) if(widget.canType()) widget.onType();});
+        getDescendants().forEach(descendant -> {if(descendant instanceof IKeyListenerWidget widget) widget.onType();});
         return super.charTyped(codePoint, modifiers);
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        getDescendants().forEach(descendant -> {if(descendant instanceof IScrollListenerWidget widget) if(widget.canScroll()) widget.onScroll();});
+        getDescendants().forEach(descendant -> {if(descendant instanceof IScrollListenerWidget widget) widget.onScroll();});
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 

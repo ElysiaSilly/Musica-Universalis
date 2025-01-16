@@ -1,7 +1,6 @@
 package com.elysiasilly.musalis.common.block;
 
 import com.elysiasilly.musalis.common.world.astrom.AstromMassManager;
-import com.elysiasilly.musalis.core.Musalis;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;

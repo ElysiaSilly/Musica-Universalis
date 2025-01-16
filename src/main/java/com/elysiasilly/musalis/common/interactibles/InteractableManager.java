@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
-public abstract class InteractableManager<INTERACTABLE extends Interactable> extends SavedData {
+public abstract class InteractableManager<I extends Interactable> extends SavedData {
 
     // todo: networking CLIENT <-> SERVER
     // todo: automatic (de)serializing
@@ -30,7 +30,7 @@ public abstract class InteractableManager<INTERACTABLE extends Interactable> ext
         this.NAME = name;
     }
 
-    public abstract Codec<INTERACTABLE> getCodec();
+    public abstract Codec<I> getCodec();
 
     public abstract InteractableManager load(CompoundTag compoundTag, HolderLookup.Provider provider);
 
@@ -40,29 +40,29 @@ public abstract class InteractableManager<INTERACTABLE extends Interactable> ext
         return level.getDataStorage().computeIfAbsent(new Factory<>(this::create, this::load), this.NAME);
     }
 
-    public final List<INTERACTABLE> interactables = new ArrayList<>();
+    public final List<I> interactables = new ArrayList<>();
 
-    public void add(INTERACTABLE interactable) {
+    public void add(I interactable) {
         this.interactables.add(interactable);
         interactable.manager = this;
         setDirty();
     }
 
     public void render(RenderLevelStageEvent event) {
-        final List<INTERACTABLE> interactables = List.copyOf(this.interactables);
-        for(INTERACTABLE interactable : interactables) {
+        final List<I> interactables = List.copyOf(this.interactables);
+        for(I interactable : interactables) {
             interactable.render(event);
         }
     }
 
     public void tick(Level level) {
-        final List<INTERACTABLE> interactables = List.copyOf(this.interactables);
-        for(INTERACTABLE interactable : interactables) {
+        final List<I> interactables = List.copyOf(this.interactables);
+        for(I interactable : interactables) {
             interactable.tick(level);
         }
     }
 
-    public void destroy(INTERACTABLE interactable) {
+    public void destroy(I interactable) {
         this.interactables.remove(interactable);
         setDirty();
     }

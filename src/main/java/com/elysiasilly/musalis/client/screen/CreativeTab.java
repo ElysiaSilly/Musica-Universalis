@@ -5,12 +5,10 @@ import com.elysiasilly.babel.client.gui.BabelWidget;
 import com.elysiasilly.babel.client.gui.WidgetBounds;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +70,10 @@ public class CreativeTab extends BabelScreen {
 
         guiGraphics.blit(tab.getBackgroundTexture(), leftPos, topPos, 0, 0, 176, 166);
 
+    }
+
+    @Override
+    public boolean renderDebug() {
+        return true;
     }
 }

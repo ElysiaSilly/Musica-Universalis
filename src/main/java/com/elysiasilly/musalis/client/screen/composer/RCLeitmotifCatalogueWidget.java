@@ -1,11 +1,6 @@
 package com.elysiasilly.musalis.client.screen.composer;
 
 import com.elysiasilly.babel.client.gui.BabelWidget;
-import com.elysiasilly.musalis.client.screen.DragParentWidget;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.phys.Vec2;
-
-import java.util.List;
 
 public class RCLeitmotifCatalogueWidget extends BabelWidget<BabelWidget, ResonanceComposerScreen> {
     public RCLeitmotifCatalogueWidget(ResonanceComposerScreen screen) {

@@ -6,9 +6,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public abstract class Interactable<MANAGER extends InteractableManager> {
+public abstract class Interactable<M extends InteractableManager> {
 
-    public MANAGER manager;
+    public M manager;
 
     public abstract void render(RenderLevelStageEvent event);
 

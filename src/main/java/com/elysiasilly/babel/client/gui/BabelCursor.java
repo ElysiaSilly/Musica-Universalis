@@ -1,19 +1,5 @@
 package com.elysiasilly.babel.client.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.world.phys.Vec2;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWImage;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.Objects;
-
 public class BabelCursor {
     /*
     public void renderMouse(GuiGraphics guiGraphics, Vec2 mousePos) {

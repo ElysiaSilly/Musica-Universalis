@@ -4,7 +4,6 @@ import com.elysiasilly.musalis.common.interactibles.Interactable;
 import com.elysiasilly.musalis.core.Musalis;
 import com.elysiasilly.musalis.util.Conversions;
 import com.elysiasilly.musalis.util.MCUtil;
-import com.elysiasilly.musalis.util.RGBA;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
