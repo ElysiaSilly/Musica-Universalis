@@ -136,4 +136,27 @@ public abstract class BabelWidget<W extends BabelWidget, S extends BabelScreen> 
         return this.bounds.globalEnd;
     }
 
+    public Vec2 pos() {
+        return this.bounds.position;
+    }
+
+    public void pos(Vec2 pos) {
+        this.bounds.position = pos;
+    }
+
+    public void unParent() {
+        this.parent.children.remove(this);
+        this.parent = null;
+        if(!this.screen.children.contains(this)) this.screen.children.add(this);
+    }
+
+    public void rebindParent() {
+        if(parent != null) {
+            this.screen.children.remove(this);
+            if(!this.parent.children.contains(this)) this.parent.children.add(this);
+            this.bounds.depth = this.parent.bounds.depth + .1f;
+        }
+    }
+
+
 }

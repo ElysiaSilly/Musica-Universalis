@@ -2,14 +2,16 @@ package com.elysiasilly.musalis.client.screen;
 
 import com.elysiasilly.babel.client.gui.BabelScreen;
 import com.elysiasilly.babel.client.gui.BabelWidget;
+import com.elysiasilly.babel.client.gui.WidgetBounds;
+import com.elysiasilly.babel.client.gui.widget.IClickListenerWidget;
 
 import java.util.List;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class DragParentWidget extends BabelWidget {
+public class DragParentWidget extends BabelWidget implements IClickListenerWidget {
 
     public DragParentWidget(BabelWidget parent, BabelScreen screen) {
-        super(parent, screen, null);
+        super(parent, screen, new WidgetBounds(0, 0, 8, 4));
     }
 
     @Override
@@ -25,10 +27,8 @@ public class DragParentWidget extends BabelWidget {
         return List.of();
     }
 
-    //@Override
-    //public void onDrag(Vec2 mousePos, int button, Vec2 mouseVelocity) {
-    //    if(button == 0) {
-    //        this.parent.moveWithChildren(mouseVelocity);
-    //    }
-    //}
+    @Override
+    public void onClick(int button) {
+
+    }
 }

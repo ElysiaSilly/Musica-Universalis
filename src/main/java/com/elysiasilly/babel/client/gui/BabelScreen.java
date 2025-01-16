@@ -206,8 +206,14 @@ public abstract class BabelScreen<M extends AbstractContainerMenu, C extends Bab
     }
 
     public void add(BabelWidget widget) {
-        this.children.add(widget);
+        if(widget.parent == null) {
+            this.children.add(widget);
+        } else {
+            widget.parent.children.add(widget);
+            widget.bounds.depth = widget.parent.bounds.depth + .1f;
+        }
         this.descendants.add(widget);
+
     }
 
     public void add(List<BabelWidget<?, ?>> widgets) {

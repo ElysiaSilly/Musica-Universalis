@@ -1,22 +1,29 @@
 package com.elysiasilly.musalis.client.screen;
 
+import com.elysiasilly.babel.client.gui.BabelScreen;
+import com.elysiasilly.babel.client.gui.BabelScreenUtil;
 import com.elysiasilly.babel.client.gui.BabelWidget;
 import com.elysiasilly.babel.client.gui.WidgetBounds;
 import com.elysiasilly.babel.client.gui.widget.IClickListenerWidget;
 import com.elysiasilly.babel.client.gui.widget.IHoverableWidget;
+import com.elysiasilly.musalis.util.Conversions;
 import com.elysiasilly.musalis.util.MathUtil;
+import com.elysiasilly.musalis.util.RGBA;
+import com.elysiasilly.musalis.util.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab> implements IHoverableWidget, IClickListenerWidget {
+public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, BabelScreen<?, ?>> implements IHoverableWidget, IClickListenerWidget {
 
     ItemStack stack = ItemStack.EMPTY;
     Vec3 rotOrigin;
@@ -26,9 +33,10 @@ public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab>
 
     boolean mutable = false;
 
-    public ItemStackWidget(@NotNull CreativeTab screen, WidgetBounds bounds) {
-        super(screen, bounds);
+    public ItemStackWidget(@Nullable BabelWidget<?, ?> parent, @NotNull BabelScreen<?, ?> screen, @NotNull WidgetBounds bounds) {
+        super(parent, screen, bounds);
     }
+
 
     @Override
     public void initBefore() {
@@ -46,18 +54,28 @@ public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab>
     @Override
     public void render(GuiGraphics guiGraphics, float partialTick) {
         if(isDragging()) {
-            this.bounds.position = mousePos().add(-8);
+            pos(mousePos().add(-8));
         }
+
+
+        float val = MathUtil.vectors.distance(Conversions.vector.vec3(pos().add(8)), Conversions.vector.vec3(mousePos()));
+
+        val = MathUtil.numbers.castToRange(30, 0, 0, 1, val);
+        if(val > 1 || val < 0) val = 0;
+
+        RGBA rgba = new RGBA(val, val, val, val);
+
+        BabelScreenUtil.fill(this.bounds, guiGraphics.bufferSource().getBuffer(RenderType.gui()), guiGraphics.pose().last().pose(), rgba);
 
         PoseStack pose = guiGraphics.pose();
         pose.pushPose();
-        pose.translate(this.bounds.position.x, this.bounds.position.y, 0);
+        pose.translate(pos().x, pos().y, 0);
         pose.pushPose();
 
-        if(isDragging()) {
+        if(isDragging() || this.screen.isDragging(this.parent)) {
             //GLFW.glfwSetCursor(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_HAND_CURSOR);
             this.rotation = rotation.add(-mouseDrag().y * 2, (mouseDrag().x  * 2), 0);
-            this.scale = Mth.lerp(0.2f, scale, 2f);
+            if(isDragging()) this.scale = Mth.lerp(0.2f, scale, 2f);
             pose.translate(0, 0, 100);
         }
 
@@ -139,23 +157,27 @@ public class ItemStackWidget extends BabelWidget<BabelWidget<?, ?>, CreativeTab>
             } else {
                 if(!this.screen.isSomethingDragging()) {
                     if(button == GLFW.GLFW_MOUSE_BUTTON_LEFT || button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
-                        ItemStackWidget copy = new ItemStackWidget(this.screen, new WidgetBounds(0, 16));
+                        ItemStackWidget copy = new ItemStackWidget(this.parent, this.screen, new WidgetBounds(0, 16));
                         copy.stack = this.stack.copy();
-                        copy.bounds.position = this.bounds.position;
+                        copy.pos(pos());
                         copy.rotation = this.rotation;
+                        //copy.rebindParent();
                         this.screen.add(copy);
                         this.mutable = true;
                         this.screen.setDragged(this);
+                        this.unParent();
                     }
                     if(button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
-                        ItemStackWidget copy = new ItemStackWidget(this.screen, new WidgetBounds(0, 16));
+                        ItemStackWidget copy = new ItemStackWidget(this.parent, this.screen, new WidgetBounds(0, 16));
                         copy.stack = this.stack.copy();
                         this.stack.setCount(this.stack.getMaxStackSize());
-                        copy.bounds.position = this.bounds.position;
+                        //copy.rebindParent();
+                        copy.pos(pos());
                         copy.rotation = this.rotation;
                         this.screen.add(copy);
                         this.mutable = true;
                         this.screen.setDragged(this);
+                        this.unParent();
                     }
                 }
             }
